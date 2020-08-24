@@ -32,29 +32,40 @@ class SystemConfigTest: AbstractTestNGSpringContextTests() {
         val jsonString = this.javaClass.getResource("/testProps.json").readText()
         val typeRef: TypeReference<HashMap<String, Any>> = object : TypeReference<HashMap<String, Any>>() {}
         val map = objectMapper.o.readValue(jsonString, typeRef)
-        val props: MutableMap<String, Any> = HashMap()
-        parseProps(props, map, "")
-        println(map)
+        var props: MutableMap<String, Any> = HashMap()
+        parseProps(props, map, String())
+        props = props.toSortedMap()
+        for (prop in props) {
+         log.info("${prop.key}: ${prop.value}")
+        }
     }
 
     private fun parseProps(props: MutableMap<String, Any>, map: HashMap<String, Any>, prefix: String) {
         for (child in map) {
-            if (!(child.value is HashMap<*, *>)) {
-                props["${prefix}.${child.key}"] = child.value
+            val newPrefix = if (prefix.isNotEmpty()) {
+                "${prefix}.${child.key}"
             } else {
-                val value = child.value as HashMap<String, Any>
-                var newPrefix = ""
-                newPrefix = if (prefix.isNotEmpty()) {
-                    "${prefix}.${child.key}"
+                child.key
+            }
+            if (child.value !is HashMap<*, *>) {
+                val value = child.value
+                if (value is String && (value as String).split(",").size > 1)  {
+                    props[newPrefix] = formatMultiVal(value)
                 } else {
-                    child.key
+                    props[newPrefix] = value
                 }
-                parseProps(props, value, newPrefix)
+            } else {
+                parseProps(props, child.value as HashMap<String, Any>, newPrefix)
             }
         }
-
-
     }
 
-
+    private fun formatMultiVal(value: String): String {
+        val tokens = value.split(",").sorted()
+        var joiner = StringJoiner("\n")
+        for (i in tokens.indices) {
+            joiner.add("[${i}] ${tokens[i].replace("\n", "").trim()}")
+        }
+        return joiner.toString()
+    }
 }
