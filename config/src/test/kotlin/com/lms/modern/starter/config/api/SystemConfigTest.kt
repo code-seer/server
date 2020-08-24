@@ -44,10 +44,10 @@ class SystemConfigTest: AbstractTestNGSpringContextTests() {
             } else {
                 val value = child.value as HashMap<String, Any>
                 var newPrefix = ""
-                if (prefix.isNotEmpty()) {
-                    newPrefix = "${prefix}.${child.key}"
+                newPrefix = if (prefix.isNotEmpty()) {
+                    "${prefix}.${child.key}"
                 } else {
-                    newPrefix = child.key
+                    child.key
                 }
                 parseProps(props, value, newPrefix)
             }

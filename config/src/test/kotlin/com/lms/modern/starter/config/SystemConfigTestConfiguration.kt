@@ -1,4 +1,4 @@
-package com.lms.modern.sdk.config
+package com.lms.modern.starter.config
 
 import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration

@@ -1,4 +1,4 @@
-package com.lms.modern.sdk.util.lib
+package com.lms.modern.starter.util.lib
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 

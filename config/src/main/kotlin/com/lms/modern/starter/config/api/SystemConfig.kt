@@ -1,4 +1,4 @@
-package com.lms.modern.sdk.config.api
+package com.lms.modern.starter.config.api
 
 
 import org.slf4j.Logger
@@ -46,7 +46,7 @@ class SystemConfig {
         val excludedFields = arrayOf("log")
         val line = String(CharArray(maxValueLength + maxNameLength + 4)).replace("\u0000", "-")
         log.info("  +$line")
-        log.info("  | Account Service Configurations")
+        log.info("  | ${applicationName} Configurations")
         log.info("  +$line")
 
         for (i in 0 until propertyNames.size) {
@@ -89,10 +89,10 @@ class SystemConfig {
     @Value("\${eureka.client.serviceUrl.defaultZone: ---Eureka server not found---}")
     var eurekaServer = ""
 
-    @Value("\${eureka.client.register-with-eureka: ---register-with-eureka not set---}")
+    @Value("\${eureka.client.register-with-eureka: true }")
     var registerWithEureka: Boolean = false
 
-    @Value("\${eureka.client.fetch-registry: ---fetch-registry not set---}")
+    @Value("\${eureka.client.fetch-registry: true }")
     var fetchEurekaRegistry: Boolean = false
 
     @Value("\${server.servlet.context-path: ---Context path not found---}")

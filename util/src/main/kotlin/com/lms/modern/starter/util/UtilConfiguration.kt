@@ -1,9 +1,9 @@
-package com.lms.modern.sdk.util
+package com.lms.modern.starter.util
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.lms.modern.sdk.util.lib.CustomObjectMapper
-import com.lms.modern.sdk.util.lib.OffsetDateTimeDeserializer
-import com.lms.modern.sdk.util.lib.OffsetDateTimeSerializer
+import com.lms.modern.starter.util.lib.CustomObjectMapper
+import com.lms.modern.starter.util.lib.OffsetDateTimeDeserializer
+import com.lms.modern.starter.util.lib.OffsetDateTimeSerializer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration

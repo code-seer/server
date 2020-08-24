@@ -1,4 +1,4 @@
-package com.lms.modern.sdk.util.lib
+package com.lms.modern.starter.util.lib
 
 val length = 96
 val line = String(CharArray(length)).replace("\u0000", "-")

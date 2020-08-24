@@ -1,4 +1,4 @@
-package com.lms.modern.sdk.util.lib
+package com.lms.modern.starter.util.lib
 
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
