@@ -1,6 +1,5 @@
 package com.lms.modern.starter.config.api
 
-
 import com.fasterxml.jackson.core.type.TypeReference
 import com.lms.modern.starter.config.SystemConfigTestConfiguration
 import com.lms.modern.starter.util.lib.CustomObjectMapper
@@ -11,7 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests
 import org.testng.annotations.Test
 import java.util.*
-import kotlin.collections.LinkedHashMap
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 
 @SpringBootTest(classes = [SystemConfigTestConfiguration::class])
@@ -24,20 +24,21 @@ class SystemConfigTest: AbstractTestNGSpringContextTests() {
 
     @Test
     fun log_all_props() {
-        loadJson()
-        log.info("this is a fun test!")
+        val result = loadJson()
+        assertNotNull(result)
+        assertEquals(77, result.size)
+        for (prop in result) {
+            log.info("${prop.key}: ${prop.value}")
+        }
     }
 
-    private fun loadJson() {
+    private fun loadJson(): SortedMap<String, Any> {
         val jsonString = this.javaClass.getResource("/testProps.json").readText()
         val typeRef: TypeReference<HashMap<String, Any>> = object : TypeReference<HashMap<String, Any>>() {}
         val map = objectMapper.o.readValue(jsonString, typeRef)
         var props: MutableMap<String, Any> = HashMap()
         parseProps(props, map, String())
-        props = props.toSortedMap()
-        for (prop in props) {
-         log.info("${prop.key}: ${prop.value}")
-        }
+        return props.toSortedMap()
     }
 
     private fun parseProps(props: MutableMap<String, Any>, map: HashMap<String, Any>, prefix: String) {
