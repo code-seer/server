@@ -16,6 +16,7 @@
         <module>util</module>
         <module>config</module>
         <module>codegen</module>
+        <module>model</module>
     </modules>
 
     <properties>
@@ -38,6 +39,9 @@
         <openapi.version>4.3.0</openapi.version>
         <maven.version>3.1.1</maven.version>
         <maven.plugin.version>1.6.0</maven.plugin.version>
+        <openapitools.jackson.version>0.2.1</openapitools.jackson.version>
+        <validation.version>2.0.1.Final</validation.version>
+        <codehaus.mojo.version>3.0.0</codehaus.mojo.version>
     </properties>
 
     <dependencies>
@@ -182,6 +186,25 @@
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>${openapitools.jackson.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
