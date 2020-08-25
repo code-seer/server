@@ -2,16 +2,18 @@ package com.lms.modern.starter.config.api
 
 
 import com.fasterxml.jackson.core.type.TypeReference
+import com.lms.modern.starter.config.SystemConfigConfiguration
 import com.lms.modern.starter.util.lib.CustomObjectMapper
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.HttpClients
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.util.*
 import javax.annotation.PostConstruct
-import kotlin.String
+
 
 /**
  * Invoked at application startup to log service configurations. The output is
@@ -22,13 +24,18 @@ import kotlin.String
 class SystemConfig(private val objectMapper: CustomObjectMapper) {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
-    private val baseUrl = "http://localhost:8888/course-dev.json"
+
+    @Autowired
+    lateinit var config: SystemConfigConfiguration
+
 
     /**
      * Log all configurations to the console
      */
     @PostConstruct
     fun logConfigs() {
+        println("application Name: ${appName}")
+        println("active profile: ${activeProfile}")
         val sinks = "kafka.connect.connector.sink.sinks"
         var maxNameLength = -1
         var maxValueLength = -1
@@ -71,7 +78,7 @@ class SystemConfig(private val objectMapper: CustomObjectMapper) {
 
     private fun loadJsonHttp(): SortedMap<String, Any> {
         val httpClient = HttpClients.createDefault()
-        val request = HttpGet("${baseUrl}")
+        val request = HttpGet("${config.uri}/${config.appName}-${config.activeProfile}.json")
         val typeRef: TypeReference<HashMap<String, Any>> = object : TypeReference<HashMap<String, Any>>() {}
         val map = objectMapper.o.readValue(httpClient.execute(request).entity.content, typeRef)
         var props: MutableMap<String, Any> = HashMap()
@@ -111,7 +118,10 @@ class SystemConfig(private val objectMapper: CustomObjectMapper) {
     /**
      * System configurations
      */
-    @Value("\${description: ---description not found---}")
-    private var description = ""
+    @Value("\${spring.profiles.active: ---spring.profiles.active not found---}")
+    private var activeProfile = ""
+
+    @Value("\${spring.application.name: ---spring.application.name not found---}")
+    private var appName = ""
 
 }
