@@ -1,0 +1,20 @@
+This is a starter project to build new services off of. Code sharing between microservices usually leads to tight-coupling
+of services. In order to avoid coupling by using a common library, we decided to use a starter codebase. All new services
+should simply copy this project and rename the root package name to match the project groupId. Further, configuration 
+properties needed for bootstrapping are now environment variables. The following environment variables need to be set:
+
+SPRING_APPLICATION_NAME=course
+SPRING_PROFILES_ACTIVE=dev
+SPRING_CLOUD_CONFIG_URI=http://localhost:8888
+SPRING_CLOUD_CONFIG_ENABLED=true
+SPRING_CLOUD_CONFIG_FAIL_FAST=true
+GIT_REMOTE=git@bitbucket.org:modern-lms/codegen.git
+COMMIT_MESSAGE="Add Course Service codegen files"
+ARTIFACT_DIR=artifacts/course
+
+The variable values are for example purposes only. The actual values should correspond to the specific service. 
+
+After copying the project, makes changes in the following areas:
+1. Maven pom.xml files: project group id
+2. Codegen module: package name in OpenApi configurations in the pom file
+3. 

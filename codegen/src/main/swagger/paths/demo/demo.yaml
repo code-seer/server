@@ -1,0 +1,33 @@
+paths:
+  find_one:
+    get:
+      tags:
+        - content
+      summary: Finds content
+      description: ''
+      operationId: findContent
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: content
+          description: content object
+          required: true
+          nullable: false
+          schema:
+            $ref: '../../common/models.yaml#/definitions/DemoContentDto'
+      responses:
+        '200':
+          description: results
+          schema:
+            $ref: '#/components/schemas/CourseResponse'
+      security:
+        - course_auth:
+            - read:course
+components:
+  schemas:
+    CourseResponse:
+      type: object
+      properties:
+        result:
+          type: string

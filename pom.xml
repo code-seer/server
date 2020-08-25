@@ -15,6 +15,7 @@
     <modules>
         <module>util</module>
         <module>config</module>
+        <module>codegen</module>
     </modules>
 
     <properties>
@@ -33,6 +34,10 @@
         <testng.version>7.1.0</testng.version>
         <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
         <apache.httpclient.version>4.5.12</apache.httpclient.version>
+        <swagger.version>3.0.0-rc1</swagger.version>
+        <openapi.version>4.3.0</openapi.version>
+        <maven.version>3.1.1</maven.version>
+        <maven.plugin.version>1.6.0</maven.plugin.version>
     </properties>
 
     <dependencies>
@@ -132,6 +137,29 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <version>${swagger.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>javax.validation</groupId>
+                        <artifactId>validation-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.fasterxml.jackson.core</groupId>
+                        <artifactId>jackson-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.fasterxml.jackson.core</groupId>
+                        <artifactId>jackson-databind</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.fasterxml.jackson.core</groupId>
+                        <artifactId>jackson-annotations</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
             <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-dependencies</artifactId>

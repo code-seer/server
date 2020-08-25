@@ -1,0 +1,33 @@
+---
+swagger: '2.0'
+info:
+  description: 'Modern LMS Stater Service Endpoints'
+  version: 1.0.0
+  title: Starter Service
+tags:
+  - name: starter
+    description: Starter CRUD Services
+  - name: discovery
+    description: Service Discovery services
+schemes:
+  - http
+host: localhost:8080
+basePath: "/api/course"
+paths:
+  ##################################################
+  # Service Discovery
+  ##################################################
+  /discovery/{applicationName}:
+    $ref: ./paths/discovery/discovery.yaml#/paths/get_service_instances
+
+  ##################################################
+  # Demo Service
+  ##################################################
+  /course/find_one/{uuid}:
+    $ref: ./paths/demo/demo.yaml#/paths/find_one
+
+  ##################################################
+  # Dummy Endpoint to trigger model generation
+  ##################################################
+  /model-gen/please-ignore-me:
+    $ref: ./paths/model/model.yaml#/paths/root
