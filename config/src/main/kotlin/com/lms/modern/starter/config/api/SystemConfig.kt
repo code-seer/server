@@ -34,8 +34,6 @@ class SystemConfig(private val objectMapper: CustomObjectMapper) {
      */
     @PostConstruct
     fun logConfigs() {
-        println("application Name: ${appName}")
-        println("active profile: ${activeProfile}")
         val sinks = "kafka.connect.connector.sink.sinks"
         var maxNameLength = -1
         var maxValueLength = -1
@@ -44,19 +42,21 @@ class SystemConfig(private val objectMapper: CustomObjectMapper) {
         val propertyNames = ArrayList<String>()
         val configValues = ArrayList<Any>()
         for (field in properties) {
-            propertyNames.add(field.key)
-            configValues.add(field.value)
-            if (field.key != sinks) {
-                maxNameLength = maxOf(maxNameLength, propertyNames.last().length, defaultLength)
-                maxValueLength = maxOf(maxValueLength, configValues.last().toString().length, defaultLength)
+            if (field.key != "description") {
+                propertyNames.add(field.key)
+                configValues.add(field.value)
+                if (field.key != sinks) {
+                    maxNameLength = maxOf(maxNameLength, propertyNames.last().length, defaultLength)
+                    maxValueLength = maxOf(maxValueLength, configValues.last().toString().length, defaultLength)
+                }
             }
         }
-        val lineLength = properties["description"].toString().length *2
+        val description = properties["description"]
+        val lineLength = description.toString().length *2
         val line = String(CharArray(lineLength)).replace("\u0000", "-")
         log.info("  +$line")
-        log.info("  | ${properties["description"]}")
+        log.info("  | $description")
         log.info("  +$line")
-
         for (i in 0 until propertyNames.size) {
             if (propertyNames[i] == sinks) {
                 val sinkValues: MutableList<String> = configValues[i] as MutableList<String>
@@ -118,10 +118,10 @@ class SystemConfig(private val objectMapper: CustomObjectMapper) {
     /**
      * System configurations
      */
-    @Value("\${spring.profiles.active: ---spring.profiles.active not found---}")
-    private var activeProfile = ""
-
-    @Value("\${spring.application.name: ---spring.application.name not found---}")
-    private var appName = ""
+//    @Value("\${spring.profiles.active: ---spring.profiles.active not found---}")
+//    private var activeProfile = ""
+//
+//    @Value("\${spring.application.name: ---spring.application.name not found---}")
+//    private var appName = ""
 
 }
