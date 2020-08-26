@@ -17,6 +17,7 @@
         <module>config</module>
         <module>codegen</module>
         <module>model</module>
+        <module>api</module>
     </modules>
 
     <properties>
@@ -42,6 +43,9 @@
         <openapitools.jackson.version>0.2.1</openapitools.jackson.version>
         <validation.version>2.0.1.Final</validation.version>
         <codehaus.mojo.version>3.0.0</codehaus.mojo.version>
+        <eureka.client.version>2.2.3.RELEASE</eureka.client.version>
+        <swagger.annotations.version>1.6.1</swagger.annotations.version>
+        <springframework.security.version>5.3.2.RELEASE</springframework.security.version>
     </properties>
 
     <dependencies>

@@ -3,6 +3,7 @@ of services. In order to avoid coupling by using a common library, we decided to
 should simply copy this project and rename the root package name to match the project groupId. Further, configuration 
 properties needed for bootstrapping are now environment variables. The following environment variables need to be set:
 
+CONTEXT_PATH=/api/starter
 SPRING_APPLICATION_NAME=course
 SPRING_PROFILES_ACTIVE=dev
 SPRING_CLOUD_CONFIG_URI=http://localhost:8888
