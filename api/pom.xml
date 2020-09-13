@@ -14,6 +14,10 @@
 	<description>API Services</description>
 	<packaging>jar</packaging>
 
+	<properties>
+		<jvmTarget>1.8</jvmTarget>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.lms.modern.starter</groupId>
@@ -44,6 +48,12 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 			<version>${eureka.client.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.google.code.gson</groupId>
+					<artifactId>gson</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
