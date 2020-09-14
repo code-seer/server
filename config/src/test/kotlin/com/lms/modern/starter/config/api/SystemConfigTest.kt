@@ -3,19 +3,20 @@ package com.lms.modern.starter.config.api
 import com.fasterxml.jackson.core.type.TypeReference
 import com.lms.modern.starter.config.SystemConfigTestConfiguration
 import com.lms.modern.starter.util.lib.CustomObjectMapper
+import org.junit.Test
+import org.junit.runner.RunWith
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests
-import org.testng.annotations.Test
+import org.springframework.test.context.junit4.SpringRunner
 import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-
+@RunWith(SpringRunner::class)
 @SpringBootTest(classes = [SystemConfigTestConfiguration::class])
-class SystemConfigTest: AbstractTestNGSpringContextTests() {
+class SystemConfigTest {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
 
@@ -50,7 +51,7 @@ class SystemConfigTest: AbstractTestNGSpringContextTests() {
             }
             if (child.value !is HashMap<*, *>) {
                 val value = child.value
-                if (value is String && (value as String).split(",").size > 1)  {
+                if (value is String && value.split(",").size > 1)  {
                     props[newPrefix] = formatMultiVal(value)
                 } else {
                     props[newPrefix] = value

@@ -95,7 +95,7 @@ class SystemConfig(private val objectMapper: CustomObjectMapper) {
             }
             if (child.value !is HashMap<*, *>) {
                 val value = child.value
-                if (value is String && (value as String).split(",").size > 1)  {
+                if (value is String && value.split(",").size > 1)  {
                     props[newPrefix] = cleanupMultiVal(value)
                 } else {
                     props[newPrefix] = value
