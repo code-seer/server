@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Import
  *
  *  spring:
  *      profiles:
- *          active: dev
+ *          active: default
  *      application:
- *          name: course
+ *          name: starter
  *      cloud:
  *          config:
  *              uri: http://localhost:8888

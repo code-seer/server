@@ -12,7 +12,7 @@ tags:
 schemes:
   - http
 host: localhost:8080
-basePath: "/api/course"
+basePath: "/api/starter"
 paths:
   ##################################################
   # Service Discovery
