@@ -23,4 +23,4 @@ docker build -t lms-starter .
 docker tag lms-starter gcr.io/modern-lms/lms-starter:latest
 #
 ## Push image
-docker push gcr.io/modern-lms/lms-starter:latest
+#docker push gcr.io/modern-lms/lms-starter:latest

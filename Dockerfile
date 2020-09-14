@@ -3,6 +3,6 @@ FROM gcr.io/modern-lms/lms-baseimage
 COPY . .
 ADD entrypoint.sh entrypoint.sh
 ENTRYPOINT ["./entrypoint.sh"]
-EXPOSE 8888
+EXPOSE 8081
 
-CMD ["java", "-jar", "starter-1.0-SNAPSHOT.jar"]
+CMD ["cd", "api", "&&", "mvn", "spring-boot:run"]
