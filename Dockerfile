@@ -5,4 +5,4 @@ ADD entrypoint.sh entrypoint.sh
 ENTRYPOINT ["./entrypoint.sh"]
 EXPOSE 8081
 
-CMD ["cd", "api", "&&", "mvn", "spring-boot:run"]
+CMD ["mvn", "spring-boot:run"]
