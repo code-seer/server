@@ -10,8 +10,8 @@
 # Select a project
 gcloud config set project modern-lms
 
-# Remove any build files
-mvn clean
+# Create executable jar
+mvn clean install
 
 ## Pull base image
 docker pull gcr.io/modern-lms/lms-baseimage:latest
