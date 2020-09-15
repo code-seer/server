@@ -117,7 +117,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<finalName>lms-starter-dist-repackaged</finalName>
+					<finalName>lms-starter-dist</finalName>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -161,34 +161,6 @@
 							<sources>
 								<source>${project.build.directory}/generated-sources/swagger</source>
 							</sources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>${maven.version}</version>
-				<executions>
-					<execution>
-						<id>jar</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<configuration>
-							<archive>
-								<manifest>
-									<mainClass>
-										com.lms.modern.starter.ApplicationKt
-									</mainClass>
-								</manifest>
-							</archive>
-							<descriptorRefs>
-								<descriptorRef>jar-with-dependencies</descriptorRef>
-							</descriptorRefs>
-							<finalName>lms-starter-dist</finalName>
-							<appendAssemblyId>false</appendAssemblyId>
 						</configuration>
 					</execution>
 				</executions>
