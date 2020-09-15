@@ -39,8 +39,4 @@ import org.springframework.context.annotation.Import
 @Configuration
 @ComponentScan
 @Import(value = [UtilConfiguration::class])
-open class SystemConfigConfiguration {
-    val activeProfile: String? = System.getenv("SPRING_PROFILES_ACTIVE")
-    val appName: String = System.getenv("SPRING_APPLICATION_NAME")
-    val uri: String = System.getenv("SPRING_CLOUD_CONFIG_URI")
-}
+open class SystemConfigConfiguration

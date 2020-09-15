@@ -2,14 +2,12 @@ package com.lms.modern.starter.config.api
 
 
 import com.fasterxml.jackson.core.type.TypeReference
-import com.lms.modern.starter.config.SystemConfigConfiguration
 import com.lms.modern.starter.util.lib.CustomObjectMapper
+import org.apache.http.client.ClientProtocolException
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.HttpClients
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.util.*
 import javax.annotation.PostConstruct
@@ -25,8 +23,9 @@ class SystemConfig(private val objectMapper: CustomObjectMapper) {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
 
-    @Autowired
-    lateinit var config: SystemConfigConfiguration
+    private var activeProfile: String? = null
+    private var appName: String? = null
+    private var configServerUrl: String? = null
 
 
     /**
@@ -34,21 +33,29 @@ class SystemConfig(private val objectMapper: CustomObjectMapper) {
      */
     @PostConstruct
     fun logConfigs() {
-        val sinks = "kafka.connect.connector.sink.sinks"
         var maxNameLength = -1
         var maxValueLength = -1
         val defaultLength = 30
-        val properties = loadJsonHttp()
+        var properties: SortedMap<String, Any>
         val propertyNames = ArrayList<String>()
         val configValues = ArrayList<Any>()
+        try {
+            activeProfile = System.getenv("SPRING_PROFILES_ACTIVE")
+            appName = System.getenv("SPRING_APPLICATION_NAME")
+            configServerUrl = System.getenv("SPRING_CLOUD_CONFIG_URI")
+            properties = loadJsonHttp()
+        } catch (e: ClientProtocolException) {
+            log.warn("SPRING_PROFILES_ACTIVE not set")
+            log.warn("SPRING_APPLICATION_NAME not set")
+            log.warn("SPRING_CLOUD_CONFIG_URI not set")
+            return
+        }
         for (field in properties) {
             if (field.key != "description") {
                 propertyNames.add(field.key)
                 configValues.add(field.value)
-                if (field.key != sinks) {
-                    maxNameLength = maxOf(maxNameLength, propertyNames.last().length, defaultLength)
-                    maxValueLength = maxOf(maxValueLength, configValues.last().toString().length, defaultLength)
-                }
+                maxNameLength = maxOf(maxNameLength, propertyNames.last().length, defaultLength)
+                maxValueLength = maxOf(maxValueLength, configValues.last().toString().length, defaultLength)
             }
         }
         val description = properties["description"]
@@ -58,27 +65,15 @@ class SystemConfig(private val objectMapper: CustomObjectMapper) {
         log.info("  | $description")
         log.info("  +$line")
         for (i in 0 until propertyNames.size) {
-            if (propertyNames[i] == sinks) {
-                val sinkValues: MutableList<String> = configValues[i] as MutableList<String>
-                for (j in 0 until sinkValues.size) {
-                    if (j == 0) {
-                        log.info(String.format("  | %-" + maxNameLength.toString() + "s : [%s] %s", propertyNames[i], j, sinkValues[j]))
-                    } else {
-                        log.info(String.format("  | %-" + maxNameLength.toString() + "s : [%s] %s", "", j, sinkValues[j]))
-                    }
-                }
-            }
-            else {
-                log.info(String.format("  | %-" + maxNameLength.toString() + "s : %s", propertyNames[i], configValues[i]))
-            }
+            log.info(String.format("  | %-" + maxNameLength.toString() + "s : %s", propertyNames[i], configValues[i]))
         }
         log.info("  +$line")
     }
 
-
+    @Throws(ClientProtocolException::class)
     private fun loadJsonHttp(): SortedMap<String, Any> {
         val httpClient = HttpClients.createDefault()
-        val request = HttpGet("${config.uri}/${config.appName}-${config.activeProfile}.json")
+        val request = HttpGet("${configServerUrl}/${appName}-${activeProfile}.json")
         val typeRef: TypeReference<HashMap<String, Any>> = object : TypeReference<HashMap<String, Any>>() {}
         val map = objectMapper.o.readValue(httpClient.execute(request).entity.content, typeRef)
         var props: MutableMap<String, Any> = HashMap()
@@ -114,14 +109,4 @@ class SystemConfig(private val objectMapper: CustomObjectMapper) {
         }
         return list
     }
-
-    /**
-     * System configurations
-     */
-//    @Value("\${spring.profiles.active: ---spring.profiles.active not found---}")
-//    private var activeProfile = ""
-//
-//    @Value("\${spring.application.name: ---spring.application.name not found---}")
-//    private var appName = ""
-
 }
