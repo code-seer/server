@@ -4,4 +4,5 @@ steps:
     args: ['clean', 'install', '-Dmaven.test.skip=true']
   - name: gcr.io/modern-lms/lms-baseimage:latest
     args: ['build', '-t', 'gcr.io/modern-lms/lms-starter:latest', '.']
-    images: ['gcr.io/modern-lms/lms-starter:latest']
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", 'gcr.io/modern-lms/lms-starter:latest']
