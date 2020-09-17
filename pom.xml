@@ -52,6 +52,9 @@
         <maven.jar.plugin.version>3.2.0</maven.jar.plugin.version>
         <javafaker.version>1.0.2</javafaker.version>
         <hibernate.orm.version>6.0.0.Beta10</hibernate.orm.version>
+        <postgresql.version>42.2.12</postgresql.version>
+        <flyway.version>6.4.4</flyway.version>
+        <openjpa.version>3.1.1</openjpa.version>
     </properties>
 
     <dependencies>
@@ -282,6 +285,17 @@
                 <groupId>org.hibernate.search</groupId>
                 <artifactId>hibernate-search-backend-elasticsearch</artifactId>
                 <version>${hibernate.orm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${flyway.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
