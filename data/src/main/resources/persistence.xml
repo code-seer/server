@@ -6,7 +6,7 @@
             <property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:5432/starter_db"/>
             <property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver"/>
             <property name="openjpa.ConnectionUserName" value="admin"/>
-            <property name="openjpa.ConnectionPassword" value="kobayashi"/>
+            <property name="openjpa.ConnectionPassword" value="admin"/>
             <property name="openjpa.Log" value="DefaultLevel=WARN, Tool=INFO"/>
             <property name="openjpa.jdbc.DBDictionary" value="StoreCharsAsNumbers=false"/>
         </properties>
