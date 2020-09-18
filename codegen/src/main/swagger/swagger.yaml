@@ -5,8 +5,8 @@ info:
   version: 1.0.0
   title: Starter Service
 tags:
-  - name: starter
-    description: Starter CRUD Services
+  - name: demoUser
+    description: Starter Demo User Service
   - name: discovery
     description: Service Discovery services
 schemes:
@@ -21,10 +21,10 @@ paths:
     $ref: ./paths/discovery/discovery.yaml#/paths/get_service_instances
 
   ##################################################
-  # Demo Service
+  # Demo User Service
   ##################################################
-  /course/find_one/{uuid}:
-    $ref: ./paths/demo/demo.yaml#/paths/find_one
+  /user/find_all:
+    $ref: ./paths/demo/demo.yaml#/paths/find_all
 
   ##################################################
   # Dummy Endpoint to trigger model generation

@@ -1,33 +1,74 @@
 paths:
-  find_one:
+  find_all:
     get:
       tags:
-        - content
-      summary: Finds content
+        - demoUser
+      summary: Find all users
       description: ''
-      operationId: findContent
+      operationId: findAllUsers
       produces:
         - application/json
-      parameters:
-        - in: body
-          name: content
-          description: content object
-          required: true
-          nullable: false
-          schema:
-            $ref: '../../common/models.yaml#/definitions/DemoContentDto'
       responses:
         '200':
           description: results
           schema:
-            $ref: '#/components/schemas/CourseResponse'
-      security:
-        - course_auth:
-            - read:course
+            $ref: '#/components/schemas/DemoUserResponse'
 components:
   schemas:
-    CourseResponse:
+    DemoUserResponse:
       type: object
       properties:
-        result:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoUserDto'
+    DemoUserDto:
+      type: object
+      required:
+        - id
+        - first_name
+        - last_name
+        - city
+        - state
+        - zip
+        - address
+        - sex
+        - favorites
+        - avatar
+        - updated_dt
+        - created_dt
+        - uuid
+      properties:
+        id:
+          type: integer
+          format: int64
+        first_name:
           type: string
+        last_name:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: integer
+          format: int64
+        address:
+          type: string
+        sex:
+          type: string
+        favorites:
+          type: array
+          items:
+            type: string
+        avatar:
+          type: string
+        uuid:
+          type: string
+          format: uuid
+        created_dt:
+          type: string
+          format: 'date-time'
+        updated_dt:
+          type: string
+          format: 'date-time'

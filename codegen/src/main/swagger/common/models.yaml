@@ -40,42 +40,6 @@ definitions:
       updated_dt:
         type: string
         format: 'date-time'
-  AssignmentDto:
-    type: object
-    required:
-      - uuid
-      - desciption
-      - files
-      - name
-      - sort_order
-      - urls
-      - created_dt
-      - updated_dt
-    properties:
-      uuid:
-        type: string
-        format: uuid
-      desciption:
-        type: string
-      files:
-        type: array
-        items:
-          type: string
-      name:
-        type: string
-      sort_order:
-        type: integer
-        format: int64
-      urls:
-        type: array
-        items:
-          type: string
-      created_dt:
-        type: string
-        format: 'date-time'
-      updated_dt:
-        type: string
-        format: 'date-time'
   TriggerObj1:
     type: object
     properties:
