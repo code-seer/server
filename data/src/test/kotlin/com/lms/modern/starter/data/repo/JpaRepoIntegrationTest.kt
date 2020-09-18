@@ -1,12 +1,14 @@
 package com.lms.modern.starter.data.repo
 
+import com.lms.modern.starter.config.SystemConfigConfiguration
 import com.lms.modern.starter.data.DataTestConfiguration
 import com.lms.modern.starter.data.entity.DemoUserEntity
 import com.lms.modern.starter.data.migration.FlywayMigration
-import org.junit.AfterClass
-import org.junit.BeforeClass
 import org.junit.Test
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.TestInstance
 import org.junit.runner.RunWith
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -20,9 +22,10 @@ import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Transactional
 @RunWith(SpringRunner::class)
-@SpringBootTest(classes = [DataTestConfiguration::class])
+@SpringBootTest(classes = [DataTestConfiguration::class, SystemConfigConfiguration::class])
 open class JpaRepoIntegrationTest {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
@@ -33,16 +36,16 @@ open class JpaRepoIntegrationTest {
     @Autowired
     lateinit var flywayMigration: FlywayMigration
 
-    @Autowired
-    lateinit var entityMapper: EntityMapper
+//    @Autowired
+//    lateinit var entityMapper: EntityMapper
 
-    @BeforeClass
-    open fun beforeClass() {
+    @BeforeAll
+    fun beforeClass() {
         flywayMigration.clean()
         flywayMigration.init()
     }
 
-    @AfterClass
+    @AfterAll
     open fun afterClass() {
         flywayMigration.clean()
     }
@@ -52,11 +55,12 @@ open class JpaRepoIntegrationTest {
         log.info("Testing ${method.name}")
     }
 
-
     @Test
     open fun testCreate() {
-        val expected = getEntity()
-        val saved = demoUserRepo.save(expected)
+        flywayMigration.clean()
+        flywayMigration.init()
+//        val expected = getEntity()
+//        val saved = demoUserRepo.save(expected)
 
         // Save multiple copies to test that transactions are rolled back. If rollback fails,
         // testFindAll() should fail
