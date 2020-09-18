@@ -16,19 +16,28 @@ import javax.sql.DataSource
 @ComponentScan
 @EnableJpaRepositories
 @EnableTransactionManagement
-open class DataConfiguration {
+open class DataConfiguration(
+        @Value("\${spring.datasource.driver-class-name: ---Driver class name not found---}")
+        open val driverClassName: String,
 
-    @Value("\${spring.datasource.driver-class-name: ---Driver class name not found---}")
-    var driverClassName = ""
+        @Value("\${spring.datasource.url: ---Datasource url not found---}")
+        open var datasourceUrl: String,
 
-    @Value("\${spring.datasource.url: ---Datasource url not found---}")
-    var datasourceUrl = ""
+        @Value("\${spring.datasource.username: ---Datasource username not found---}")
+        open var datasourceUsername: String,
 
-    @Value("\${spring.datasource.username: ---Datasource username not found---}")
-    var datasourceUsername = ""
+        @Value("\${spring.datasource.password: ---Datasource password not found---}")
+        open var datasourcePassword: String,
 
-    @Value("\${spring.datasource.password: ---Datasource password not found---}")
-    var datasourcePassword = ""
+        @Value("\${spring.flyway.schemas: ---Database schemas not found---}")
+        open var schemas: String,
+
+        @Value("\${spring.flyway.locations: ---spring.flyway.locations not set---}")
+        open var flywaySchemaLocation: String,
+
+        @Value("\${source.profile: ---Profile name not found---}")
+        open var profile: String
+) {
 
     @Bean
     open fun datasource(): DataSource {
