@@ -4,29 +4,25 @@ import com.lms.modern.starter.config.SystemConfigConfiguration
 import com.lms.modern.starter.data.DataTestConfiguration
 import com.lms.modern.starter.data.entity.DemoUserEntity
 import com.lms.modern.starter.data.migration.FlywayMigration
-import org.junit.Test
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.TestInstance
-import org.junit.runner.RunWith
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests
 import org.springframework.transaction.annotation.Transactional
+import org.testng.annotations.AfterClass
+import org.testng.annotations.BeforeClass
+import org.testng.annotations.BeforeMethod
+import org.testng.annotations.Test
 import java.lang.reflect.Method
 import java.time.OffsetDateTime
 import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Transactional
-@RunWith(SpringRunner::class)
 @SpringBootTest(classes = [DataTestConfiguration::class, SystemConfigConfiguration::class])
-open class JpaRepoIntegrationTest {
+open class JpaRepoIntegrationTest: AbstractTestNGSpringContextTests() {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
 
@@ -39,26 +35,26 @@ open class JpaRepoIntegrationTest {
 //    @Autowired
 //    lateinit var entityMapper: EntityMapper
 
-    @BeforeAll
+    @BeforeClass
     fun beforeClass() {
         flywayMigration.clean()
         flywayMigration.init()
     }
 
-    @AfterAll
+    @AfterClass
     open fun afterClass() {
         flywayMigration.clean()
     }
 
-    @BeforeEach
+    @BeforeMethod
     open fun beforeMethod(method: Method) {
         log.info("Testing ${method.name}")
     }
 
     @Test
     open fun testCreate() {
-        flywayMigration.clean()
-        flywayMigration.init()
+//        flywayMigration.clean()
+//        flywayMigration.init()
 //        val expected = getEntity()
 //        val saved = demoUserRepo.save(expected)
 
