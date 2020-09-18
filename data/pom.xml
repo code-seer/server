@@ -72,6 +72,11 @@
 			<artifactId>flyway-core</artifactId>
 			<version>${flyway.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.github.javafaker</groupId>
+			<artifactId>javafaker</artifactId>
+			<version>${javafaker.version}</version>
+		</dependency>
 		<!--        Test Phase-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

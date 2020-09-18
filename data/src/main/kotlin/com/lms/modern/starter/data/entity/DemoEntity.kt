@@ -35,15 +35,11 @@ open class DemoUserEntity: Serializable {
 
         @Basic
         @Column(name = "zip", columnDefinition = "text")
-        open var zip: Long? = null
+        open var zip: String? = null
 
         @Basic
         @Column(name = "address", columnDefinition = "text")
         open var address: String? = null
-
-        @Basic
-        @Column(name = "sex", columnDefinition = "text")
-        open var sex: String? = null
 
         @Type(type = "com.lms.modern.starter.data.type.ArrayUserType")
         @Column(name = "favorites", columnDefinition = "text[]")

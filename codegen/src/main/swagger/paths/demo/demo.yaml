@@ -32,7 +32,6 @@ components:
         - state
         - zip
         - address
-        - sex
         - favorites
         - avatar
         - updated_dt
@@ -51,8 +50,7 @@ components:
         state:
           type: string
         zip:
-          type: integer
-          format: int64
+          type: string
         address:
           type: string
         sex:
