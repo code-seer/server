@@ -2,11 +2,6 @@ package com.lms.modern.starter.data.migration
 
 import com.lms.modern.starter.data.DataConfiguration
 import com.lms.modern.starter.util.lib.line
-import org.elasticsearch.action.admin.indices.cache.clear.ClearIndicesCacheRequest
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest
-import org.elasticsearch.client.RequestOptions
-import org.elasticsearch.client.RestHighLevelClient
-import org.elasticsearch.client.indices.GetIndexRequest
 import org.flywaydb.core.Flyway
 import org.hibernate.search.mapper.orm.Search
 import org.slf4j.Logger
