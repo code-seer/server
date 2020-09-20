@@ -8,22 +8,29 @@ import org.elasticsearch.client.RequestOptions
 import org.elasticsearch.client.RestHighLevelClient
 import org.elasticsearch.client.indices.GetIndexRequest
 import org.flywaydb.core.Flyway
+import org.hibernate.search.mapper.orm.Search
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
+import javax.persistence.EntityManager
+import javax.persistence.PersistenceContext
 
 
 /**
  * Migrate schema and performs bulk indexing for Elasticsearch.
  */
+@Transactional
 @Component
-class FlywayMigrationImpl(
-        private val dataConfig: DataConfiguration,
-        private val client: RestHighLevelClient
+open class FlywayMigrationImpl(
+        private val dataConfig: DataConfiguration
 ): FlywayMigration {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
     private val maxNameLength = 60
+
+    @PersistenceContext
+    lateinit var entityManager: EntityManager
 
     private val flyway = Flyway
             .configure()
@@ -38,39 +45,25 @@ class FlywayMigrationImpl(
         log.info("  +$line")
         log.info("  | Flyway Schema Migration")
         log.info("  +$line")
+        clean()
         flyway.locations(dataConfig.flywaySchemaLocation).load().migrate()
+        indexData()
     }
 
     override fun clean() {
         if (dataConfig.profile == "dev" || dataConfig.applicationName == "starter") {
             log.info(String.format("  | %-" + maxNameLength.toString() + "s : %s", "Dropping database", "true"))
             Flyway(flyway).clean()
-            deleteIndex()
         } else {
             log.info(String.format("  | %-" + maxNameLength.toString() + "s : %s", "Dropping database", "false"))
         }
     }
 
-    override fun deleteIndex() {
-        log.info("  +$line")
-        log.info("  | Elasticsearch Index Deletion")
-        log.info("  +$line")
-        val indices: Array<String> = client.indices().get(GetIndexRequest("*"), RequestOptions.DEFAULT).indices
-        indices.sort()
-        val deletedIndices: MutableList<String> = ArrayList()
-        for (index in indices) {
-            if (index.startsWith("${dataConfig.indexPrefix}-")) {
-                val clearCacheRequest = ClearIndicesCacheRequest(index)
-                val deleteRequest = DeleteIndexRequest(index)
-                client.indices().clearCache(clearCacheRequest, RequestOptions.DEFAULT)
-                val ack = client.indices().delete(deleteRequest, RequestOptions.DEFAULT)
-                if (ack.isAcknowledged) {
-                    log.info(String.format("  | %-" + maxNameLength.toString() + "s : %s", index, "deleted"))
-                    deletedIndices.add(index)
-                }
-            }
-        }
-        log.info(String.format("  | %-" + maxNameLength.toString() + "s : %s", "Num deleted", deletedIndices.size))
+    override fun indexData() {
+        log.info("Bulk indexing in progress")
+        val searchSession = Search.session(entityManager)
+        searchSession.massIndexer().startAndWait()
+
     }
 
 }
