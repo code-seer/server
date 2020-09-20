@@ -11,11 +11,6 @@ import org.elasticsearch.search.sort.SortOrder
  */
 interface SearchApi {
 
-    /**
-     * Initialize Elasticsearch by dropping any existing indices
-     * belonging to Course Service.
-     */
-    fun clean(): MutableList<String>
 
     /**
      * Executes an Elasticsearch search query and returns a general
