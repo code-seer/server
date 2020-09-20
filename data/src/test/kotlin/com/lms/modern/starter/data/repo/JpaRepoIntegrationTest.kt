@@ -1,7 +1,6 @@
 package com.lms.modern.starter.data.repo
 
 import com.github.javafaker.Faker
-import com.lms.modern.starter.config.SystemConfigConfiguration
 import com.lms.modern.starter.data.DataTestConfiguration
 import com.lms.modern.starter.data.entity.DemoUserEntity
 import com.lms.modern.starter.data.migration.FlywayMigration
@@ -22,7 +21,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 @Transactional
-@SpringBootTest(classes = [DataTestConfiguration::class, SystemConfigConfiguration::class])
+@SpringBootTest(classes = [DataTestConfiguration::class])
 open class JpaRepoIntegrationTest: AbstractTestNGSpringContextTests() {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
