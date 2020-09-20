@@ -1,5 +1,6 @@
 package com.lms.modern.starter.data.repo
 
+import com.github.javafaker.Faker
 import com.lms.modern.starter.config.SystemConfigConfiguration
 import com.lms.modern.starter.data.DataTestConfiguration
 import com.lms.modern.starter.data.entity.DemoUserEntity
@@ -43,7 +44,7 @@ open class JpaRepoIntegrationTest: AbstractTestNGSpringContextTests() {
 
     @AfterClass
     open fun afterClass() {
-        flywayMigration.clean()
+//        flywayMigration.clean()
     }
 
     @BeforeMethod
@@ -51,10 +52,36 @@ open class JpaRepoIntegrationTest: AbstractTestNGSpringContextTests() {
         log.info("Testing ${method.name}")
     }
 
-    @Test
+    @Test(priority = 0)
+    open fun testFindAll() {
+        var response = demoUserRepo.findAll()
+        assertNotNull(response)
+        assertEquals(false, response.isEmpty())
+        assertEquals(100, response.size)
+    }
+
+    @Test(priority = 1)
     open fun testCreate() {
-//        flywayMigration.clean()
-//        flywayMigration.init()
+        val faker = Faker()
+        val entity = DemoUserEntity()
+        val now = OffsetDateTime.now()
+//        entity.id =
+        entity.firstName = faker.name().firstName()
+        entity.lastName = faker.name().lastName()
+        entity.city = faker.address().city()
+        entity.state = faker.address().state()
+        entity.zip = faker.address().zipCode()
+        entity.address = faker.address().fullAddress()
+        entity.favorites = arrayOf(
+                faker.starTrek().specie(),
+                faker.starTrek().specie(),
+                faker.starTrek().specie())
+        entity.avatar = faker.avatar().image()
+        entity.createdDt = now
+        entity.updatedDt = now
+        entity.uuid = UUID.randomUUID()
+        demoUserRepo.save(entity)
+
 //        val expected = getEntity()
 //        val saved = demoUserRepo.save(expected)
 
@@ -125,14 +152,6 @@ open class JpaRepoIntegrationTest: AbstractTestNGSpringContextTests() {
 //        assertEquals(399, actual.price)
 //        assertEquals("Contest slippered insular central merged", actual.learningObjectives[4])
 //    }
-
-    @Test
-    open fun testFindAll() {
-        var response = demoUserRepo.findAll()
-        assertNotNull(response)
-        assertEquals(false, response.isEmpty())
-        assertEquals(606, response.size)
-    }
 
     private fun getEntity(): DemoUserEntity {
         val requirements = arrayOf("Alpha req", "Beta req", "Gamma req")
