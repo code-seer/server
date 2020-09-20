@@ -26,24 +26,24 @@ components:
       type: object
       required:
         - id
-        - first_name
-        - last_name
+        - firstName
+        - lastName
         - city
         - state
         - zip
         - address
         - favorites
         - avatar
-        - updated_dt
-        - created_dt
+        - updatedDt
+        - createdDt
         - uuid
       properties:
         id:
           type: integer
           format: int64
-        first_name:
+        firstName:
           type: string
-        last_name:
+        lastName:
           type: string
         city:
           type: string
@@ -64,9 +64,9 @@ components:
         uuid:
           type: string
           format: uuid
-        created_dt:
+        createdDt:
           type: string
           format: 'date-time'
-        updated_dt:
+        updatedDt:
           type: string
           format: 'date-time'
