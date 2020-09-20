@@ -1,22 +1,24 @@
 package com.lms.modern.starter.data
 
 
-import org.apache.http.HttpHost
-import org.elasticsearch.client.RestClient
-import org.elasticsearch.client.RestHighLevelClient
+import com.lms.modern.starter.config.SystemConfigConfiguration
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.jdbc.DataSourceBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.transaction.annotation.EnableTransactionManagement
 import javax.sql.DataSource
 
 @Configuration
 @ComponentScan
+@EntityScan
 @EnableJpaRepositories
 @EnableTransactionManagement
+@Import(value = [SystemConfigConfiguration::class])
 open class DataConfiguration(
         @Value("\${spring.datasource.driver-class-name: ---Driver class name not found---}")
         open val driverClassName: String,
@@ -40,16 +42,7 @@ open class DataConfiguration(
         open var profile: String,
 
         @Value("\${spring.application.name: ---Application name not found---}")
-        open var applicationName: String,
-
-        @Value("\${elasticsearch.host: ---elasticsearch.host not found---}")
-        open var elasticsearchHost: String,
-
-        @Value("\${elasticsearch.index-prefix: ---elasticsearch.index-prefix not found---}")
-        open var indexPrefix: String,
-
-        @Value("\${elasticsearch.port: 9200}")
-        open var elasticsearchPort: Int
+        open var applicationName: String
 ) {
 
     @Bean
@@ -60,11 +53,5 @@ open class DataConfiguration(
                 .username(datasourceUsername)
                 .password(datasourcePassword)
                 .build()
-    }
-
-    @Bean(destroyMethod = "close")
-    open fun client(): RestHighLevelClient {
-        return RestHighLevelClient(
-                RestClient.builder(HttpHost(elasticsearchHost, elasticsearchPort)))
     }
 }
