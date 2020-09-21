@@ -15,10 +15,10 @@ import kotlin.math.ceil
  * Takes a standard Elasticsearch SearchResponse object and unpacks it to provide
  * a convenient abstraction over the underlying response object.
  */
-class IPage<T>(searchResponse: SearchResponse,
-               offset: Int,
-               limit: Int,
-               type: Class<T>
+class LmsPage<T>(searchResponse: SearchResponse,
+                 offset: Int,
+                 limit: Int,
+                 type: Class<T>
 ){
     private val objectMapper = jacksonObjectMapper()
     var limit: Int = 0
