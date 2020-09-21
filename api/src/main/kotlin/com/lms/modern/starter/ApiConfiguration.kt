@@ -64,7 +64,7 @@ class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
     fun onApplicationStart(event: ApplicationStartedEvent) {
         val countRequest = CountRequest(arrayOf(testIndex), QueryBuilders.matchAllQuery())
         val response = searchApi.count(countRequest)
-        if (demoUserRepo.findAll().size == 0 && response.count == 0L) {
+        if (demoUserRepo.findAll().size == 0 || response.count == 0L) {
             flywayMigration.init()
         }
     }
