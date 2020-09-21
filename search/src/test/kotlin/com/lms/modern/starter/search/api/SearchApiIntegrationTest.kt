@@ -68,7 +68,7 @@ class SearchApiIntegrationTest: AbstractTestNGSpringContextTests() {
         val sourceBuilder =  SearchSourceBuilder()
         sourceBuilder.query(QueryBuilders.termQuery("id", 23))
         searchRequest.source(sourceBuilder)
-        val page = IPage(searchApi.execute(searchRequest), 0, 1, DemoUserDto::class.java)
+        val page = LmsPage(searchApi.execute(searchRequest), 0, 1, DemoUserDto::class.java)
         val firstName = "Raymonde"
         val avatar = "https://s3.amazonaws.com/uifaces/faces/twitter/ajaxy_ru/128.jpg"
         val address = "West Matthewchester, OR"
