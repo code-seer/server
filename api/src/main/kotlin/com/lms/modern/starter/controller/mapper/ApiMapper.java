@@ -1,6 +1,9 @@
 package com.lms.modern.starter.controller.mapper;
 
+import com.lms.modern.starter.model.DemoUserDto;
+import com.lms.modern.starter.model.DemoUserResponse;
 import com.lms.modern.starter.model.ServiceInstanceDto;
+import com.lms.modern.starter.search.api.LmsPage;
 import org.jetbrains.annotations.NotNull;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -19,4 +22,7 @@ public abstract class ApiMapper {
 
     @Mapping(target = "isSecure", expression = "java(serviceInstance.isSecure())")
     public abstract ServiceInstanceDto map(ServiceInstance serviceInstance);
+
+    @Mapping(source = "records", target = "content")
+    public abstract DemoUserResponse map(LmsPage<DemoUserDto> page);
 }
