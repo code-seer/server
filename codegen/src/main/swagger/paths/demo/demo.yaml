@@ -2,7 +2,7 @@ paths:
   find_all:
     post:
       tags:
-        - demoUser
+        - demo-user
       summary: Find all users
       description: ''
       operationId: findAllUsers
