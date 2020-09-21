@@ -1,13 +1,23 @@
 paths:
   find_all:
-    get:
+    post:
       tags:
         - demoUser
       summary: Find all users
       description: ''
       operationId: findAllUsers
+      consumes:
+        - application/json
       produces:
         - application/json
+      parameters:
+        - in: body
+          name: pageableRequest
+          description: Page view metadata
+          required: true
+          nullable: false
+          schema:
+            $ref: '../../common/models.yaml#/definitions/PageableRequest'
       responses:
         '200':
           description: results
@@ -16,12 +26,16 @@ paths:
 components:
   schemas:
     DemoUserResponse:
-      type: object
-      properties:
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/DemoUserDto'
+      allOf:
+        - $ref: '../../common/models.yaml#/definitions/PageableResponse'
+        - type: object
+          required:
+            - content
+          properties:
+            content:
+              type: array
+              items:
+                $ref: '#/components/schemas/DemoUserDto'
     DemoUserDto:
       type: object
       required:

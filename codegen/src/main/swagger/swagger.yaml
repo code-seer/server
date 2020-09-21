@@ -5,7 +5,7 @@ info:
   version: 1.0.0
   title: Starter Service
 tags:
-  - name: demoUser
+  - name: demo-user
     description: Starter Demo User Service
   - name: discovery
     description: Service Discovery services
@@ -23,11 +23,11 @@ paths:
   ##################################################
   # Demo User Service
   ##################################################
-  /user/find_all:
+  /demoUser/findAllUsers:
     $ref: ./paths/demo/demo.yaml#/paths/find_all
 
   ##################################################
   # Dummy Endpoint to trigger model generation
   ##################################################
-  /model-gen/please-ignore-me:
+  /modelGen/pleaseIgnoreMe:
     $ref: ./paths/model/model.yaml#/paths/root
