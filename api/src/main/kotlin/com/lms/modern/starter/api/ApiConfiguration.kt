@@ -11,10 +11,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.event.ApplicationStartedEvent
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.ComponentScan
-import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Import
+import org.springframework.context.annotation.*
 import org.springframework.context.event.EventListener
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
@@ -28,6 +25,10 @@ import org.springframework.web.filter.CorsFilter
  * will check to see if the database has been seeded. Otherwise, we continue
  * with Flyway schema migration.
  */
+
+//@ComponentScan(excludeFilters = [ComponentScan.Filter(
+//        type = FilterType.ASSIGNABLE_TYPE,
+//        classes = arrayOf(OpenApiControllerWebMvc::class))])
 @Configuration
 @ComponentScan
 @Import(value = [ SearchConfiguration::class, ServiceConfiguration::class ] )
