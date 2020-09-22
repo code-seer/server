@@ -35,7 +35,7 @@
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>${openapi.version}</version>
+				<version>${openapi.generator.version}</version>
 				<executions>
 					<execution>
 						<id>api-model-codegen</id>
@@ -45,7 +45,7 @@
 						</goals>
 						<configuration>
 							<addCompileSourceRoot>false</addCompileSourceRoot>
-							<inputSpec>${project.basedir}/src/main/swagger/swagger.yaml</inputSpec>
+							<inputSpec>${project.basedir}/src/main/resources/openApi/openApi.yaml</inputSpec>
 							<generatorName>spring</generatorName>
 							<configOptions>
 								<modelPackage>com.lms.modern.starter.model</modelPackage>
@@ -70,7 +70,7 @@
 						<configuration>
 							<generatorName>typescript-axios</generatorName>
 							<addCompileSourceRoot>false</addCompileSourceRoot>
-							<inputSpec>${project.basedir}/src/main/swagger/swagger.yaml</inputSpec>
+							<inputSpec>${project.basedir}/src/main/resources/openApi/openApi.yaml</inputSpec>
 							<output>${project.build.directory}/generated-resources/typescript</output>
 						</configuration>
 					</execution>

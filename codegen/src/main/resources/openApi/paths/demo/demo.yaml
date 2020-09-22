@@ -10,24 +10,23 @@ paths:
         - application/json
       produces:
         - application/json
-      parameters:
-        - in: body
-          name: pageableRequest
-          description: Page view metadata
-          required: true
-          nullable: false
-          schema:
-            $ref: '../../common/models.yaml#/definitions/PageableRequest'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../../common/models.yaml#/components/schemas/PageableRequest'
       responses:
         '200':
-          description: results
-          schema:
-            $ref: '#/components/schemas/DemoUserResponse'
+          description: Demo users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DemoUserResponse'
 components:
   schemas:
     DemoUserResponse:
       allOf:
-        - $ref: '../../common/models.yaml#/definitions/PageableResponse'
+        - $ref: '../../common/models.yaml#/components/schemas/PageableResponse'
         - type: object
           required:
             - content

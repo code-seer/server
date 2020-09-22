@@ -1,18 +1,17 @@
 ---
-swagger: '2.0'
+openapi: 3.0.0
 info:
-  description: 'Modern LMS Stater Service Endpoints'
-  version: 1.0.0
-  title: Starter Service
+  title: Modern LMS Stater API
+  description: REST API for LMS Server Microservice Development
+  version: 0.0.1
+
+servers:
+  - url: ''
 tags:
   - name: demo-user
     description: Starter Demo User Service
   - name: discovery
     description: Service Discovery services
-schemes:
-  - http
-host: localhost:8080
-basePath: "/api/starter"
 paths:
   ##################################################
   # Service Discovery
@@ -20,14 +19,14 @@ paths:
   /discovery/{applicationName}:
     $ref: ./paths/discovery/discovery.yaml#/paths/get_service_instances
 
-  ##################################################
-  # Demo User Service
-  ##################################################
+#  ##################################################
+#  # Demo User Service
+#  ##################################################
   /demoUser/findAllUsers:
     $ref: ./paths/demo/demo.yaml#/paths/find_all
-
-  ##################################################
-  # Dummy Endpoint to trigger model generation
-  ##################################################
+#
+#  ##################################################
+#  # Dummy Endpoint to trigger model generation
+#  ##################################################
   /modelGen/pleaseIgnoreMe:
     $ref: ./paths/model/model.yaml#/paths/root

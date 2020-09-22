@@ -9,16 +9,19 @@ paths:
       produces:
         - application/json
       parameters:
-        - in: path
-          name: applicationName
+        - name: applicationName
+          in: path
           description: Name of Spring application
           required: true
-          type: string
+          schema:
+            type: string
       responses:
         '200':
-          description: results
-          schema:
-            $ref: '#/components/schemas/ServiceDiscoveryResponse'
+          description: Discovered services
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceDiscoveryResponse'
 components:
   schemas:
     ServiceDiscoveryResponse:
