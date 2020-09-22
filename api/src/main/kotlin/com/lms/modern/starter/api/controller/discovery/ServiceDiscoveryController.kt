@@ -1,7 +1,7 @@
-package com.lms.modern.starter.controller.discovery
+package com.lms.modern.starter.api.controller.discovery
 
 import com.lms.modern.starter.api.DiscoveryApi
-import com.lms.modern.starter.controller.mapper.ApiMapper
+import com.lms.modern.starter.api.controller.mapper.ApiMapper
 import com.lms.modern.starter.model.ServiceDiscoveryResponse
 import org.springframework.cloud.client.discovery.DiscoveryClient
 import org.springframework.http.ResponseEntity

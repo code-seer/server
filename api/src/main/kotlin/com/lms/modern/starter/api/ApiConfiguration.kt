@@ -1,9 +1,10 @@
-package com.lms.modern.starter
+package com.lms.modern.starter.api
 
 import com.lms.modern.starter.data.migration.FlywayMigration
 import com.lms.modern.starter.data.repo.DemoUserRepo
 import com.lms.modern.starter.search.SearchConfiguration
 import com.lms.modern.starter.search.api.SearchApi
+import com.lms.modern.starter.service.ServiceConfiguration
 import org.elasticsearch.client.core.CountRequest
 import org.elasticsearch.index.query.QueryBuilders
 import org.slf4j.Logger
@@ -18,7 +19,6 @@ import org.springframework.context.event.EventListener
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
-import org.springframework.web.servlet.config.annotation.EnableWebMvc
 
 
 /**
@@ -29,9 +29,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc
  * with Flyway schema migration.
  */
 @Configuration
-@EnableWebMvc
 @ComponentScan
-@Import(value = [ SearchConfiguration::class ] )
+@Import(value = [ SearchConfiguration::class, ServiceConfiguration::class ] )
 class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)

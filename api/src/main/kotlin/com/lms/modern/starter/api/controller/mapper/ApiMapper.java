@@ -1,4 +1,4 @@
-package com.lms.modern.starter.controller.mapper;
+package com.lms.modern.starter.api.controller.mapper;
 
 import com.lms.modern.starter.model.DemoUserDto;
 import com.lms.modern.starter.model.DemoUserResponse;

@@ -1,4 +1,4 @@
-package com.lms.modern.starter
+package com.lms.modern.starter.api
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

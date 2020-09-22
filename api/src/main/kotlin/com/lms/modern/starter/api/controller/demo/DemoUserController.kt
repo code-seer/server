@@ -1,7 +1,7 @@
-package com.lms.modern.starter.controller.demo
+package com.lms.modern.starter.api.controller.demo
 
 import com.lms.modern.starter.api.DemoUserApi
-import com.lms.modern.starter.controller.mapper.ApiMapper
+import com.lms.modern.starter.api.controller.mapper.ApiMapper
 import com.lms.modern.starter.model.DemoUserResponse
 import com.lms.modern.starter.model.PageableRequest
 import com.lms.modern.starter.service.api.demoUser.DemoUserService
