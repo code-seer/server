@@ -18,4 +18,6 @@ class FirebaseAuthTest: AbstractTestNGSpringContextTests() {
         val googleCredentials =  firebaseConfig.getFirebaseCredentials()
         assertNotNull(googleCredentials)
     }
+
+
 }

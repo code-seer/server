@@ -26,6 +26,7 @@ class SystemConfig(private val objectMapper: CustomObjectMapper) {
     private var activeProfile: String? = null
     private var appName: String? = null
     private var configServerUrl: String? = null
+    private val excludedProps = arrayOf("firebase.private_key")
 
 
     /**
@@ -65,7 +66,9 @@ class SystemConfig(private val objectMapper: CustomObjectMapper) {
         log.info("  | $description")
         log.info("  +$line")
         for (i in 0 until propertyNames.size) {
-            log.info(String.format("  | %-" + maxNameLength.toString() + "s : %s", propertyNames[i], configValues[i]))
+            if (!excludedProps.contains(propertyNames[i])) {
+                log.info(String.format("  | %-" + maxNameLength.toString() + "s : %s", propertyNames[i], configValues[i]))
+            }
         }
         log.info("  +$line")
     }

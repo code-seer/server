@@ -14,10 +14,6 @@
 	<description>API Services</description>
 	<packaging>jar</packaging>
 
-	<properties>
-		<jvmTarget>${jvmTarget}</jvmTarget>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>com.lms.modern.starter</groupId>
