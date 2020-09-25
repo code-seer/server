@@ -361,7 +361,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <jvmTarget>1.8</jvmTarget>
+                    <jvmTarget>${jvmTarget}</jvmTarget>
                     <args>
                         <arg>-Xjsr305=strict</arg>
                     </args>
