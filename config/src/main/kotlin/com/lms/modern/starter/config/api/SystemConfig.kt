@@ -2,12 +2,13 @@ package com.lms.modern.starter.config.api
 
 
 import com.fasterxml.jackson.core.type.TypeReference
-import com.lms.modern.starter.util.lib.CustomObjectMapper
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.http.client.ClientProtocolException
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.HttpClients
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import java.util.*
 import javax.annotation.PostConstruct
@@ -19,7 +20,7 @@ import javax.annotation.PostConstruct
  * file on upstream will change the configurations at runtime.
  */
 @Component
-class SystemConfig(private val objectMapper: CustomObjectMapper) {
+class SystemConfig(@Qualifier("jacksonObjectMapper") private val objectMapper: ObjectMapper) {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
 
@@ -78,7 +79,7 @@ class SystemConfig(private val objectMapper: CustomObjectMapper) {
         val httpClient = HttpClients.createDefault()
         val request = HttpGet("${configServerUrl}/${appName}-${activeProfile}.json")
         val typeRef: TypeReference<HashMap<String, Any>> = object : TypeReference<HashMap<String, Any>>() {}
-        val map = objectMapper.o.readValue(httpClient.execute(request).entity.content, typeRef)
+        val map = objectMapper.readValue(httpClient.execute(request).entity.content, typeRef)
         var props: MutableMap<String, Any> = HashMap()
         parseProps(props, map, String())
         return props.toSortedMap()
