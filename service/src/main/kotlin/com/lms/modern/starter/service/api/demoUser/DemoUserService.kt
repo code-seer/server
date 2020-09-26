@@ -5,6 +5,7 @@ import com.lms.modern.starter.model.DemoUserDto
 import com.lms.modern.starter.model.PageableRequest
 import com.lms.modern.starter.search.api.LmsPage
 import com.lms.modern.starter.search.api.SearchApi
+import com.lms.modern.starter.service.api.util.sortBuilder
 import org.elasticsearch.action.search.SearchRequest
 import org.elasticsearch.index.query.QueryBuilders
 import org.elasticsearch.search.builder.SearchSourceBuilder
@@ -24,6 +25,7 @@ class DemoUserService(private val searchApi: SearchApi,
                 .size(pageableRequest.limit)
                 .from(pageableRequest.offset)
         sourceBuilder.query(QueryBuilders.matchAllQuery())
+        sortBuilder(sourceBuilder, pageableRequest)
         searchRequest.source(sourceBuilder)
         return LmsPage(searchApi.execute(searchRequest),
                 pageableRequest.offset, pageableRequest.limit, DemoUserDto::class.java, objectMapper)
