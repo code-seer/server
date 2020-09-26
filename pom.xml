@@ -21,7 +21,6 @@
         <module>data</module>
         <module>search</module>
         <module>service</module>
-        <module>security</module>
     </modules>
 
     <properties>
