@@ -41,7 +41,13 @@ class FirebaseConfig(
         open var authProviderCertUrl: String,
 
         @Value("\${firebase.client_x509_cert_url:}")
-        open var clientCertUrl: String
+        open var clientCertUrl: String,
+
+        @Value("\${firebase.custom_token_verification_url:}")
+        open var customTokenVerificationUrl: String,
+
+        @Value("\${firebase.client_api_key:}")
+        open var clientApiKey: String
 ) {
 
     @Primary

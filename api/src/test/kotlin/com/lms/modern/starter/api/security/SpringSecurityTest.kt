@@ -48,6 +48,9 @@ class SpringSecurityTest: AbstractTestNGSpringContextTests() {
     private val port = 0
 
     @Autowired
+    private lateinit var firebaseConfig: FirebaseConfig
+
+    @Autowired
     private val restTemplate: TestRestTemplate? = null
 
     @Autowired
@@ -141,14 +144,12 @@ class SpringSecurityTest: AbstractTestNGSpringContextTests() {
     private fun login() {
         val userRecord = FirebaseAuth.getInstance().getUserByEmail(email)
         val customToken = FirebaseAuth.getInstance().createCustomToken(userRecord.uid)
-        val url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken"
-        val apiKey = "AIzaSyCnkdkr0Q2Ljby4qjcIECSAcGfvphpkC8k"
         val httpClient = HttpClients.createDefault()
         val json = JSONObject()
         json.put("token", customToken)
         json.put("returnSecureToken", true)
         val params = StringEntity(json.toString())
-        val request = HttpPost("${url}?key=${apiKey}")
+        val request = HttpPost("${firebaseConfig.customTokenVerificationUrl}?key=${firebaseConfig.clientApiKey}")
         request.addHeader("content-type", "application/json")
         request.entity = params;
         val typeRef: TypeReference<HashMap<String, Any>> = object : TypeReference<HashMap<String, Any>>() {}
