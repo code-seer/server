@@ -46,8 +46,6 @@ class FirebaseAuthTest: AbstractTestNGSpringContextTests() {
 
     @Test(priority = 1)
     fun create_user_test() {
-        val defaultAuth = FirebaseAuth.getInstance()
-        assertNotNull(defaultAuth)
         val request: UserRecord.CreateRequest = UserRecord.CreateRequest()
                 .setEmail(email)
                 .setEmailVerified(false)
