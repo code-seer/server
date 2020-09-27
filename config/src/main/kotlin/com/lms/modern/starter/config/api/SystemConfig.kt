@@ -80,6 +80,7 @@ class SystemConfig(@Qualifier("jacksonObjectMapper") private val objectMapper: O
         val request = HttpGet("${configServerUrl}/${appName}-${activeProfile}.json")
         val typeRef: TypeReference<HashMap<String, Any>> = object : TypeReference<HashMap<String, Any>>() {}
         val map = objectMapper.readValue(httpClient.execute(request).entity.content, typeRef)
+        httpClient.close()
         var props: MutableMap<String, Any> = HashMap()
         parseProps(props, map, String())
         return props.toSortedMap()
