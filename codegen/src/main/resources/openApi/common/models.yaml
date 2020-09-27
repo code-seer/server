@@ -27,10 +27,6 @@ components:
             type: string
         query:
           type: string
-        owned:
-          type: boolean
-        affiliated:
-          type: boolean
     PageableResponse:
       type: object
       required:
@@ -51,13 +47,45 @@ components:
         num_pages:
           type: integer
           format: int64
-    TriggerObj1:
+    UserDto:
       type: object
       properties:
-        value:
+        uid:
           type: string
-    TriggerObj2:
+        name:
+          type: string
+        email:
+          type: string
+        is_email_verified:
+          type: boolean
+        picture:
+          type: string
+        roles:
+          type: object
+          additionalProperties:
+            type: string
+    SecurityProperty:
       type: object
       properties:
-        value:
-          type: string
+        allow_credentials:
+          type: boolean
+        allowed_origins:
+          type: array
+          items:
+            type: string
+        allowed_headers:
+          type: array
+          items:
+            type: string
+        allowed_methods:
+          type: array
+          items:
+            type: string
+        allowed_public_apis:
+          type: array
+          items:
+            type: string
+        exposed_headers:
+          type: array
+          items:
+            type: string

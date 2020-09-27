@@ -19,5 +19,5 @@ components:
   schemas:
     ModelTrigger:
       allOf:
-        - $ref: '../../common/models.yaml#/components/schemas/TriggerObj2'
-        - $ref: '../../common/models.yaml#/components/schemas/TriggerObj2'
+        - $ref: '../../common/models.yaml#/components/schemas/UserDto'
+        - $ref: '../../common/models.yaml#/components/schemas/SecurityProperty'
