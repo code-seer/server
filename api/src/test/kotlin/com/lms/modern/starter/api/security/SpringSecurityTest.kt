@@ -23,6 +23,7 @@ import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests
 import org.testng.annotations.AfterClass
 import org.testng.annotations.BeforeClass
@@ -66,6 +67,7 @@ class SpringSecurityTest: AbstractTestNGSpringContextTests() {
     private val photoUrl = "http://www.example.com/12345678/photo.png"
 
     private var idToken: String? = null
+    private var userRecord: UserRecord? = null
 
     /**
      *
@@ -74,8 +76,7 @@ class SpringSecurityTest: AbstractTestNGSpringContextTests() {
     @BeforeClass
     fun beforeClass() {
         deleteUser()
-        createClaims(createUser())
-        login()
+        userRecord = createUser()
     }
 
     /**
@@ -116,16 +117,23 @@ class SpringSecurityTest: AbstractTestNGSpringContextTests() {
         return userRecord
     }
 
-    private fun createClaims(userRecord: UserRecord) {
+    private fun createClaims(userRecord: UserRecord, removeClaim: Boolean) {
         val claims =  hashMapOf<String, Boolean>()
         claims["ROLE_ADMIN"] = true
         claims["ROLE_TEST"] = true
-        claims["ROLE_DEMO_USER_READ"] = true
+        if (!removeClaim) {
+            claims["ROLE_DEMO_USER_READ"] = true
+        }
         FirebaseAuth.getInstance().setCustomUserClaims(userRecord.uid, claims as Map<String, Any>?)
         val newUserRecord = FirebaseAuth.getInstance().getUserByEmail(email)
         assertNotNull(newUserRecord)
         assertEquals(newUserRecord.uid, userRecord.uid)
-        assertEquals(newUserRecord.customClaims.size, 3)
+        if (removeClaim) {
+            assertEquals(newUserRecord.customClaims.size, 2)
+        } else {
+            assertEquals(newUserRecord.customClaims.size, 3)
+        }
+
     }
 
     /**
@@ -161,7 +169,30 @@ class SpringSecurityTest: AbstractTestNGSpringContextTests() {
     }
 
     @Test
-    fun demo_user_endpoint_test() {
+    fun demo_user_endpoint_200_test() {
+        createClaims(userRecord!!, false)
+        login()
+        val response = request()
+        assertNotNull(response)
+        assertEquals(200, response.statusCodeValue)
+        val demoUserResponse = objectMapper.readValue(response.body, DemoUserResponse::class.java)
+        assertNotNull(demoUserResponse)
+        assertEquals(4, demoUserResponse.numPages)
+        assertEquals(100, demoUserResponse.totalRecords)
+        assertEquals("Angelo", demoUserResponse.content[7].firstName)
+        assertEquals("Carter", demoUserResponse.content[7].lastName)
+    }
+
+    @Test
+    fun demo_user_endpoint_403_test() {
+        createClaims(userRecord!!, true)
+        login()
+        val response = request()
+        assertNotNull(response)
+        assertEquals(403, response.statusCodeValue)
+    }
+
+    private fun request(): ResponseEntity<String>? {
         val uri = "http://${host}:${port}${testUrl}"
         val headers = HttpHeaders()
         headers.contentType = MediaType.APPLICATION_JSON
@@ -172,14 +203,6 @@ class SpringSecurityTest: AbstractTestNGSpringContextTests() {
         pageableRequest.sortBy = arrayOf("lastName").toMutableList()
         pageableRequest.sortDir = arrayOf("ASC").toMutableList()
         val entity = HttpEntity<PageableRequest>(pageableRequest, headers)
-        val response = restTemplate?.postForEntity(uri, entity, String::class.java)
-        assertNotNull(response)
-        assertEquals(200, response.statusCodeValue)
-        val demoUserResponse = objectMapper.readValue(response.body, DemoUserResponse::class.java)
-        assertNotNull(demoUserResponse)
-        assertEquals(4, demoUserResponse.numPages)
-        assertEquals(100, demoUserResponse.totalRecords)
-        assertEquals("Angelo", demoUserResponse.content[7].firstName)
-        assertEquals("Carter", demoUserResponse.content[7].lastName)
+        return restTemplate?.postForEntity(uri, entity, String::class.java)
     }
 }
