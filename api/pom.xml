@@ -84,7 +84,7 @@
 		<dependency>
 			<groupId>com.google.firebase</groupId>
 			<artifactId>firebase-admin</artifactId>
-			<version>${firebase.version}</version>
+			<version>${firebase.admin.version}</version>
 		</dependency>
 
 		<!--Test Phase-->
