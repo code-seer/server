@@ -56,7 +56,7 @@ class ApiTest: AbstractTestNGSpringContextTests() {
         assertNotNull(demoUserResponse)
         assertEquals( 4, demoUserResponse.numPages)
         assertEquals(100, demoUserResponse.totalRecords)
-        assertEquals( "Milissa", demoUserResponse.content[6].firstName)
-        assertEquals( "Brown", demoUserResponse.content[6].lastName)
+        assertEquals( "Angelo", demoUserResponse.content[7].firstName)
+        assertEquals( "Carter", demoUserResponse.content[7].lastName)
     }
 }

@@ -202,11 +202,6 @@
                 <artifactId>firebase-admin</artifactId>
                 <version>${firebase.admin.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>com.google.firebase</groupId>-->
-<!--                <artifactId>firebase-auth</artifactId>-->
-<!--                <version>${firebase.auth.version}</version>-->
-<!--            </dependency>-->
             <dependency>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator</artifactId>
