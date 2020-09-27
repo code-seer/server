@@ -19,7 +19,7 @@ class SecurityService {
             val securityContext = SecurityContextHolder.getContext()
             val principal = securityContext.authentication.principal
             if (principal is UserDto) {
-                userPrincipal = principal as UserDto
+                userPrincipal = principal
             }
             return userPrincipal
         }

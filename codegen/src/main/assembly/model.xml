@@ -13,6 +13,7 @@
             <includes>
                 <include>**/*Request*.java</include>
                 <include>**/*Response*.java</include>
+                <include>**/*Role*.java</include>
                 <include>**/*Dto.java</include>
             </includes>
             <excludes>

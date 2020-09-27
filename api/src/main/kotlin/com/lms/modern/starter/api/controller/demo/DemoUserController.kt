@@ -15,7 +15,7 @@ class DemoUserController(
         private val apiMapper: ApiMapper
 ): DemoUserApi {
 
-    @PreAuthorize("hasRole('ROLE_DEMO_USER_READ')")
+    @PreAuthorize("hasRole(T(com.lms.modern.starter.model.UserRole).DEMO_USER_READ.value)")
     override fun findAllUsers(pageableRequest: PageableRequest): ResponseEntity<DemoUserResponse> {
         val response = apiMapper.map(demoUserService.findAllUsers(pageableRequest))
         return ResponseEntity.ok(response)

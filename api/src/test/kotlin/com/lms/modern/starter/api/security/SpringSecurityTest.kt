@@ -8,6 +8,7 @@ import com.google.firebase.auth.UserRecord
 import com.lms.modern.starter.api.ApiTestConfiguration
 import com.lms.modern.starter.model.DemoUserResponse
 import com.lms.modern.starter.model.PageableRequest
+import com.lms.modern.starter.model.UserRole
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.HttpClients
@@ -119,10 +120,10 @@ class SpringSecurityTest: AbstractTestNGSpringContextTests() {
 
     private fun createClaims(userRecord: UserRecord, removeClaim: Boolean) {
         val claims =  hashMapOf<String, Boolean>()
-        claims["ROLE_ADMIN"] = true
-        claims["ROLE_TEST"] = true
+        claims[UserRole.ADMIN.value] = true
+        claims[UserRole.TEST.value] = true
         if (!removeClaim) {
-            claims["ROLE_DEMO_USER_READ"] = true
+            claims[UserRole.DEMO_USER_READ.value] = true
         }
         FirebaseAuth.getInstance().setCustomUserClaims(userRecord.uid, claims as Map<String, Any>?)
         val newUserRecord = FirebaseAuth.getInstance().getUserByEmail(email)
@@ -190,6 +191,17 @@ class SpringSecurityTest: AbstractTestNGSpringContextTests() {
         val response = request()
         assertNotNull(response)
         assertEquals(403, response.statusCodeValue)
+    }
+
+    @Test
+    fun demo_user_endpoint_401_test() {
+        idToken = ""
+        val response = request()
+        assertNotNull(response)
+        assertEquals(401, response.statusCodeValue)
+        val typeRef: TypeReference<HashMap<String, Any>> = object : TypeReference<HashMap<String, Any>>() {}
+        val map = objectMapper.readValue(response.body, typeRef)
+        assertEquals("UNAUTHORIZED", map["error"])
     }
 
     private fun request(): ResponseEntity<String>? {

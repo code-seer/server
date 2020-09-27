@@ -12,19 +12,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
-import org.springframework.web.filter.CorsFilter
-import java.io.IOException
 import java.sql.Timestamp
 import java.util.*
-import javax.servlet.ServletException
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 import kotlin.collections.HashMap
 
 @Configuration
@@ -41,7 +35,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Bean
     fun restAuthenticationEntryPoint(): AuthenticationEntryPoint {
-        return AuthenticationEntryPoint { httpServletRequest, httpServletResponse, e ->
+        return AuthenticationEntryPoint { _, httpServletResponse, _ ->
             val errorObject: MutableMap<String, Any> = HashMap()
             val errorCode = 401
             errorObject["message"] = "Unauthorized access of protected resource, invalid credentials"
@@ -50,7 +44,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             errorObject["timestamp"] = Timestamp(Date().time)
             httpServletResponse.contentType = "application/json;charset=UTF-8"
             httpServletResponse.status = errorCode
-            httpServletResponse.writer.write(objectMapper!!.writeValueAsString(errorObject))
+            httpServletResponse.writer.write(objectMapper.writeValueAsString(errorObject))
         }
     }
 

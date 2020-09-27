@@ -20,4 +20,4 @@ components:
     ModelTrigger:
       allOf:
         - $ref: '../../common/models.yaml#/components/schemas/UserDto'
-        - $ref: '../../common/models.yaml#/components/schemas/SecurityProperty'
+        - $ref: '../../common/models.yaml#/components/schemas/UserRole'

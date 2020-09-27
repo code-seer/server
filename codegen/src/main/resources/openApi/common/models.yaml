@@ -63,28 +63,10 @@ components:
         roles:
           type: object
           additionalProperties: true
-    SecurityProperty:
-      type: object
-      properties:
-        allow_credentials:
-          type: boolean
-        allowed_origins:
-          type: array
-          items:
-            type: string
-        allowed_headers:
-          type: array
-          items:
-            type: string
-        allowed_methods:
-          type: array
-          items:
-            type: string
-        allowed_public_apis:
-          type: array
-          items:
-            type: string
-        exposed_headers:
-          type: array
-          items:
-            type: string
+    UserRole:
+      type: string
+      nullable: false
+      enum:
+        - ROLE_ADMIN
+        - ROLE_TEST
+        - ROLE_DEMO_USER_READ
