@@ -42,7 +42,7 @@ class SecurityService {
         val authorities: MutableList<SimpleGrantedAuthority> = ArrayList()
         for ((claim: String, value) in claims) {
             if (claim.startsWith("ROLE_") && value == true) {
-                authorities.add(SimpleGrantedAuthority(claim.substring(5, claim.length)))
+                authorities.add(SimpleGrantedAuthority(claim))
             }
         }
         return authorities
