@@ -18,6 +18,7 @@ import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
+import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests
 import org.testng.annotations.AfterClass
 import org.testng.annotations.BeforeClass
@@ -32,7 +33,8 @@ import kotlin.test.assertNotNull
 /**
  * Test Spring Security with Firebase using MockMvc.
  */
-@AutoConfigureMockMvc
+
+@DirtiesContext
 @SpringBootTest(classes = [ApiTestConfiguration::class],
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SpringSecurityTest: AbstractTestNGSpringContextTests() {
