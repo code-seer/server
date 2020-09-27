@@ -3,7 +3,7 @@ package com.lms.modern.starter.api.security
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.UserRecord
-import com.lms.modern.starter.api.ApiTestConfiguration
+import com.lms.modern.starter.api.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,12 +22,6 @@ class FirebaseAuthTest: AbstractTestNGSpringContextTests() {
 
     @Autowired
     private lateinit var firebaseConfig: FirebaseConfig
-
-    private val displayName = "LMS TestNG User"
-    private val email = "lms.testng@modern-lms.com"
-    private val password = "secretPassword"
-    private val phoneNumber = "+11234567890"
-    private val photoUrl = "http://www.example.com/12345678/photo.png"
 
     @BeforeClass
     fun beforeClass() {
