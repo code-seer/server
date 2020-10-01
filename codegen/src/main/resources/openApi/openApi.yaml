@@ -6,7 +6,7 @@ info:
   version: 0.0.1
 
 servers:
-  - url: ''
+  - url: 'http://localhost:8080/api/starter'
 tags:
   - name: demo-user
     description: Starter Demo User Service

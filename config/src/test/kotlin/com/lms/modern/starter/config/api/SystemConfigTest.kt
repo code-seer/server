@@ -1,11 +1,12 @@
 package com.lms.modern.starter.config.api
 
 import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.lms.modern.starter.config.SystemConfigTestConfiguration
-import com.lms.modern.starter.util.lib.CustomObjectMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests
 import org.testng.annotations.Test
@@ -20,7 +21,8 @@ class SystemConfigTest: AbstractTestNGSpringContextTests() {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
 
     @Autowired
-    lateinit var objectMapper: CustomObjectMapper
+    @Qualifier("jacksonObjectMapper")
+    lateinit var objectMapper: ObjectMapper
 
     @Test
     fun log_all_props() {
@@ -35,7 +37,7 @@ class SystemConfigTest: AbstractTestNGSpringContextTests() {
     private fun loadJson(): SortedMap<String, Any> {
         val jsonString = this.javaClass.getResource("/testProps.json").readText()
         val typeRef: TypeReference<HashMap<String, Any>> = object : TypeReference<HashMap<String, Any>>() {}
-        val map = objectMapper.o.readValue(jsonString, typeRef)
+        val map = objectMapper.readValue(jsonString, typeRef)
         var props: MutableMap<String, Any> = HashMap()
         parseProps(props, map, String())
         return props.toSortedMap()

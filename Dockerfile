@@ -5,6 +5,6 @@ ADD entrypoint.sh entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]
 
-EXPOSE 8081
+EXPOSE 7080
 
 CMD ["java", "-jar", "lms-starter-dist.jar"]

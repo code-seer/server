@@ -14,10 +14,6 @@
 	<description>API Services</description>
 	<packaging>jar</packaging>
 
-	<properties>
-		<jvmTarget>1.8</jvmTarget>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>com.lms.modern.starter</groupId>
@@ -85,6 +81,11 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 			<version>${spring.boot.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>${firebase.admin.version}</version>
+		</dependency>
 
 		<!--Test Phase-->
 		<dependency>
@@ -104,6 +105,12 @@
 			<version>${kotlin.version}</version>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <version>${spring.boot.version}</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 	<build>

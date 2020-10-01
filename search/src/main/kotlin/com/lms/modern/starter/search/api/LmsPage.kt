@@ -1,13 +1,8 @@
 package com.lms.modern.starter.search.api
 
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.lms.modern.starter.util.lib.OffsetDateTimeDeserializer
-import com.lms.modern.starter.util.lib.OffsetDateTimeSerializer
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.search.SearchHit
-import java.time.OffsetDateTime
 import kotlin.collections.ArrayList
 import kotlin.math.ceil
 
@@ -18,9 +13,9 @@ import kotlin.math.ceil
 class LmsPage<T>(searchResponse: SearchResponse,
                  offset: Int,
                  limit: Int,
-                 type: Class<T>
+                 type: Class<T>,
+                 objectMapper: ObjectMapper
 ){
-    private val objectMapper = jacksonObjectMapper()
     var limit: Int = 0
     var offset: Int = 0
     var totalRecords: Long = 0
@@ -28,7 +23,6 @@ class LmsPage<T>(searchResponse: SearchResponse,
     var records: MutableList<T> = ArrayList()
 
     init {
-        addModule()
         if (searchResponse.hits.totalHits?.value!! > 0L) {
             this.totalRecords = searchResponse.hits.totalHits!!.value
             this.limit = limit
@@ -40,11 +34,4 @@ class LmsPage<T>(searchResponse: SearchResponse,
         }
     }
 
-    private fun addModule() {
-        val javaTimeModule = JavaTimeModule()
-        javaTimeModule.addSerializer(OffsetDateTime::class.java, OffsetDateTimeSerializer())
-        javaTimeModule.addDeserializer(OffsetDateTime::class.java, OffsetDateTimeDeserializer())
-        objectMapper.registerModule(javaTimeModule)
-        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-    }
 }
