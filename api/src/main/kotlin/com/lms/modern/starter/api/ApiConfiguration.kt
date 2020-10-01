@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.event.ApplicationStartedEvent
 import org.springframework.context.annotation.*
 import org.springframework.context.event.EventListener
+import org.springframework.dao.InvalidDataAccessResourceUsageException
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
@@ -64,7 +65,13 @@ class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
     fun onApplicationStart(event: ApplicationStartedEvent) {
         val countRequest = CountRequest(arrayOf(testIndex), QueryBuilders.matchAllQuery())
         val response = searchApi.count(countRequest)
-        if (demoUserRepo.findAll().size == 0 || response.count == 0L) {
+        try {
+            if (demoUserRepo.findAll().size == 0 || response.count == 0L) {
+                flywayMigration.init()
+            }
+        }
+        catch (e: InvalidDataAccessResourceUsageException) {
+            log.error(e.message)
             flywayMigration.init()
         }
     }
