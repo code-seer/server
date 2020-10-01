@@ -3,7 +3,7 @@ package com.lms.modern.starter.api.controller
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.firebase.auth.UserRecord
 import com.lms.modern.starter.api.*
-import com.lms.modern.starter.api.security.FirebaseConfig
+import com.lms.modern.starter.api.security.*
 import com.lms.modern.starter.model.DemoUserResponse
 import com.lms.modern.starter.model.PageableRequest
 import org.slf4j.Logger

@@ -1,21 +1,18 @@
-package com.lms.modern.starter.api
+package com.lms.modern.starter.api.security
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.UserRecord
-import com.lms.modern.starter.api.security.FirebaseConfig
 import com.lms.modern.starter.model.UserRole
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.HttpClients
 import org.springframework.boot.configurationprocessor.json.JSONObject
 import java.util.HashMap
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 
-const val displayName = "LMS TestNG User"
+const val displayName = "LMS Demo User"
 const val email = "bizmelesse@gmail.com"
 const val password = "passwork"
 const val phoneNumber = "+11234567890"
@@ -31,10 +28,6 @@ fun createUser(): UserRecord {
             .setPhotoUrl(photoUrl)
             .setDisabled(false)
     val userRecord = FirebaseAuth.getInstance().createUser(request)
-    assertEquals(userRecord.displayName, displayName)
-    assertEquals(userRecord.email, email)
-    assertEquals(userRecord.phoneNumber, phoneNumber)
-    assertEquals(userRecord.photoUrl, photoUrl)
     return userRecord
 }
 
@@ -54,15 +47,6 @@ fun createClaims(userRecord: UserRecord, removeClaim: Boolean) {
         claims[UserRole.DEMO_USER_READ.value] = true
     }
     FirebaseAuth.getInstance().setCustomUserClaims(userRecord.uid, claims as Map<String, Any>?)
-    val newUserRecord = FirebaseAuth.getInstance().getUserByEmail(email)
-    assertNotNull(newUserRecord)
-    assertEquals(newUserRecord.uid, userRecord.uid)
-    if (removeClaim) {
-        assertEquals(newUserRecord.customClaims.size, 2)
-    } else {
-        assertEquals(newUserRecord.customClaims.size, 3)
-    }
-
 }
 
 /**
@@ -92,8 +76,6 @@ fun login(firebaseConfig: FirebaseConfig, objectMapper: ObjectMapper): String? {
     val typeRef: TypeReference<HashMap<String, Any>> = object : TypeReference<HashMap<String, Any>>() {}
     val map = objectMapper.readValue(httpClient.execute(request).entity.content, typeRef)
     httpClient.close()
-    assertNotNull(map)
     val idToken = map["idToken"] as String?
-    assertNotNull(idToken)
     return idToken
 }
