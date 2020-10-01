@@ -9,7 +9,7 @@
     <fileSets>
         <fileSet>
             <directory>target/generated-resources/typescript</directory>
-            <outputDirectory>Course</outputDirectory>
+            <outputDirectory>openApi</outputDirectory>
             <includes>
                 <include>**/*.ts</include>
             </includes>
