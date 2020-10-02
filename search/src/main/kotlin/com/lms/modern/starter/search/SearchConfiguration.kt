@@ -26,7 +26,7 @@ class SearchConfiguration(
 ) {
 
     @Bean(destroyMethod = "close")
-    open fun client(): RestHighLevelClient {
+    fun client(): RestHighLevelClient {
         return RestHighLevelClient(
                 RestClient.builder(HttpHost(elasticsearchHost, elasticsearchPort)))
     }

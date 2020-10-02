@@ -1,5 +1,8 @@
 package com.lms.modern.starter.api
 
+import com.lms.modern.starter.api.security.createClaims
+import com.lms.modern.starter.api.security.createUser
+import com.lms.modern.starter.api.security.deleteUser
 import com.lms.modern.starter.data.migration.FlywayMigration
 import com.lms.modern.starter.data.repo.DemoUserRepo
 import com.lms.modern.starter.search.SearchConfiguration
@@ -14,9 +17,6 @@ import org.springframework.boot.context.event.ApplicationStartedEvent
 import org.springframework.context.annotation.*
 import org.springframework.context.event.EventListener
 import org.springframework.dao.InvalidDataAccessResourceUsageException
-import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource
-import org.springframework.web.filter.CorsFilter
 
 
 /**
@@ -46,23 +46,26 @@ class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
     private val testIndex = "lms-demo_user-read"
 
 
-    @Bean
-    fun corsFilter(): CorsFilter {
-        val source = UrlBasedCorsConfigurationSource()
-        val config = CorsConfiguration()
-        config.allowCredentials = true;
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config)
-        return CorsFilter(source)
-    }
-
     /**
      * TODO: Run the comparison on all tables and indices that should be seeded.
      */
     @EventListener
     fun onApplicationStart(event: ApplicationStartedEvent) {
+        handleMigration()
+        createDemoUser()
+    }
+
+    /**
+     * Create a demo LMS user account to access protected services. This microservice
+     * is not publicly accessible. It can only be accessed through the API Gateway
+     * and the user must be authenticated. Otherwise a 401 response is returned.
+     */
+    private fun createDemoUser() {
+        deleteUser()
+        createClaims(createUser(), false)
+    }
+
+    private fun handleMigration() {
         val countRequest = CountRequest(arrayOf(testIndex), QueryBuilders.matchAllQuery())
         val response = searchApi.count(countRequest)
         try {
