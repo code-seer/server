@@ -14,9 +14,9 @@ import java.util.HashMap
 
 const val displayName = "LMS Demo User"
 const val email = "bizmelesse@gmail.com"
-const val password = "passwork"
+const val password = "demouser"
 const val phoneNumber = "+11234567890"
-const val photoUrl = "http://www.example.com/12345678/photo.png"
+const val photoUrl = "https://avatars0.githubusercontent.com/u/19600025?s=460&u=0743d9d8e8ebefe36990ad498ede9fc0df96e18f&v=4"
 
 fun createUser(): UserRecord {
     val request: UserRecord.CreateRequest = UserRecord.CreateRequest()
@@ -27,8 +27,7 @@ fun createUser(): UserRecord {
             .setDisplayName(displayName)
             .setPhotoUrl(photoUrl)
             .setDisabled(false)
-    val userRecord = FirebaseAuth.getInstance().createUser(request)
-    return userRecord
+    return FirebaseAuth.getInstance().createUser(request)
 }
 
 fun deleteUser() {

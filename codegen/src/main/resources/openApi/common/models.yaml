@@ -10,6 +10,8 @@ components:
       required:
         - sort_by
         - sort_dir
+        - limit
+        - offset
       properties:
         limit:
           type: integer

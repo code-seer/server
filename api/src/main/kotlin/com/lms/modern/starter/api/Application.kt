@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean
 
 @EnableDiscoveryClient
 @SpringBootApplication
-open class Application
+class Application
 
 fun main(args: Array<String>) {
     runApplication<Application>(*args)
