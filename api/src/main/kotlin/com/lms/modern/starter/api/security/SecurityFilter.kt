@@ -20,7 +20,10 @@ class SecurityFilter: OncePerRequestFilter() {
     private lateinit var securityService: SecurityService
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
-        verifyToken(request)
+        // All non-preflight requests must have a valid authorization token
+        if (request.method != "OPTIONS") {
+            verifyToken(request)
+        }
         filterChain.doFilter(request, response)
     }
 
