@@ -12,6 +12,18 @@ tags:
     description: Starter Demo User Service
   - name: discovery
     description: Service Discovery services
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+# Apply security to global scope;
+security:
+  - bearerAuth: []
+
 paths:
   ##################################################
   # Service Discovery

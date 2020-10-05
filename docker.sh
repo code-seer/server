@@ -11,7 +11,7 @@
 gcloud config set project modern-lms
 
 # Create executable jar
-mvn clean install
+mvn clean install -D skipTests
 
 ## Pull base image
 docker pull gcr.io/modern-lms/lms-baseimage:latest
@@ -23,4 +23,4 @@ docker build -t lms-starter .
 docker tag lms-starter gcr.io/modern-lms/lms-starter:latest
 #
 ## Push image
-#docker push gcr.io/modern-lms/lms-starter:latest
+docker push gcr.io/modern-lms/lms-starter:latest

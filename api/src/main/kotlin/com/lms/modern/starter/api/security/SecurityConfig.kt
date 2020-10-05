@@ -31,6 +31,9 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     lateinit var objectMapper: ObjectMapper
 
     @Autowired
+    lateinit var securityProps: SecurityProps
+
+    @Autowired
     private val tokenAuthenticationFilter: SecurityFilter? = null
 
     @Bean
@@ -52,10 +55,10 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     fun corsConfigurationSource(): CorsConfigurationSource {
         val source = UrlBasedCorsConfigurationSource()
         val config = CorsConfiguration()
-        config.allowCredentials = true;
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
+        config.allowCredentials = securityProps.allowCredentials
+        config.allowedOrigins = securityProps.allowedOrigins
+        config.allowedHeaders = securityProps.allowedHeaders
+        config.allowedMethods = securityProps.allowedMethods
         source.registerCorsConfiguration("/**", config)
         return source
     }
