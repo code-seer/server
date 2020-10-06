@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.firebase.auth.UserRecord
 import com.lms.modern.starter.api.*
+import com.lms.modern.starter.api.properties.FirebaseProps
 import com.lms.modern.starter.model.DemoUserResponse
 import com.lms.modern.starter.model.PageableRequest
 import org.slf4j.Logger
@@ -44,7 +45,7 @@ class SpringSecurityTest: AbstractTestNGSpringContextTests() {
     private val port = 0
 
     @Autowired
-    private lateinit var firebaseConfig: FirebaseConfig
+    private lateinit var firebaseProps: FirebaseProps
 
     @Autowired
     private val restTemplate: TestRestTemplate? = null
@@ -84,7 +85,7 @@ class SpringSecurityTest: AbstractTestNGSpringContextTests() {
     @Test
     fun demo_user_endpoint_200_test() {
         createClaims(userRecord!!, false)
-        idToken = login(firebaseConfig, objectMapper)
+        idToken = login(firebaseProps, objectMapper)
         val response = request()
         assertNotNull(response)
         assertEquals(200, response.statusCodeValue)
@@ -99,7 +100,7 @@ class SpringSecurityTest: AbstractTestNGSpringContextTests() {
     @Test
     fun demo_user_endpoint_403_test() {
         createClaims(userRecord!!, true)
-        idToken = login(firebaseConfig, objectMapper)
+        idToken = login(firebaseProps, objectMapper)
         val response = request()
         assertNotNull(response)
         assertEquals(403, response.statusCodeValue)

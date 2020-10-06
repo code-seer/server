@@ -1,6 +1,7 @@
 package com.lms.modern.starter.api
 
-import com.lms.modern.starter.api.security.SecurityProps
+import com.lms.modern.starter.api.properties.FirebaseProps
+import com.lms.modern.starter.api.properties.SecurityProps
 import com.lms.modern.starter.api.security.createClaims
 import com.lms.modern.starter.api.security.createUser
 import com.lms.modern.starter.api.security.deleteUser
@@ -35,7 +36,7 @@ import org.springframework.dao.InvalidDataAccessResourceUsageException
 @Configuration
 @ComponentScan
 @Import(value = [ SearchConfiguration::class, ServiceConfiguration::class ] )
-@EnableConfigurationProperties(SecurityProps::class)
+@EnableConfigurationProperties(SecurityProps::class, FirebaseProps::class)
 class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)

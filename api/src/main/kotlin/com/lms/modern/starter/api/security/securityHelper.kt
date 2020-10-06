@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.UserRecord
+import com.lms.modern.starter.api.properties.FirebaseProps
 import com.lms.modern.starter.model.UserRole
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.entity.StringEntity
@@ -61,7 +62,7 @@ fun createClaims(userRecord: UserRecord, removeClaim: Boolean) {
  * Once Spring Boot receives the request, its security filter should call the Firebase
  * Admin SDK and verify the token and decode the claims.
  */
-fun login(firebaseConfig: FirebaseConfig, objectMapper: ObjectMapper): String? {
+fun login(firebaseProps: FirebaseProps, objectMapper: ObjectMapper): String? {
     val userRecord = FirebaseAuth.getInstance().getUserByEmail(email)
     val customToken = FirebaseAuth.getInstance().createCustomToken(userRecord.uid)
     val httpClient = HttpClients.createDefault()
@@ -69,7 +70,7 @@ fun login(firebaseConfig: FirebaseConfig, objectMapper: ObjectMapper): String? {
     json.put("token", customToken)
     json.put("returnSecureToken", true)
     val params = StringEntity(json.toString())
-    val request = HttpPost("${firebaseConfig.customTokenVerificationUrl}?key=${firebaseConfig.clientApiKey}")
+    val request = HttpPost("${firebaseProps.customTokenVerificationUrl}?key=${firebaseProps.clientApiKey}")
     request.addHeader("content-type", "application/json")
     request.entity = params;
     val typeRef: TypeReference<HashMap<String, Any>> = object : TypeReference<HashMap<String, Any>>() {}
