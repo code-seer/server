@@ -69,7 +69,6 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 .httpBasic().disable().exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint())
                 .and()
                 .authorizeRequests()
-//                .antMatchers(restSecProps.getAllowedPublicApis().stream().toArray({ _Dummy_.__Array__() })).permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
