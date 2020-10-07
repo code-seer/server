@@ -1,4 +1,4 @@
-package com.lms.modern.starter.api.security
+package com.lms.modern.starter.util.properties
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration

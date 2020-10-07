@@ -7,7 +7,6 @@ then
   archive=codegen-1.0-SNAPSHOT-typescript.zip
 
   cd ../target
-  #git clone git@bitbucket.org:modern-lms/codegen.git
   git clone "${GIT_REMOTE}"
 
 

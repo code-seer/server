@@ -3,6 +3,8 @@ package com.lms.modern.starter.api.controller
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.firebase.auth.UserRecord
 import com.lms.modern.starter.api.*
+import com.lms.modern.starter.util.properties.DemoUserProps
+import com.lms.modern.starter.util.properties.FirebaseProps
 import com.lms.modern.starter.api.security.*
 import com.lms.modern.starter.model.DemoUserResponse
 import com.lms.modern.starter.model.PageableRequest
@@ -39,7 +41,10 @@ class ApiTest: AbstractTestNGSpringContextTests() {
     private val port = 0
 
     @Autowired
-    private lateinit var firebaseConfig: FirebaseConfig
+    private lateinit var firebaseProps: FirebaseProps
+
+    @Autowired
+    private lateinit var demoUserProps: DemoUserProps
 
     @Autowired
     private val restTemplate: TestRestTemplate? = null
@@ -55,13 +60,13 @@ class ApiTest: AbstractTestNGSpringContextTests() {
 
     @BeforeClass
     fun beforeClass() {
-        deleteUser()
-        userRecord = createUser()
+        deleteUser(demoUserProps.email)
+        userRecord = createUser(demoUserProps)
     }
 
     @AfterClass
     fun afterClass() {
-        deleteUser()
+        deleteUser(demoUserProps.email)
     }
 
     @BeforeMethod
@@ -73,7 +78,7 @@ class ApiTest: AbstractTestNGSpringContextTests() {
     @Test
     fun demo_user_endpoint_test() {
         createClaims(userRecord!!, false)
-        idToken = login(firebaseConfig, objectMapper)
+        idToken = login(firebaseProps, objectMapper, demoUserProps.email)
         val response = request()
         assertNotNull(response)
         assertEquals(200, response.statusCodeValue)

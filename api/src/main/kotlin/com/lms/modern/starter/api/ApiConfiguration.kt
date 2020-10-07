@@ -1,6 +1,6 @@
 package com.lms.modern.starter.api
 
-import com.lms.modern.starter.api.security.SecurityProps
+import com.lms.modern.starter.util.properties.DemoUserProps
 import com.lms.modern.starter.api.security.createClaims
 import com.lms.modern.starter.api.security.createUser
 import com.lms.modern.starter.api.security.deleteUser
@@ -15,7 +15,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.event.ApplicationStartedEvent
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.*
 import org.springframework.context.event.EventListener
 import org.springframework.dao.InvalidDataAccessResourceUsageException
@@ -35,7 +34,6 @@ import org.springframework.dao.InvalidDataAccessResourceUsageException
 @Configuration
 @ComponentScan
 @Import(value = [ SearchConfiguration::class, ServiceConfiguration::class ] )
-@EnableConfigurationProperties(SecurityProps::class)
 class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
@@ -44,9 +42,10 @@ class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
     lateinit var flywayMigration: FlywayMigration
 
     @Autowired
-    lateinit var searchApi: SearchApi
+    private lateinit var demoUserProps: DemoUserProps
 
-    private val testIndex = "lms-demo_user-read"
+    @Autowired
+    lateinit var searchApi: SearchApi
 
 
     /**
@@ -64,12 +63,12 @@ class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
      * and the user must be authenticated. Otherwise a 401 response is returned.
      */
     private fun createDemoUser() {
-        deleteUser()
-        createClaims(createUser(), false)
+        deleteUser(demoUserProps.email)
+        createClaims(createUser(demoUserProps), false)
     }
 
     private fun handleMigration() {
-        val countRequest = CountRequest(arrayOf(testIndex), QueryBuilders.matchAllQuery())
+        val countRequest = CountRequest(arrayOf(demoUserProps.esIndex), QueryBuilders.matchAllQuery())
         val response = searchApi.count(countRequest)
         try {
             if (demoUserRepo.findAll().size == 0 || response.count == 0L) {

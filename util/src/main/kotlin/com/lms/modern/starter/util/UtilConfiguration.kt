@@ -6,7 +6,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.lms.modern.starter.util.lib.OffsetDateTimeDeserializer
 import com.lms.modern.starter.util.lib.OffsetDateTimeSerializer
+import com.lms.modern.starter.util.properties.*
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
@@ -14,6 +16,15 @@ import java.time.OffsetDateTime
 
 @Configuration
 @ComponentScan
+@EnableConfigurationProperties(
+        SecurityProps::class,
+        FirebaseProps::class,
+        DemoUserProps::class,
+        DataSourceProps::class,
+        FlywayProps::class,
+        SearchProps::class,
+        SourceProps::class
+)
 class UtilConfiguration {
 
     @Bean
