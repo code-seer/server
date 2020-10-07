@@ -3,7 +3,7 @@ package com.lms.modern.starter.api.security
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
-import com.lms.modern.starter.api.properties.FirebaseProps
+import com.lms.modern.starter.util.properties.FirebaseProps
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.configurationprocessor.json.JSONObject
 import org.springframework.context.annotation.Bean

@@ -39,4 +39,4 @@ import org.springframework.context.annotation.Import
 @Configuration
 @ComponentScan
 @Import(value = [UtilConfiguration::class])
-open class SystemConfigConfiguration
+class SystemConfigConfiguration

@@ -4,6 +4,7 @@ package com.lms.modern.starter.data
 import com.lms.modern.starter.config.SystemConfigConfiguration
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.domain.EntityScan
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.jdbc.DataSourceBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
@@ -19,6 +20,7 @@ import javax.sql.DataSource
 @EnableJpaRepositories
 @EnableTransactionManagement
 @Import(value = [SystemConfigConfiguration::class])
+//@EnableConfigurationProperties()
 open class DataConfiguration(
         @Value("\${spring.datasource.driver-class-name: ---Driver class name not found---}")
         open val driverClassName: String,

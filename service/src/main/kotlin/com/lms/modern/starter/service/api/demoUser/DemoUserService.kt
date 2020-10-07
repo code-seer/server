@@ -6,9 +6,11 @@ import com.lms.modern.starter.model.PageableRequest
 import com.lms.modern.starter.search.api.LmsPage
 import com.lms.modern.starter.search.api.SearchApi
 import com.lms.modern.starter.service.api.util.sortBuilder
+import com.lms.modern.starter.util.properties.DemoUserProps
 import org.elasticsearch.action.search.SearchRequest
 import org.elasticsearch.index.query.QueryBuilders
 import org.elasticsearch.search.builder.SearchSourceBuilder
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 
@@ -16,10 +18,12 @@ import org.springframework.stereotype.Service
 class DemoUserService(private val searchApi: SearchApi,
                       @Qualifier("jacksonObjectMapper")
                       private val objectMapper: ObjectMapper) {
-    private val demoIndex = "lms-demo_user-read"
+
+    @Autowired
+    lateinit var demoUserProps: DemoUserProps
 
     fun findAllUsers(pageableRequest: PageableRequest): LmsPage<DemoUserDto> {
-        val searchRequest = SearchRequest(demoIndex)
+        val searchRequest = SearchRequest(demoUserProps.esIndex)
         val sourceBuilder =  SearchSourceBuilder()
         sourceBuilder
                 .size(pageableRequest.limit)

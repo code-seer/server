@@ -1,8 +1,8 @@
 package com.lms.modern.starter.api
 
-import com.lms.modern.starter.api.properties.DemoUserProps
-import com.lms.modern.starter.api.properties.FirebaseProps
-import com.lms.modern.starter.api.properties.SecurityProps
+import com.lms.modern.starter.util.properties.DemoUserProps
+import com.lms.modern.starter.util.properties.FirebaseProps
+import com.lms.modern.starter.util.properties.SecurityProps
 import com.lms.modern.starter.api.security.createClaims
 import com.lms.modern.starter.api.security.createUser
 import com.lms.modern.starter.api.security.deleteUser
@@ -51,8 +51,6 @@ class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
     @Autowired
     lateinit var searchApi: SearchApi
 
-    private val testIndex = "lms-demo_user-read"
-
 
     /**
      * TODO: Run the comparison on all tables and indices that should be seeded.
@@ -74,7 +72,7 @@ class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
     }
 
     private fun handleMigration() {
-        val countRequest = CountRequest(arrayOf(testIndex), QueryBuilders.matchAllQuery())
+        val countRequest = CountRequest(arrayOf(demoUserProps.esIndex), QueryBuilders.matchAllQuery())
         val response = searchApi.count(countRequest)
         try {
             if (demoUserRepo.findAll().size == 0 || response.count == 0L) {

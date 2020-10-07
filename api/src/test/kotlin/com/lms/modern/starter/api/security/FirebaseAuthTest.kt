@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.UserRecord
 import com.lms.modern.starter.api.*
-import com.lms.modern.starter.api.properties.DemoUserProps
+import com.lms.modern.starter.util.properties.DemoUserProps
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

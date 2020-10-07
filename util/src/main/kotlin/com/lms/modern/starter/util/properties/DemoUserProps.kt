@@ -1,4 +1,4 @@
-package com.lms.modern.starter.api.properties
+package com.lms.modern.starter.util.properties
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration
@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 @ConfigurationProperties("demouser")
 class DemoUserProps {
+    lateinit var esIndex: String
     lateinit var displayName: String
     lateinit var email: String
     lateinit var password: String

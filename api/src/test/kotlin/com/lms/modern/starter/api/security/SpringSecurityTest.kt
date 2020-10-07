@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.firebase.auth.UserRecord
 import com.lms.modern.starter.api.*
-import com.lms.modern.starter.api.properties.DemoUserProps
-import com.lms.modern.starter.api.properties.FirebaseProps
+import com.lms.modern.starter.util.properties.DemoUserProps
+import com.lms.modern.starter.util.properties.FirebaseProps
 import com.lms.modern.starter.model.DemoUserResponse
 import com.lms.modern.starter.model.PageableRequest
 import org.slf4j.Logger
