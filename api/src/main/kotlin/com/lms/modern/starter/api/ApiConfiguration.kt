@@ -1,5 +1,6 @@
 package com.lms.modern.starter.api
 
+import com.lms.modern.starter.api.properties.DemoUserProps
 import com.lms.modern.starter.api.properties.FirebaseProps
 import com.lms.modern.starter.api.properties.SecurityProps
 import com.lms.modern.starter.api.security.createClaims
@@ -36,13 +37,16 @@ import org.springframework.dao.InvalidDataAccessResourceUsageException
 @Configuration
 @ComponentScan
 @Import(value = [ SearchConfiguration::class, ServiceConfiguration::class ] )
-@EnableConfigurationProperties(SecurityProps::class, FirebaseProps::class)
+@EnableConfigurationProperties(SecurityProps::class, FirebaseProps::class, DemoUserProps::class)
 class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
 
     @Autowired
     lateinit var flywayMigration: FlywayMigration
+
+    @Autowired
+    private lateinit var demoUserProps: DemoUserProps
 
     @Autowired
     lateinit var searchApi: SearchApi
@@ -65,8 +69,8 @@ class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
      * and the user must be authenticated. Otherwise a 401 response is returned.
      */
     private fun createDemoUser() {
-        deleteUser()
-        createClaims(createUser(), false)
+        deleteUser(demoUserProps.email)
+        createClaims(createUser(demoUserProps), false)
     }
 
     private fun handleMigration() {

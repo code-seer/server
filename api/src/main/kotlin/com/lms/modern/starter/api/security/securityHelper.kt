@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.UserRecord
+import com.lms.modern.starter.api.properties.DemoUserProps
 import com.lms.modern.starter.api.properties.FirebaseProps
 import com.lms.modern.starter.model.UserRole
 import org.apache.http.client.methods.HttpPost
@@ -13,25 +14,19 @@ import org.apache.http.impl.client.HttpClients
 import org.springframework.boot.configurationprocessor.json.JSONObject
 import java.util.HashMap
 
-const val displayName = "LMS Demo User"
-const val email = "bizmelesse@gmail.com"
-const val password = "demouser"
-const val phoneNumber = "+11234567890"
-const val photoUrl = "https://avatars0.githubusercontent.com/u/19600025?s=460&u=0743d9d8e8ebefe36990ad498ede9fc0df96e18f&v=4"
-
-fun createUser(): UserRecord {
+fun createUser(demoUserProps: DemoUserProps): UserRecord {
     val request: UserRecord.CreateRequest = UserRecord.CreateRequest()
-            .setEmail(email)
+            .setEmail(demoUserProps.email)
             .setEmailVerified(false)
-            .setPassword(password)
-            .setPhoneNumber(phoneNumber)
-            .setDisplayName(displayName)
-            .setPhotoUrl(photoUrl)
+            .setPassword(demoUserProps.password)
+            .setPhoneNumber(demoUserProps.phoneNumber)
+            .setDisplayName(demoUserProps.displayName)
+            .setPhotoUrl(demoUserProps.photoUrl)
             .setDisabled(false)
     return FirebaseAuth.getInstance().createUser(request)
 }
 
-fun deleteUser() {
+fun deleteUser(email: String) {
     try {
         FirebaseAuth.getInstance().deleteUser(FirebaseAuth.getInstance().getUserByEmail(email).uid)
     } catch (e: FirebaseAuthException) {
@@ -62,7 +57,7 @@ fun createClaims(userRecord: UserRecord, removeClaim: Boolean) {
  * Once Spring Boot receives the request, its security filter should call the Firebase
  * Admin SDK and verify the token and decode the claims.
  */
-fun login(firebaseProps: FirebaseProps, objectMapper: ObjectMapper): String? {
+fun login(firebaseProps: FirebaseProps, objectMapper: ObjectMapper, email: String): String? {
     val userRecord = FirebaseAuth.getInstance().getUserByEmail(email)
     val customToken = FirebaseAuth.getInstance().createCustomToken(userRecord.uid)
     val httpClient = HttpClients.createDefault()
