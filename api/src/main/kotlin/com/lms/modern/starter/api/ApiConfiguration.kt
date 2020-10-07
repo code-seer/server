@@ -1,8 +1,6 @@
 package com.lms.modern.starter.api
 
 import com.lms.modern.starter.util.properties.DemoUserProps
-import com.lms.modern.starter.util.properties.FirebaseProps
-import com.lms.modern.starter.util.properties.SecurityProps
 import com.lms.modern.starter.api.security.createClaims
 import com.lms.modern.starter.api.security.createUser
 import com.lms.modern.starter.api.security.deleteUser
@@ -17,7 +15,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.event.ApplicationStartedEvent
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.*
 import org.springframework.context.event.EventListener
 import org.springframework.dao.InvalidDataAccessResourceUsageException
@@ -37,7 +34,6 @@ import org.springframework.dao.InvalidDataAccessResourceUsageException
 @Configuration
 @ComponentScan
 @Import(value = [ SearchConfiguration::class, ServiceConfiguration::class ] )
-@EnableConfigurationProperties(SecurityProps::class, FirebaseProps::class, DemoUserProps::class)
 class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)

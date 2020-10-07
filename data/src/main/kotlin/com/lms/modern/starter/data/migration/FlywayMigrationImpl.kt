@@ -1,7 +1,10 @@
 package com.lms.modern.starter.data.migration
 
-import com.lms.modern.starter.data.DataConfiguration
 import com.lms.modern.starter.util.lib.line
+import com.lms.modern.starter.util.properties.DataSourceProps
+import com.lms.modern.starter.util.properties.FlywayProps
+import com.lms.modern.starter.util.properties.SourceProps
+import com.lms.modern.starter.util.properties.SpringApplicationProps
 import org.flywaydb.core.Flyway
 import org.hibernate.search.mapper.orm.Search
 import org.slf4j.Logger
@@ -18,7 +21,10 @@ import javax.persistence.PersistenceContext
 @Transactional
 @Component
 open class FlywayMigrationImpl(
-        private val dataConfig: DataConfiguration
+        private val dataSourceProps: DataSourceProps,
+        private val sourceProps: SourceProps,
+        private val springAppProps: SpringApplicationProps,
+        private val flywayProps: FlywayProps
 ): FlywayMigration {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
@@ -29,24 +35,24 @@ open class FlywayMigrationImpl(
 
     private val flyway = Flyway
             .configure()
-            .schemas(dataConfig.schemas)
+            .schemas(flywayProps.schemas)
             .validateOnMigrate(true)
             .baselineOnMigrate(true)
-            .dataSource(dataConfig.datasourceUrl,
-                    dataConfig.datasourceUsername,
-                    dataConfig.datasourcePassword)
+            .dataSource(dataSourceProps.url,
+                    dataSourceProps.username,
+                    dataSourceProps.password)
 
     override fun init() {
         log.info("  +$line")
         log.info("  | Flyway Schema Migration")
         log.info("  +$line")
         clean()
-        flyway.locations(dataConfig.flywaySchemaLocation).load().migrate()
+        flyway.locations(flywayProps.locations).load().migrate()
         indexData()
     }
 
     override fun clean() {
-        if (dataConfig.profile == "dev" || dataConfig.applicationName == "starter") {
+        if (sourceProps.profile == "dev" || springAppProps.name == "starter") {
             log.info(String.format("  | %-" + maxNameLength.toString() + "s : %s", "Dropping database", "true"))
             Flyway(flyway).clean()
         } else {

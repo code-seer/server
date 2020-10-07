@@ -7,8 +7,6 @@ import org.apache.http.HttpHost
 import org.elasticsearch.client.RestClient
 import org.elasticsearch.client.RestHighLevelClient
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
@@ -20,7 +18,6 @@ import org.springframework.context.annotation.Import
 @Import(value = [
     DataConfiguration::class,
     UtilConfiguration::class])
-@EnableConfigurationProperties(SearchProps::class)
 class SearchConfiguration {
 
     @Autowired
