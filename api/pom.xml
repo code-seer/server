@@ -3,7 +3,7 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.lms.modern.starter</groupId>
+		<groupId>io.learnet.starter</groupId>
 		<artifactId>root</artifactId>
 		<version>1.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
@@ -16,12 +16,12 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.lms.modern.starter</groupId>
+			<groupId>io.learnet.starter</groupId>
 			<artifactId>search</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.lms.modern.starter</groupId>
+			<groupId>io.learnet.starter</groupId>
 			<artifactId>service</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -135,7 +135,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<finalName>lms-starter-dist</finalName>
+					<finalName>learnet-starter-dist</finalName>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -152,7 +152,7 @@
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>com.lms.modern.starter</groupId>
+									<groupId>io.learnet.starter</groupId>
 									<artifactId>codegen</artifactId>
 									<type>zip</type>
 									<classifier>api</classifier>

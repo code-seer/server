@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.lms.modern.starter</groupId>
+		<groupId>io.learnet.starter</groupId>
 		<artifactId>root</artifactId>
 		<version>1.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
@@ -48,8 +48,8 @@
 							<inputSpec>${project.basedir}/src/main/resources/openApi/openApi.yaml</inputSpec>
 							<generatorName>spring</generatorName>
 							<configOptions>
-								<modelPackage>com.lms.modern.starter.model</modelPackage>
-								<apiPackage>com.lms.modern.starter.api</apiPackage>
+								<modelPackage>io.learnet.starter.model</modelPackage>
+								<apiPackage>io.learnet.starter.api</apiPackage>
 								<serializableModel>true</serializableModel>
 								<interfaceOnly>true</interfaceOnly>
 								<swaggerAnnotations>false</swaggerAnnotations>
