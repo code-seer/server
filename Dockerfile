@@ -1,10 +1,10 @@
-FROM gcr.io/modern-lms/lms-baseimage
+FROM gcr.io/learnet/learnet-base
 
-COPY api/target/lms-starter-dist.jar .
+COPY api/target/learnet-starter-dist.jar .
 ADD entrypoint.sh entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]
 
 EXPOSE 7080
 
-CMD ["java", "-jar", "lms-starter-dist.jar"]
+CMD ["java", "-jar", "learnet-starter-dist.jar"]

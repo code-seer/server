@@ -9,7 +9,7 @@ SPRING_PROFILES_ACTIVE=dev
 SPRING_CLOUD_CONFIG_URI=http://localhost:8888
 SPRING_CLOUD_CONFIG_ENABLED=true
 SPRING_CLOUD_CONFIG_FAIL_FAST=true
-GIT_REMOTE=git@bitbucket.org:modern-lms/codegen.git
+GIT_REMOTE=git@bitbucket.org:learnet-app/codegen.git
 COMMIT_MESSAGE="Add Starter Project codegen files"
 ARTIFACT_DIR=artifacts/starter
 
