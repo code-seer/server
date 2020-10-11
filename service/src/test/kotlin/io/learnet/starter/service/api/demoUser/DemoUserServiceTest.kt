@@ -14,7 +14,6 @@ import java.lang.reflect.Method
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-
 @SpringBootTest(classes = [ServiceTestConfiguration::class])
 class DemoUserServiceTest: AbstractTestNGSpringContextTests() {
 
