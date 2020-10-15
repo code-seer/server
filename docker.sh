@@ -17,10 +17,10 @@ mvn clean install -D skipTests
 docker pull gcr.io/learnet/learnet-base:latest
 #
 ## Build docker image
-docker build -t learnet-starter .
+docker build -t learnet-account .
 #
 ### Tag image
-docker tag learnet-starter gcr.io/learnet/learnet-starter:latest
+docker tag learnet-account gcr.io/learnet/learnet-account:latest
 #
 ## Push image
-docker push gcr.io/learnet/learnet-starter:latest
+docker push gcr.io/learnet/learnet-account:latest
