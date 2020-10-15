@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>io.learnet.starter</groupId>
+		<groupId>io.learnet.account</groupId>
 		<artifactId>root</artifactId>
 		<version>1.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
@@ -22,17 +22,17 @@
 
     <dependencies>
 		<dependency>
-			<groupId>io.learnet.starter</groupId>
+			<groupId>io.learnet.account</groupId>
 			<artifactId>model</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>io.learnet.starter</groupId>
+			<groupId>io.learnet.account</groupId>
 			<artifactId>config</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>io.learnet.starter</groupId>
+			<groupId>io.learnet.account</groupId>
 			<artifactId>util</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
@@ -131,7 +131,7 @@
 						<argument>-accessType</argument><argument>fields</argument>
 						<argument>-metadata</argument><argument>none</argument>
 						<argument>-useGenericCollections</argument><argument>true</argument>
-						<argument>-package</argument><argument>io.learnet.starter.data.entity</argument>
+						<argument>-package</argument><argument>io.learnet.account.data.entity</argument>
 						<argument>-innerIdentityClasses</argument><argument>true</argument>
 						<argument>-useBuiltinIdentityClass</argument><argument>false</argument>
 						<argument>-primaryKeyOnJoin</argument><argument>false</argument>
