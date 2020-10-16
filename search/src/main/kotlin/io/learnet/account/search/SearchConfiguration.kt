@@ -1,6 +1,6 @@
 package io.learnet.account.search
 
-import io.learnet.acount.data.DataConfiguration
+import io.learnet.account.data.DataConfiguration
 import io.learnet.account.util.UtilConfiguration
 import io.learnet.account.util.properties.SearchProps
 import org.apache.http.HttpHost

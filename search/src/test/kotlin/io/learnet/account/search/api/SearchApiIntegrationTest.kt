@@ -2,7 +2,7 @@ package io.learnet.account.search.api
 
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.learnet.acount.data.migration.FlywayMigration
+import io.learnet.account.data.migration.FlywayMigration
 import io.learnet.account.model.DemoUserDto
 import io.learnet.account.search.SearchTestConfiguration
 import org.elasticsearch.action.search.SearchRequest
