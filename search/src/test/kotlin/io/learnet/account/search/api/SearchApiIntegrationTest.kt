@@ -2,7 +2,7 @@ package io.learnet.account.search.api
 
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.learnet.acount.data.migration.FlywayMigration
+import io.learnet.account.data.migration.FlywayMigration
 import io.learnet.account.model.DemoUserDto
 import io.learnet.account.search.SearchTestConfiguration
 import org.elasticsearch.action.search.SearchRequest
@@ -47,7 +47,7 @@ class SearchApiIntegrationTest: AbstractTestNGSpringContextTests() {
     @Qualifier("jacksonObjectMapper")
     lateinit var objectMapper: ObjectMapper
 
-    private val testIndex = "lms-demo_user-read"
+    private val testIndex = "learnet-demo_user-read"
 
     /**
      * Re-index Elasticsearch and sync with Postgres

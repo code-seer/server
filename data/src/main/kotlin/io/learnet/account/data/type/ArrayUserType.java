@@ -1,4 +1,4 @@
-package io.learnet.acount.data.type;
+package io.learnet.account.data.type;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;

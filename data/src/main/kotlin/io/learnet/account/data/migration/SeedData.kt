@@ -1,8 +1,8 @@
-package io.learnet.acount.data.migration
+package io.learnet.account.data.migration
 
 import com.github.javafaker.Faker
-import io.learnet.acount.data.entity.DemoUserEntity
-import io.learnet.acount.data.repo.DemoUserRepo
+import io.learnet.account.data.entity.DemoUserEntity
+import io.learnet.account.data.repo.DemoUserRepo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component

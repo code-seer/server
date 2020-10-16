@@ -1,4 +1,4 @@
-package io.learnet.acount.data.entity
+package io.learnet.account.data.entity
 
 import org.hibernate.annotations.Type
 import org.hibernate.search.engine.backend.types.Projectable

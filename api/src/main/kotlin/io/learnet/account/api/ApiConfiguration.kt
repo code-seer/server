@@ -4,8 +4,8 @@ import io.learnet.account.util.properties.DemoUserProps
 import io.learnet.account.api.security.createClaims
 import io.learnet.account.api.security.createUser
 import io.learnet.account.api.security.deleteUser
-import io.learnet.acount.data.migration.FlywayMigration
-import io.learnet.acount.data.repo.DemoUserRepo
+import io.learnet.account.data.migration.FlywayMigration
+import io.learnet.account.data.repo.DemoUserRepo
 import io.learnet.account.search.SearchConfiguration
 import io.learnet.account.search.api.SearchApi
 import io.learnet.account.service.ServiceConfiguration

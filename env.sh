@@ -1,7 +1,7 @@
 #!/bin/sh
 
 export SPRING_APPLICATION_NAME=account
-export SPRING_PROFILES_ACTIVE=default
+export SPRING_PROFILES_ACTIVE=dev
 export SPRING_CLOUD_CONFIG_URI=http://localhost:8888
 export SERVICE_DISCOVERY_HOST=localhost
 export SERVICE_DISCOVERY_PORT=8761
