@@ -1,4 +1,4 @@
-package io.learnet.acount.data.migration
+package io.learnet.account.data.migration
 
 interface FlywayMigration {
     /**

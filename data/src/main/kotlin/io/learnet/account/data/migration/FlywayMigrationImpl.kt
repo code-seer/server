@@ -1,4 +1,4 @@
-package io.learnet.acount.data.migration
+package io.learnet.account.data.migration
 
 import io.learnet.account.util.lib.line
 import io.learnet.account.util.properties.DataSourceProps

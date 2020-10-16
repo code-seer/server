@@ -1,7 +1,7 @@
 package io.learnet.account.service.api.demoUser
 
 
-import io.learnet.acount.data.migration.FlywayMigration
+import io.learnet.account.data.migration.FlywayMigration
 import io.learnet.account.model.PageableRequest
 import io.learnet.account.service.ServiceTestConfiguration
 import org.slf4j.Logger
