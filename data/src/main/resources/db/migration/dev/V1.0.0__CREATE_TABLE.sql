@@ -11,11 +11,6 @@
 
 -- COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
 
---
--- Name: status; Type: TABLE; Schema: public; Owner: -; Tablespace:
---
--- DROP TABLE IF EXISTS public.status CASCADE;
-
 CREATE TABLE public.demo_user (
     id BIGSERIAL PRIMARY KEY NOT NULL,
     first_name varchar(255),
