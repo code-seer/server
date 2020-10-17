@@ -7,9 +7,10 @@ CREATE TABLE public.user_profile (
     gender varchar(8),
     email varchar(255),
     is_new_user boolean,
+    avatar varchar(255),
     home_phone varchar(255),
     mobile_phone varchar(255),
-    date_of_birth timestamptz,
+    date_of_birth date,
     created_dt timestamptz,
     updated_dt timestamptz,
     _uuid uuid DEFAULT uuid_generate_v4 ()
