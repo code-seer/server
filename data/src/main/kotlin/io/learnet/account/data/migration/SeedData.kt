@@ -2,11 +2,15 @@ package io.learnet.account.data.migration
 
 import com.github.javafaker.Faker
 import io.learnet.account.data.entity.DemoUserEntity
+import io.learnet.account.data.entity.UserProfileEntity
 import io.learnet.account.data.repo.DemoUserRepo
+import io.learnet.account.data.repo.UserProfileRepo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.time.ZoneId
 import java.util.*
 import javax.annotation.PostConstruct
 
@@ -16,7 +20,7 @@ import javax.annotation.PostConstruct
  * tests would fail. We would like to avoid this by hard-coding a flag in the code.
  */
 @Component
-class SeedData(private val demoUserRepo: DemoUserRepo, private val flyway: FlywayMigration) {
+class SeedData(private val userProfileRepo: UserProfileRepo, private val flyway: FlywayMigration) {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
     private val rowcount = 100
@@ -27,7 +31,7 @@ class SeedData(private val demoUserRepo: DemoUserRepo, private val flyway: Flywa
     // This operation is dangerous as it would most likely break all integration
     // tests.
     //=======================================================================
-    private val generateData = false
+    private val generateData = true
 
     @PostConstruct
     fun seed() {
@@ -35,31 +39,35 @@ class SeedData(private val demoUserRepo: DemoUserRepo, private val flyway: Flywa
             flyway.clean()
             flyway.init()
             log.info("Generating seed data")
-            seedDemoUser()
+            seedUserProfile()
         }
     }
 
-    private fun seedDemoUser() {
-        log.info("Generating seed data for demo_user")
+    private fun seedUserProfile() {
+        log.info("Generating seed data for user_profile")
         val faker = Faker()
         for (i in 0 until rowcount) {
-            val entity = DemoUserEntity()
+            val entity = UserProfileEntity()
             val now = OffsetDateTime.now()
             entity.firstName = faker.name().firstName()
             entity.lastName = faker.name().lastName()
-            entity.city = faker.address().city()
-            entity.state = faker.address().state()
-            entity.zip = faker.address().zipCode()
-            entity.address = faker.address().fullAddress()
-            entity.favorites = arrayOf(
-                    faker.starTrek().specie(),
-                    faker.starTrek().specie(),
-                    faker.starTrek().specie())
+            entity.middleName = faker.name().name()
+            entity.title = faker.name().title()
+            entity.gender = arrayListOf<String>("M", "F").random()
+            entity.email = faker.internet().emailAddress()
+            entity.isNewUser = true
+            entity.homePhone = faker.phoneNumber().phoneNumber()
+            entity.mobilePhone = faker.phoneNumber().cellPhone()
+            entity.dateOfBirth = faker.date()
+                    .birthday()
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate()
             entity.avatar = faker.avatar().image()
             entity.createdDt = now
             entity.updatedDt = now
             entity.uuid = UUID.randomUUID()
-            demoUserRepo.save(entity)
+            userProfileRepo.save(entity)
         }
     }
 }
