@@ -32,6 +32,9 @@ open class UserProfileRepoTest: AbstractTestNGSpringContextTests() {
     lateinit var addressRepo: AddressRepo
 
     @Autowired
+    lateinit var socialRepo: SocialRepo
+
+    @Autowired
     lateinit var flywayMigration: FlywayMigration
 
     @BeforeClass
@@ -44,7 +47,7 @@ open class UserProfileRepoTest: AbstractTestNGSpringContextTests() {
         log.info("Testing ${method.name}")
     }
 
-    @Test(priority = 0)
+    @Test//(priority = 0)
     open fun find_all_user_profiles_test() {
         var response = userProfileRepo.findAll()
         assertNotNull(response)
@@ -52,7 +55,7 @@ open class UserProfileRepoTest: AbstractTestNGSpringContextTests() {
         assertEquals(100, response.size)
     }
 
-    @Test(priority = 0)
+    @Test//(priority = 0)
     open fun find_all_addresses_test() {
         var response = addressRepo.findAll()
         assertNotNull(response)
@@ -64,5 +67,19 @@ open class UserProfileRepoTest: AbstractTestNGSpringContextTests() {
         assertEquals(false, profileResponse.isEmpty())
         assertEquals(100, profileResponse.size)
         assertNotNull(profileResponse[0].address)
+    }
+
+    @Test//(priority = 0)
+    open fun find_all_social_test() {
+        var response = socialRepo.findAll()
+        assertNotNull(response)
+        assertEquals(false, response.isEmpty())
+        assertEquals(100, response.size)
+
+        val profileResponse = userProfileRepo.findAll()
+        assertNotNull(profileResponse)
+        assertEquals(false, profileResponse.isEmpty())
+        assertEquals(100, profileResponse.size)
+        assertNotNull(profileResponse[0].social)
     }
 }
