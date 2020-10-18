@@ -1,19 +1,11 @@
 package io.learnet.account.data.migration
 
 import com.github.javafaker.Faker
-import io.learnet.account.data.entity.AddressEntity
-import io.learnet.account.data.entity.DemoUserEntity
-import io.learnet.account.data.entity.SocialEntity
-import io.learnet.account.data.entity.UserProfileEntity
-import io.learnet.account.data.repo.AddressRepo
-import io.learnet.account.data.repo.DemoUserRepo
-import io.learnet.account.data.repo.SocialRepo
-import io.learnet.account.data.repo.UserProfileRepo
+import io.learnet.account.data.entity.*
+import io.learnet.account.data.repo.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
-import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.util.*
@@ -29,6 +21,8 @@ class SeedData(
         private val userProfileRepo: UserProfileRepo,
         private val addressRepo: AddressRepo,
         private val socialRepo: SocialRepo,
+        private val securityRepo: SecurityRepo,
+        private val userSettingsRepo: UserSettingsRepo,
         private val flyway: FlywayMigration) {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
@@ -40,7 +34,7 @@ class SeedData(
     // This operation is dangerous as it would most likely break all integration
     // tests.
     //=======================================================================
-    private val generateData = true
+    private val generateData = false
 
     @PostConstruct
     fun seed() {
@@ -60,6 +54,8 @@ class SeedData(
             val now = OffsetDateTime.now()
             entity.address = getAddress()
             entity.social = getSocial()
+            entity.security = getSecurity()
+            entity.userSettings = getUserSettings()
             entity.firstName = faker.name().firstName()
             entity.lastName = faker.name().lastName()
             entity.middleName = faker.name().firstName()
@@ -80,6 +76,30 @@ class SeedData(
             entity.uuid = UUID.randomUUID()
             userProfileRepo.save(entity)
         }
+    }
+
+    private fun getUserSettings(): UserSettingsEntity? {
+        val faker = Faker()
+        val entity = UserSettingsEntity()
+        val now = OffsetDateTime.now()
+        entity.language = faker.starTrek().specie()
+        entity.timezone = faker.address().timeZone()
+        entity.createdDt = now
+        entity.updatedDt = now
+        entity.uuid = UUID.randomUUID()
+        return userSettingsRepo.save(entity)
+
+    }
+
+    private fun getSecurity(): SecurityEntity? {
+        val entity = SecurityEntity()
+        val now = OffsetDateTime.now()
+        entity.roles = arrayOf("ROLE_ADMIN", "ROLE_DEMO", "ROLE_USER")
+        entity.createdDt = now
+        entity.updatedDt = now
+        entity.uuid = UUID.randomUUID()
+        return securityRepo.save(entity)
+
     }
 
     private fun getSocial(): SocialEntity? {
