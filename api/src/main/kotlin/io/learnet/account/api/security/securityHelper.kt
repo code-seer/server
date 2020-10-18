@@ -71,6 +71,5 @@ fun login(firebaseProps: FirebaseProps, objectMapper: ObjectMapper, email: Strin
     val typeRef: TypeReference<HashMap<String, Any>> = object : TypeReference<HashMap<String, Any>>() {}
     val map = objectMapper.readValue(httpClient.execute(request).entity.content, typeRef)
     httpClient.close()
-    val idToken = map["idToken"] as String?
-    return idToken
+    return map["idToken"] as String?
 }
