@@ -2,9 +2,6 @@ package io.learnet.account.data.entity
 
 import org.hibernate.search.engine.backend.types.Projectable
 import org.hibernate.search.engine.backend.types.Sortable
-import org.hibernate.search.mapper.pojo.automaticindexing.ReindexOnUpdate
-import org.hibernate.search.mapper.pojo.extractor.builtin.BuiltinContainerExtractors
-import org.hibernate.search.mapper.pojo.extractor.mapping.annotation.ContainerExtraction
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.*
 import java.io.Serializable
 import java.time.LocalDate
@@ -31,6 +28,14 @@ open class UserProfileEntity: Serializable {
         @IndexedEmbedded
         @OneToOne
         open var social: SocialEntity? = null
+
+        @IndexedEmbedded
+        @OneToOne
+        open var security: SecurityEntity? = null
+
+        @IndexedEmbedded
+        @OneToOne
+        open var userSettings: UserSettingsEntity? = null
 
         @Basic
         @FullTextField(analyzer = "english", projectable = Projectable.YES)
