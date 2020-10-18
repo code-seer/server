@@ -3,9 +3,11 @@ package io.learnet.account.data.migration
 import com.github.javafaker.Faker
 import io.learnet.account.data.entity.AddressEntity
 import io.learnet.account.data.entity.DemoUserEntity
+import io.learnet.account.data.entity.SocialEntity
 import io.learnet.account.data.entity.UserProfileEntity
 import io.learnet.account.data.repo.AddressRepo
 import io.learnet.account.data.repo.DemoUserRepo
+import io.learnet.account.data.repo.SocialRepo
 import io.learnet.account.data.repo.UserProfileRepo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -26,6 +28,7 @@ import javax.annotation.PostConstruct
 class SeedData(
         private val userProfileRepo: UserProfileRepo,
         private val addressRepo: AddressRepo,
+        private val socialRepo: SocialRepo,
         private val flyway: FlywayMigration) {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
@@ -56,6 +59,7 @@ class SeedData(
             val entity = UserProfileEntity()
             val now = OffsetDateTime.now()
             entity.address = getAddress()
+            entity.social = getSocial()
             entity.firstName = faker.name().firstName()
             entity.lastName = faker.name().lastName()
             entity.middleName = faker.name().firstName()
@@ -78,18 +82,37 @@ class SeedData(
         }
     }
 
+    private fun getSocial(): SocialEntity? {
+        val faker = Faker()
+        val entity = SocialEntity()
+        val now = OffsetDateTime.now()
+        entity.facebook = faker.internet().url()
+        entity.twitter = faker.name().username()
+        entity.linkedin = faker.internet().url()
+        entity.github = faker.internet().url()
+        entity.youtube = faker.internet().url()
+        entity.instagram = faker.name().username()
+        entity.snapchat = faker.name().username()
+        entity.whatsapp = faker.phoneNumber().phoneNumber()
+        entity.website = faker.internet().url()
+        entity.createdDt = now
+        entity.updatedDt = now
+        entity.uuid = UUID.randomUUID()
+        return socialRepo.save(entity)
+    }
+
     private fun getAddress(): AddressEntity {
         val faker = Faker()
-            val entity = AddressEntity()
-            val now = OffsetDateTime.now()
-            entity.country = faker.address().country()
-            entity.state = faker.address().stateAbbr()
-            entity.city = faker.address().city()
-            entity.postalCode = faker.address().zipCode()
-            entity.address1 = faker.address().fullAddress()
-            entity.createdDt = now
-            entity.updatedDt = now
-            entity.uuid = UUID.randomUUID()
-            return addressRepo.save(entity)
+        val entity = AddressEntity()
+        val now = OffsetDateTime.now()
+        entity.country = faker.address().country()
+        entity.state = faker.address().stateAbbr()
+        entity.city = faker.address().city()
+        entity.postalCode = faker.address().zipCode()
+        entity.address1 = faker.address().fullAddress()
+        entity.createdDt = now
+        entity.updatedDt = now
+        entity.uuid = UUID.randomUUID()
+        return addressRepo.save(entity)
     }
 }
