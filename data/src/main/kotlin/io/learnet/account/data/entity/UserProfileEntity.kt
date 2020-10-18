@@ -2,10 +2,10 @@ package io.learnet.account.data.entity
 
 import org.hibernate.search.engine.backend.types.Projectable
 import org.hibernate.search.engine.backend.types.Sortable
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField
+import org.hibernate.search.mapper.pojo.automaticindexing.ReindexOnUpdate
+import org.hibernate.search.mapper.pojo.extractor.builtin.BuiltinContainerExtractors
+import org.hibernate.search.mapper.pojo.extractor.mapping.annotation.ContainerExtraction
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.*
 import java.io.Serializable
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -23,6 +23,17 @@ open class UserProfileEntity: Serializable {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id", columnDefinition = "bigserial")
         open var id: Long? = null
+
+
+//        @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
+//        @AssociationInverseSide(
+//                extraction = ContainerExtraction(BuiltinContainerExtractors.MAP_KEY),
+//                inversePath = ObjectPath(PropertyValue(propertyName = "address" ))
+//        )
+        @IndexedEmbedded
+        @OneToOne//(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+//        @JoinColumn(name = "id", columnDefinition = "int8")
+        open var address: AddressEntity? = null
 
         @Basic
         @FullTextField(analyzer = "english", projectable = Projectable.YES)

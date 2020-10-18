@@ -1,12 +1,15 @@
 package io.learnet.account.data.migration
 
 import com.github.javafaker.Faker
+import io.learnet.account.data.entity.AddressEntity
 import io.learnet.account.data.entity.DemoUserEntity
 import io.learnet.account.data.entity.UserProfileEntity
+import io.learnet.account.data.repo.AddressRepo
 import io.learnet.account.data.repo.DemoUserRepo
 import io.learnet.account.data.repo.UserProfileRepo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -20,7 +23,10 @@ import javax.annotation.PostConstruct
  * tests would fail. We would like to avoid this by hard-coding a flag in the code.
  */
 @Component
-class SeedData(private val userProfileRepo: UserProfileRepo, private val flyway: FlywayMigration) {
+class SeedData(
+        private val userProfileRepo: UserProfileRepo,
+        private val addressRepo: AddressRepo,
+        private val flyway: FlywayMigration) {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
     private val rowcount = 100
@@ -49,9 +55,10 @@ class SeedData(private val userProfileRepo: UserProfileRepo, private val flyway:
         for (i in 0 until rowcount) {
             val entity = UserProfileEntity()
             val now = OffsetDateTime.now()
+            entity.address = getAddress()
             entity.firstName = faker.name().firstName()
             entity.lastName = faker.name().lastName()
-            entity.middleName = faker.name().name()
+            entity.middleName = faker.name().firstName()
             entity.title = faker.name().title()
             entity.gender = arrayListOf<String>("M", "F").random()
             entity.email = faker.internet().emailAddress()
@@ -69,5 +76,20 @@ class SeedData(private val userProfileRepo: UserProfileRepo, private val flyway:
             entity.uuid = UUID.randomUUID()
             userProfileRepo.save(entity)
         }
+    }
+
+    private fun getAddress(): AddressEntity {
+        val faker = Faker()
+            val entity = AddressEntity()
+            val now = OffsetDateTime.now()
+            entity.country = faker.address().country()
+            entity.state = faker.address().stateAbbr()
+            entity.city = faker.address().city()
+            entity.postalCode = faker.address().zipCode()
+            entity.address1 = faker.address().fullAddress()
+            entity.createdDt = now
+            entity.updatedDt = now
+            entity.uuid = UUID.randomUUID()
+            return addressRepo.save(entity)
     }
 }
