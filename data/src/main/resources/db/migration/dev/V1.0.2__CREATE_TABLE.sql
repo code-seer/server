@@ -1,5 +1,6 @@
 CREATE TABLE public.user_profile (
     id BIGSERIAL PRIMARY KEY NOT NULL,
+    address_id bigint,
     first_name varchar(255),
     last_name varchar(255),
     middle_name varchar(255),
@@ -29,8 +30,7 @@ CREATE TABLE public.address (
       user_profile_id bigint,
       created_dt timestamptz,
       updated_dt timestamptz,
-      _uuid uuid DEFAULT uuid_generate_v4 (),
-      FOREIGN KEY (user_profile_id) REFERENCES public.user_profile(id)
+      _uuid uuid DEFAULT uuid_generate_v4 ()
 );
 
 ALTER TABLE public.address OWNER TO admin;
@@ -50,8 +50,7 @@ CREATE TABLE public.social (
     user_profile_id bigint,
     created_dt timestamptz,
     updated_dt timestamptz,
-    _uuid uuid DEFAULT uuid_generate_v4 (),
-    FOREIGN KEY (user_profile_id) REFERENCES public.user_profile(id)
+    _uuid uuid DEFAULT uuid_generate_v4 ()
 );
 
 ALTER TABLE public.social OWNER TO admin;
@@ -63,8 +62,7 @@ CREATE TABLE public.user_security (
      user_profile_id bigint,
      created_dt timestamptz,
      updated_dt timestamptz,
-     _uuid uuid DEFAULT uuid_generate_v4 (),
-    FOREIGN KEY (user_profile_id) REFERENCES public.user_profile(id)
+     _uuid uuid DEFAULT uuid_generate_v4 ()
 );
 
 ALTER TABLE public.user_security OWNER TO admin;
@@ -76,8 +74,7 @@ CREATE TABLE public.user_settings (
       user_profile_id bigint,
       created_dt timestamptz,
       updated_dt timestamptz,
-      _uuid uuid DEFAULT uuid_generate_v4 (),
-      FOREIGN KEY (user_profile_id) REFERENCES public.user_profile(id)
+      _uuid uuid DEFAULT uuid_generate_v4 ()
 );
 
 ALTER TABLE public.user_settings OWNER TO admin;
