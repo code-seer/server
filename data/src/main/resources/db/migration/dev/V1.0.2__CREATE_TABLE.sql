@@ -1,6 +1,7 @@
 CREATE TABLE public.user_profile (
     id BIGSERIAL PRIMARY KEY NOT NULL,
     address_id bigint,
+    social_id bigint,
     first_name varchar(255),
     last_name varchar(255),
     middle_name varchar(255),
@@ -47,7 +48,6 @@ CREATE TABLE public.social (
     whatsapp varchar(255),
     website varchar(255),
     other varchar(255),
-    user_profile_id bigint,
     created_dt timestamptz,
     updated_dt timestamptz,
     _uuid uuid DEFAULT uuid_generate_v4 ()

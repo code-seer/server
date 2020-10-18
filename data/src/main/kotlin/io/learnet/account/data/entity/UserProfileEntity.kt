@@ -24,16 +24,13 @@ open class UserProfileEntity: Serializable {
         @Column(name = "id", columnDefinition = "bigserial")
         open var id: Long? = null
 
-
-//        @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
-//        @AssociationInverseSide(
-//                extraction = ContainerExtraction(BuiltinContainerExtractors.MAP_KEY),
-//                inversePath = ObjectPath(PropertyValue(propertyName = "address" ))
-//        )
         @IndexedEmbedded
-        @OneToOne//(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-//        @JoinColumn(name = "id", columnDefinition = "int8")
+        @OneToOne
         open var address: AddressEntity? = null
+
+        @IndexedEmbedded
+        @OneToOne
+        open var social: SocialEntity? = null
 
         @Basic
         @FullTextField(analyzer = "english", projectable = Projectable.YES)
