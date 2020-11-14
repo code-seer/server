@@ -135,7 +135,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<finalName>learnet-starter-dist</finalName>
+					<finalName>app</finalName>
 				</configuration>
 			</plugin>
 			<plugin>
