@@ -1,7 +1,6 @@
 package io.learnet.starter.api.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.learnet.starter.util.properties.SecurityProps
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
@@ -15,9 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.CorsConfigurationSource
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import java.sql.Timestamp
 import java.util.*
 import kotlin.collections.HashMap
@@ -32,10 +28,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     lateinit var objectMapper: ObjectMapper
 
     @Autowired
-    lateinit var securityProps: SecurityProps
-
-    @Autowired
-    private val tokenAuthenticationFilter: SecurityFilter? = null
+    private lateinit var tokenAuthenticationFilter: SecurityFilter
 
     @Bean
     fun restAuthenticationEntryPoint(): AuthenticationEntryPoint {
@@ -52,21 +45,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
         }
     }
 
-    @Bean
-    fun corsConfigurationSource(): CorsConfigurationSource {
-        val source = UrlBasedCorsConfigurationSource()
-        val config = CorsConfiguration()
-        config.allowCredentials = securityProps.allowCredentials
-        config.allowedOrigins = securityProps.allowedOrigins
-        config.allowedHeaders = securityProps.allowedHeaders
-        config.allowedMethods = securityProps.allowedMethods
-        source.registerCorsConfiguration("/**", config)
-        return source
-    }
-
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-//        http.cors().configurationSource(corsConfigurationSource()).and().csrf().disable().formLogin().disable()
         http.cors().disable().csrf().disable().formLogin().disable()
                 .httpBasic().disable().exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint())
                 .and()
