@@ -17,7 +17,6 @@ import java.time.OffsetDateTime
 @Configuration
 @ComponentScan
 @EnableConfigurationProperties(
-        SecurityProps::class,
         FirebaseProps::class,
         DemoUserProps::class,
         DataSourceProps::class,
