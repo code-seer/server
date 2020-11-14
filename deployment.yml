@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: starter-deployment
+  labels:
+    app: starter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: starter
+  template:
+    metadata:
+      labels:
+        app: starter
+    spec:
+      containers:
+        - name: starter
+          image: registry.learnet.io/learnet/starter
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "dev"
+            - name: SPRING_APPLICATION_NAME
+              value: "starter"
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: "http://configserver:8888"
+      imagePullSecrets:
+        - name: registry.learnet.io
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: starter
+spec:
+  type: ClusterIP
+  ports:
+    - port: 7080
+  selector:
+    app: starter
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: starter-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+        - starter.learnet.io
+      secretName: starter-learnet-io-tls
+  rules:
+    - host: starter.learnet.io
+      http:
+        paths:
+          - backend:
+              serviceName: starter
+              servicePort: 7080

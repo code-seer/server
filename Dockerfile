@@ -1,10 +1,4 @@
-FROM gcr.io/learnet/learnet-base
-
-COPY api/target/learnet-starter-dist.jar .
-ADD entrypoint.sh entrypoint.sh
-
-ENTRYPOINT ["./entrypoint.sh"]
-
+FROM openjdk:8-jdk-alpine
 EXPOSE 7080
-
-CMD ["java", "-jar", "learnet-starter-dist.jar"]
+COPY target/app.jar /app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
