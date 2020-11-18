@@ -27,6 +27,8 @@ spec:
               value: "starter"
             - name: SPRING_CLOUD_CONFIG_URI
               value: "http://configserver:8888"
+            - name: SERVICE_DISCOVERY_URI
+              value: "servicediscovery:8761/eureka"
       imagePullSecrets:
         - name: registry.learnet.io
 ---
