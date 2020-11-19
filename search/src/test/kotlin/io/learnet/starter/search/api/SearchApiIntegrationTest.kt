@@ -47,7 +47,7 @@ class SearchApiIntegrationTest: AbstractTestNGSpringContextTests() {
     @Qualifier("jacksonObjectMapper")
     lateinit var objectMapper: ObjectMapper
 
-    private val testIndex = "lms-demo_user-read"
+    private val testIndex = "learnet-demo_user-read"
 
     /**
      * Re-index Elasticsearch and sync with Postgres
