@@ -14,6 +14,12 @@ stages:
   - deploy
 
 maven-build:
+  variables:
+    MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  cache:
+    key: "maven-global-cache"
+    paths:
+      - ./.m2/repository/
   image: maven:3-jdk-8
   stage: build
   script:
@@ -25,13 +31,10 @@ maven-build:
     reports:
       junit:
         - api/target/surefire-reports/TEST-*.xml
-        - codegen/target/surefire-reports/TEST-*.xml
         - config/target/surefire-reports/TEST-*.xml
         - data/target/surefire-reports/TEST-*.xml
-        - model/target/surefire-reports/TEST-*.xml
         - search/target/surefire-reports/TEST-*.xml
         - service/target/surefire-reports/TEST-*.xml
-        - util/target/surefire-reports/TEST-*.xml
 
 docker-build:
   stage: package
@@ -53,9 +56,9 @@ k8s-deploy-staging:
     - kubectl config set-credentials gitlab-service-account --token=$K8S_TOKEN
     - kubectl config set-context default --cluster=k8s --user=gitlab-service-account --namespace=staging
     - kubectl config use-context default
-    - kubectl delete secret $CI_REGISTRY --ignore-not-found
+    - kubectl delete secret $IMAGE_PULL_SECRET_NAME --ignore-not-found
     - kubectl delete -f deployment.yml --namespace=staging --ignore-not-found
-    - kubectl create secret docker-registry $CI_REGISTRY --docker-server=https://$CI_REGISTRY --docker-username=$CI_DEPLOY_USER --docker-password=$CI_DEPLOY_PASSWORD --docker-email=$GITLAB_USER_EMAIL
+    - kubectl create secret docker-registry $IMAGE_PULL_SECRET_NAME --docker-server=https://$CI_REGISTRY --docker-username=$CI_DEPLOY_USER --docker-password=$CI_DEPLOY_PASSWORD --docker-email=$GITLAB_USER_EMAIL
     - kubectl apply -f deployment.yml --namespace=staging
   environment:
     name: staging
