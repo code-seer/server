@@ -53,7 +53,7 @@ class ApiTest: AbstractTestNGSpringContextTests() {
     @Qualifier("jacksonObjectMapper")
     lateinit var objectMapper: ObjectMapper
 
-    private val testUrl = "/api/starter/demoUser/findAllUsers"
+    private val testUrl = "/starter/demoUser/findAllUsers"
     private val host = "localhost"
     private var idToken: String? = null
     private var userRecord: UserRecord? = null
