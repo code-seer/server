@@ -57,9 +57,9 @@ k8s-deploy-staging:
     - kubectl config set-context default --cluster=k8s --user=gitlab-service-account --namespace=staging
     - kubectl config use-context default
     - kubectl delete secret $IMAGE_PULL_SECRET_NAME --ignore-not-found
-    - kubectl delete -f deployment.yml --namespace=staging --ignore-not-found
+    - kubectl delete -f deployment-dev.yml --namespace=staging --ignore-not-found
     - kubectl create secret docker-registry $IMAGE_PULL_SECRET_NAME --docker-server=https://$CI_REGISTRY --docker-username=$CI_DEPLOY_USER --docker-password=$CI_DEPLOY_PASSWORD --docker-email=$GITLAB_USER_EMAIL
-    - kubectl apply -f deployment.yml --namespace=staging
+    - kubectl apply -f deployment-dev.yml --namespace=staging
   environment:
     name: staging
     url: $REVIEW_APP_URL
