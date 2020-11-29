@@ -1,7 +1,6 @@
 package io.learnet.account.api.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.learnet.account.util.properties.SecurityProps
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
