@@ -72,3 +72,4 @@ components:
         - ROLE_ADMIN
         - ROLE_TEST
         - ROLE_DEMO_USER_READ
+        - ROLE_VIEW_DASHBOARD
