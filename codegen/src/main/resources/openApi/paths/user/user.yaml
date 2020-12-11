@@ -1,0 +1,39 @@
+paths:
+  permissions:
+    post:
+      tags:
+        - user-management
+      summary: Populates user permissions
+      description: ''
+      operationId: createUserPermissions
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPermissionsRequest'
+      responses:
+        '200':
+          description: User Management Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+components:
+  schemas:
+    UserPermissionsRequest:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+        display_name:
+          type: string

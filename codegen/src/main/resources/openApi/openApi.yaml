@@ -12,6 +12,8 @@ tags:
     description: Starter Demo User Service
   - name: discovery
     description: Service Discovery services
+  - name: user-management
+    description: Server-side user management
 
 components:
   securitySchemes:
@@ -36,6 +38,12 @@ paths:
 #  ##################################################
   /demoUser/findAllUsers:
     $ref: ./paths/demo/demo.yaml#/paths/find_all
+
+  #  ##################################################
+  #  # Demo User Service
+  #  ##################################################
+  /permissions:
+    $ref: ./paths/user/user.yaml#/paths/permissions
 #
 #  ##################################################
 #  # Dummy Endpoint to trigger model generation
