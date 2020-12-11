@@ -9,6 +9,7 @@ import io.learnet.account.data.repo.DemoUserRepo
 import io.learnet.account.search.SearchConfiguration
 import io.learnet.account.search.api.SearchApi
 import io.learnet.account.service.ServiceConfiguration
+import io.learnet.account.util.FirebaseConfig
 import org.elasticsearch.client.core.CountRequest
 import org.elasticsearch.index.query.QueryBuilders
 import org.slf4j.Logger
@@ -33,7 +34,7 @@ import org.springframework.dao.InvalidDataAccessResourceUsageException
 //        classes = arrayOf(OpenApiControllerWebMvc::class))])
 @Configuration
 @ComponentScan
-@Import(value = [ SearchConfiguration::class, ServiceConfiguration::class ] )
+@Import(value = [ SearchConfiguration::class, ServiceConfiguration::class, FirebaseConfig::class ] )
 class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)

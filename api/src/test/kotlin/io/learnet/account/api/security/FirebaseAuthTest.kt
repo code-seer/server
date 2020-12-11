@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.UserRecord
 import io.learnet.account.api.ApiTestConfiguration
-import io.learnet.account.api.*
+import io.learnet.account.util.FirebaseConfig
 import io.learnet.account.util.properties.DemoUserProps
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
