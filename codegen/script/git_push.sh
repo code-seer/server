@@ -7,7 +7,7 @@ then
   archive=codegen-1.0-SNAPSHOT-typescript.zip
 
   cd ../target
-  git clone "${GIT_REMOTE}"
+  git clone "${GIT_CODEGEN_REMOTE}"
 
 
   # Move the files to be pushed
@@ -22,7 +22,7 @@ then
   git commit -m "${GIT_COMMIT_MESSAGE}"
 
   # Pushes (Forces) the changes in the local repository up to the remote repository
-  echo "Git pushing to ${GIT_REMOTE}"
+  echo "Git pushing to ${GIT_CODEGEN_REMOTE}"
   git push origin master
 fi
 
