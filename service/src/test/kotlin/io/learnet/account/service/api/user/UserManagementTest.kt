@@ -62,7 +62,7 @@ class UserManagementTest: AbstractTestNGSpringContextTests() {
         }
     }
 
-    @Test
+    @Test(priority = 1)
     fun createPermissions() {
         val request = UserPermissionsRequest()
         request.email(testEmail)
@@ -83,4 +83,15 @@ class UserManagementTest: AbstractTestNGSpringContextTests() {
             assertEquals(true, expected.contains(role.first))
         }
     }
+
+    @Test(priority = 2)
+    fun createPermissionsWithNoChange() {
+        val request = UserPermissionsRequest()
+        request.email(testEmail)
+        request.displayName("LearNet User")
+        val response = userManagement.createPermissions(request)
+        assertNotNull(response)
+        assertEquals("No Change", response)
+    }
+
 }
