@@ -6,7 +6,7 @@ info:
   version: 0.0.1
 
 servers:
-  - url: 'https://api.learnet.io/starter'
+  - url: 'https://api.learnet.io/account'
 tags:
   - name: demo-user
     description: Starter Demo User Service
