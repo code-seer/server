@@ -16,6 +16,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+            <version>${aws.sdk.version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.learnet.starter</groupId>
             <artifactId>search</artifactId>
             <version>1.0-SNAPSHOT</version>
