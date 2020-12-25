@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-@ConfigurationProperties("digitalOcean")
+@ConfigurationProperties("digitalocean")
 class DigitalOceanProps {
     lateinit var endpoint: String
     lateinit var url: String
