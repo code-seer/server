@@ -22,7 +22,8 @@ import java.time.OffsetDateTime
         DataSourceProps::class,
         FlywayProps::class,
         SearchProps::class,
-        SourceProps::class
+        SourceProps::class,
+        DigitalOceanProps::class
 )
 class UtilConfiguration {
 
