@@ -27,8 +27,13 @@ class SystemConfig(@Qualifier("jacksonObjectMapper") private val objectMapper: O
     private var activeProfile: String? = null
     private var appName: String? = null
     private var configServerUrl: String? = null
-    private val excludedProps = arrayOf("firebase.private_key")
-
+    private val excludedProps = arrayOf(
+        "firebase.private_key",
+        "digitalocean.object_storage.key",
+        "digitalocean.object_storage.secret")
+    private val springProfilesActiveEnvName = "SPRING_PROFILES_ACTIVE"
+    private val springApplicationEnvName = "SPRING_APPLICATION_NAME"
+    private val springCloudConfigUrlEnvName = "SPRING_CLOUD_CONFIG_URI"
 
     /**
      * Log all configurations to the console
@@ -42,14 +47,20 @@ class SystemConfig(@Qualifier("jacksonObjectMapper") private val objectMapper: O
         val propertyNames = ArrayList<String>()
         val configValues = ArrayList<Any>()
         try {
-            activeProfile = System.getenv("SPRING_PROFILES_ACTIVE")
-            appName = System.getenv("SPRING_APPLICATION_NAME")
-            configServerUrl = System.getenv("SPRING_CLOUD_CONFIG_URI")
+            activeProfile = System.getenv(springProfilesActiveEnvName)
+            appName = System.getenv(springApplicationEnvName)
+            configServerUrl = System.getenv(springCloudConfigUrlEnvName)
             properties = loadJsonHttp()
         } catch (e: ClientProtocolException) {
-            log.warn("SPRING_PROFILES_ACTIVE not set")
-            log.warn("SPRING_APPLICATION_NAME not set")
-            log.warn("SPRING_CLOUD_CONFIG_URI not set")
+            if (activeProfile == null) {
+                log.warn("$springProfilesActiveEnvName not set")
+            }
+            if (appName == null) {
+                log.warn("$springApplicationEnvName not set")
+            }
+            if (configServerUrl == null) {
+                log.warn("$springCloudConfigUrlEnvName not set")
+            }
             return
         }
         for (field in properties) {
