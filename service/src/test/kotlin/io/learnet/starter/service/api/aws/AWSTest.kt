@@ -8,19 +8,12 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests
-import org.springframework.web.multipart.MultipartFile
 import org.testng.annotations.*
 import java.io.File
 import java.lang.reflect.Method
 import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
-import org.springframework.mock.web.MockMultipartFile
-
-import java.io.FileInputStream
-
-
-
 
 @SpringBootTest(classes = [ServiceTestConfiguration::class])
 class AWSTest: AbstractTestNGSpringContextTests() {
@@ -46,20 +39,12 @@ class AWSTest: AbstractTestNGSpringContextTests() {
     @Test
     fun uploadObject() {
         val fileName = UUID.randomUUID().toString()
-        s3.uploadObject("${s3Props.prefix}-test-ng",  fileName, loadFile())
+        val url = s3.uploadObject(s3Props.bucket,  fileName, loadFile())
+        assertNotNull(url)
+        assertEquals(url.contains(fileName), true)
     }
 
     private fun loadFile(): File {
         return File(this::class.java.getResource("/aws/cat.jpg").file)
     }
-//    @Test
-//    fun findAllUsers() {
-//        val pageableRequest = PageableRequest()
-//        pageableRequest.offset = 0
-//        pageableRequest.limit = 25
-//        val page = demoUserService.findAllUsers(pageableRequest)
-//        assertNotNull(page)
-//        assertEquals(100, page.totalRecords)
-//        assertEquals(4, page.numPages)
-//    }
 }

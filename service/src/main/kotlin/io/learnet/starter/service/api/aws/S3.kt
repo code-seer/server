@@ -9,6 +9,8 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.regions.Region
+import software.amazon.awssdk.services.s3.S3Configuration
+import software.amazon.awssdk.services.s3.S3Utilities
 import software.amazon.awssdk.services.s3.model.*
 import java.io.File
 import java.io.IOException
@@ -45,7 +47,11 @@ class S3(private val s3Props: S3Props) {
                     .acl(ObjectCannedACL.PUBLIC_READ)
                     .build(),
                 RequestBody.fromFile(file))
-            return response.eTag()
+            val urlRequest = GetUrlRequest.builder()
+                .bucket(bucketName)
+                .key(objectKey)
+                .build()
+           s3Client.utilities().getUrl(urlRequest).toString()
         } catch (e: S3Exception) {
             e.printStackTrace()
         }
