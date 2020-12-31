@@ -52,6 +52,18 @@ class AWSTest: AbstractTestNGSpringContextTests() {
         assertEquals(url.contains(fileName), true)
     }
 
+    @Test
+    fun deleteObject() {
+        val fileName = UUID.randomUUID().toString()
+        val url = s3.uploadObject(s3Props.bucket,  fileName, loadFile())
+        assertNotNull(url)
+        assertEquals(url.contains(fileName), true)
+
+        val response = s3.deleteObject(s3Props.bucket, fileName)
+        assertNotNull(response)
+        assertEquals(response, "OK")
+    }
+
     private fun fileToMultipart(file: File): MultipartFile {
         return MockMultipartFile("mr.cat", file.name, MediaType.IMAGE_JPEG.toString(), FileInputStream(file))
     }

@@ -31,6 +31,19 @@ class S3(private val s3Props: S3Props) {
         return uploadObject(bucketName, objectKey, multiPartToFile(multipartFile))
     }
 
+    fun deleteObject(bucketName: String, objectKey: String): String {
+        val s3Client = getS3Client()
+        try {
+            s3Client.deleteObject(DeleteObjectRequest.builder()
+                .bucket(bucketName)
+                .key(objectKey)
+                .build())
+        } catch (e: S3Exception) {
+            return e.message.toString()
+        }
+        return "OK"
+    }
+
     fun uploadObject(bucketName: String, objectKey: String, file: File): String {
         val s3Client = getS3Client()
         createBucket(s3Client, bucketName)
