@@ -1,0 +1,95 @@
+paths:
+  permissions:
+    post:
+      tags:
+        - user-management
+      summary: Populates user permissions
+      description: ''
+      operationId: createUserPermissions
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPermissionsRequest'
+      responses:
+        '200':
+          description: User Management Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+  avatar:
+    post:
+      tags:
+        - user-management
+      summary: Upload user avatar
+      description: ''
+      operationId: uploadUserAvatar
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+            encoding:
+              avatar:
+                contentType: image/png, image/jpeg
+      responses:
+        '200':
+          description: User Avatar Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAvatarResponse'
+    get:
+      tags:
+        - user-management
+      summary: Get user avatar url
+      description: ''
+      operationId: getAvatarUrl
+      produces:
+        - application/json
+      parameters:
+        - name: email
+          in: query
+          description: User email address
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User Avatar Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAvatarResponse'
+components:
+  schemas:
+    UserPermissionsRequest:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+        display_name:
+          type: string
+    UserAvatarResponse:
+      type: object
+      properties:
+        url:
+          type: string

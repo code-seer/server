@@ -1,0 +1,66 @@
+---
+openapi: 3.0.0
+info:
+  title: LearNet Stater App API
+  description: REST API for LearNet Starter App
+  version: 0.0.1
+
+servers:
+  - url: 'https://api.learnet.io/account'
+tags:
+  - name: demo-user
+    description: Starter Demo User Service
+  - name: discovery
+    description: Service Discovery services
+  - name: user-management
+    description: Server-side user management
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+# Apply security to global scope;
+security:
+  - bearerAuth: []
+
+paths:
+  ##################################################
+  # Service Discovery
+  ##################################################
+  /discovery/{applicationName}:
+    $ref: ./paths/discovery/discovery.yaml#/paths/get_service_instances
+
+#  ##################################################
+#  # Demo User Service
+#  ##################################################
+  /demoUser/findAllUsers:
+    $ref: ./paths/demo/demo.yaml#/paths/find_all
+
+#  ##################################################
+#  # User Management Service
+#  ##################################################
+  /permissions:
+    $ref: ./paths/user/user.yaml#/paths/permissions
+  /avatar:
+    $ref: ./paths/user/user.yaml#/paths/avatar
+#  /social:
+#    $ref: ./paths/user/user.yaml#/paths/social
+#  /profile:
+#    $ref: ./paths/user/user.yaml#/paths/profile
+#  /settings/language:
+#    $ref: ./paths/user/user.yaml#/paths/language
+#  /settings/privacy:
+#    $ref: ./paths/user/user.yaml#/paths/privacy
+#  /settings/notifications:
+#    $ref: ./paths/user/user.yaml#/paths/notifications
+
+
+#
+#  ##################################################
+#  # Dummy Endpoint to trigger model generation
+#  ##################################################
+  /modelGen/pleaseIgnoreMe:
+    $ref: ./paths/model/model.yaml#/paths/root
