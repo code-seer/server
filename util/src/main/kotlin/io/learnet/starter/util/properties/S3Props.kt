@@ -4,7 +4,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-@ConfigurationProperties("digitalocean")
-class DigitalOceanProps {
-    lateinit var objectStorage: ObjectStorage
+@ConfigurationProperties("s3")
+class S3Props {
+    lateinit var key: String
+    lateinit var secret: String
+    lateinit var user: String
 }
