@@ -23,7 +23,7 @@ import java.time.OffsetDateTime
         FlywayProps::class,
         SearchProps::class,
         SourceProps::class,
-        DigitalOceanProps::class
+        S3Props::class
 )
 class UtilConfiguration {
 

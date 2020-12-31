@@ -29,8 +29,8 @@ class SystemConfig(@Qualifier("jacksonObjectMapper") private val objectMapper: O
     private var configServerUrl: String? = null
     private val excludedProps = arrayOf(
         "firebase.private_key",
-        "digitalocean.object_storage.key",
-        "digitalocean.object_storage.secret")
+        "s3.key",
+        "s3.secret")
     private val springProfilesActiveEnvName = "SPRING_PROFILES_ACTIVE"
     private val springApplicationEnvName = "SPRING_APPLICATION_NAME"
     private val springCloudConfigUrlEnvName = "SPRING_CLOUD_CONFIG_URI"
