@@ -9,8 +9,6 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.regions.Region
-import software.amazon.awssdk.services.s3.S3Configuration
-import software.amazon.awssdk.services.s3.S3Utilities
 import software.amazon.awssdk.services.s3.model.*
 import java.io.File
 import java.io.IOException
@@ -51,11 +49,10 @@ class S3(private val s3Props: S3Props) {
                 .bucket(bucketName)
                 .key(objectKey)
                 .build()
-           s3Client.utilities().getUrl(urlRequest).toString()
+            return s3Client.utilities().getUrl(urlRequest).toString()
         } catch (e: S3Exception) {
-            e.printStackTrace()
+            return e.message.toString()
         }
-        return ""
     }
     @Throws(IOException::class)
     private fun multiPartToFile(file: MultipartFile): File {
