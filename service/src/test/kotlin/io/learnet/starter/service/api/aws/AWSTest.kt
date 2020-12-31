@@ -1,18 +1,26 @@
 package io.learnet.starter.service.api.aws
 
 
-import io.learnet.starter.data.migration.FlywayMigration
-import io.learnet.starter.model.PageableRequest
 import io.learnet.starter.service.ServiceTestConfiguration
+import io.learnet.starter.util.properties.S3Props
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests
+import org.springframework.web.multipart.MultipartFile
 import org.testng.annotations.*
+import java.io.File
 import java.lang.reflect.Method
+import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import org.springframework.mock.web.MockMultipartFile
+
+import java.io.FileInputStream
+
+
+
 
 @SpringBootTest(classes = [ServiceTestConfiguration::class])
 class AWSTest: AbstractTestNGSpringContextTests() {
@@ -20,10 +28,10 @@ class AWSTest: AbstractTestNGSpringContextTests() {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
 
     @Autowired
-    lateinit var flywayMigration: FlywayMigration
+    lateinit var s3: S3
 
     @Autowired
-    lateinit var s3: S3
+    lateinit var s3Props: S3Props
 
     @BeforeClass
     fun beforeClass() {
@@ -37,7 +45,12 @@ class AWSTest: AbstractTestNGSpringContextTests() {
 
     @Test
     fun uploadObject() {
-        s3.uploadObject("learnet-test-bucket", "dummyFileName")
+        val fileName = UUID.randomUUID().toString()
+        s3.uploadObject("${s3Props.prefix}-test-ng",  fileName, loadFile())
+    }
+
+    private fun loadFile(): File {
+        return File(this::class.java.getResource("/aws/cat.jpg").file)
     }
 //    @Test
 //    fun findAllUsers() {

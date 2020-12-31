@@ -9,4 +9,5 @@ class S3Props {
     lateinit var key: String
     lateinit var secret: String
     lateinit var user: String
+    lateinit var prefix: String
 }

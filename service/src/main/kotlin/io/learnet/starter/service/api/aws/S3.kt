@@ -2,6 +2,7 @@ package io.learnet.starter.service.api.aws
 
 import io.learnet.starter.util.properties.S3Props
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
 import software.amazon.awssdk.services.s3.S3Client
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider
 
@@ -9,10 +10,13 @@ import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.s3.model.*
+import java.io.File
 import java.io.IOException
 
-import java.nio.ByteBuffer
-import java.util.*
+import java.io.FileOutputStream
+
+
+
 
 @Service
 class S3(private val s3Props: S3Props) {
@@ -26,10 +30,34 @@ class S3(private val s3Props: S3Props) {
             .build()
     }
 
-    fun uploadObject(bucketName: String, fileName: String): String {
+    fun uploadObject(bucketName: String, objectKey: String, multipartFile: MultipartFile): String {
+        return uploadObject(bucketName, objectKey, multiPartToFile(multipartFile))
+    }
+
+    fun uploadObject(bucketName: String, objectKey: String, file: File): String {
         val s3Client = getS3Client()
         createBucket(s3Client, bucketName)
-        return putS3ObjectFromByteBuffer(s3Client, bucketName, "objectKey")
+        try {
+            val response: PutObjectResponse = s3Client.putObject(
+                PutObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(objectKey)
+                    .acl(ObjectCannedACL.PUBLIC_READ)
+                    .build(),
+                RequestBody.fromFile(file))
+            return response.eTag()
+        } catch (e: S3Exception) {
+            e.printStackTrace()
+        }
+        return ""
+    }
+    @Throws(IOException::class)
+    private fun multiPartToFile(file: MultipartFile): File {
+        val convFile = File(file.originalFilename)
+        val fos = FileOutputStream(convFile)
+        fos.write(file.bytes)
+        fos.close()
+        return convFile
     }
 
     private fun createBucket(s3Client: S3Client, bucketName: String) {
@@ -43,29 +71,4 @@ class S3(private val s3Props: S3Props) {
                .build())
        }
     }
-
-    private fun putS3ObjectFromByteBuffer(s3: S3Client,
-                            bucketName: String,
-                            objectKey: String): String {
-        try {
-            val response: PutObjectResponse = s3.putObject(
-                PutObjectRequest.builder()
-                    .bucket(bucketName)
-                    .key(objectKey)
-                    .build(),
-                RequestBody.fromByteBuffer(getRandomByteBuffer(10000)))
-            return response.eTag()
-        } catch (e: S3Exception) {
-            e.printStackTrace()
-        }
-        return ""
-    }
-
-    @Throws(IOException::class)
-    private fun getRandomByteBuffer(size: Int): ByteBuffer {
-        val b = ByteArray(size)
-        Random().nextBytes(b)
-        return ByteBuffer.wrap(b)
-    }
-
 }
