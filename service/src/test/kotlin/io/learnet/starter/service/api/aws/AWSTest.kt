@@ -31,11 +31,6 @@ class AWSTest: AbstractTestNGSpringContextTests() {
     @Autowired
     lateinit var s3Props: S3Props
 
-    @BeforeClass
-    fun beforeClass() {
-
-    }
-
     @BeforeMethod
     fun beforeMethod(method: Method) {
         log.info("Testing ${method.name}")
@@ -47,10 +42,6 @@ class AWSTest: AbstractTestNGSpringContextTests() {
         val url = s3.uploadObject(s3Props.bucket,  fileName, loadFile())
         assertNotNull(url)
         assertEquals(url.contains(fileName), true)
-    }
-
-    private fun loadFile(): File {
-        return File(this::class.java.getResource("/aws/cat.jpg").file)
     }
 
     @Test
@@ -65,4 +56,7 @@ class AWSTest: AbstractTestNGSpringContextTests() {
         return MockMultipartFile("mr.cat", file.name, MediaType.IMAGE_JPEG.toString(), FileInputStream(file))
     }
 
+    private fun loadFile(): File {
+        return File(this::class.java.getResource("/aws/cat.jpg").file)
+    }
 }
