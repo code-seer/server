@@ -40,14 +40,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserProfile'
+              $ref: '#/components/schemas/UserProfileDto'
       responses:
         '200':
           description: User Profile Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserProfile'
+                $ref: '#/components/schemas/UserProfileDto'
     get:
       tags:
         - user-management
@@ -69,7 +69,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserProfile'
+                $ref: '#/components/schemas/UserProfileDto'
   social:
     post:
       tags:
@@ -84,14 +84,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserSocial'
+              $ref: '#/components/schemas/UserSocialDto'
       responses:
         '200':
           description: User Social Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserSocial'
+                $ref: '#/components/schemas/UserSocialDto'
     get:
       tags:
         - user-management
@@ -113,7 +113,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserSocial'
+                $ref: '#/components/schemas/UserSocialDto'
   avatar:
     post:
       tags:
@@ -179,14 +179,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserLanguage'
+              $ref: '#/components/schemas/UserLanguageDto'
       responses:
         '200':
           description: User Language Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserLanguage'
+                $ref: '#/components/schemas/UserLanguageDto'
     get:
       tags:
         - user-management
@@ -208,7 +208,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserLanguage'
+                $ref: '#/components/schemas/UserLanguageDto'
   privacy:
     post:
       tags:
@@ -223,14 +223,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserPrivacySettings'
+              $ref: '#/components/schemas/UserPrivacySettingsDto'
       responses:
         '200':
           description: User Privacy Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserPrivacySettings'
+                $ref: '#/components/schemas/UserPrivacySettingsDto'
     get:
       tags:
         - user-management
@@ -252,7 +252,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserPrivacySettings'
+                $ref: '#/components/schemas/UserPrivacySettingsDto'
   notifications:
     post:
       tags:
@@ -267,14 +267,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserNotificationSettings'
+              $ref: '#/components/schemas/UserNotificationSettingsDto'
       responses:
         '200':
           description: User Notifications Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserNotificationSettings'
+                $ref: '#/components/schemas/UserNotificationSettingsDto'
     get:
       tags:
         - user-management
@@ -296,7 +296,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserNotificationSettings'
+                $ref: '#/components/schemas/UserNotificationSettingsDto'
 components:
   schemas:
     UserPermissionsRequest:
@@ -313,7 +313,7 @@ components:
       properties:
         url:
           type: string
-    UserProfile:
+    UserProfileDto:
       type: object
       properties:
         title:
@@ -338,7 +338,7 @@ components:
           type: string
         postal_code:
           type: string
-    UserSocial:
+    UserSocialDto:
       type: object
       properties:
         facebook:
@@ -351,19 +351,19 @@ components:
           type: string
         linkedin:
           type: string
-    UserLanguage:
+    UserLanguageDto:
       type: object
       properties:
         language:
           type: string
-    UserPrivacySettings:
+    UserPrivacySettingsDto:
       type: object
       properties:
         directory_opt_in:
           type: boolean
         others_can_contact:
           type: boolean
-    UserNotificationSettings:
+    UserNotificationSettingsDto:
       type: object
       properties:
         posts:
