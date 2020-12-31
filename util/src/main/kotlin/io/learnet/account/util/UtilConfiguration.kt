@@ -7,7 +7,6 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.learnet.account.util.lib.OffsetDateTimeDeserializer
 import io.learnet.account.util.lib.OffsetDateTimeSerializer
 import io.learnet.account.util.properties.*
-import io.learnet.account.util.properties.*
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean

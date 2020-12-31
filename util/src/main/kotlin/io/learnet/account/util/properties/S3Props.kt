@@ -1,4 +1,4 @@
-package io.learnet.starter.util.properties
+package io.learnet.account.util.properties
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration

@@ -1,8 +1,8 @@
-package io.learnet.starter.service.api.aws
+package io.learnet.account.service.api.aws
 
 
-import io.learnet.starter.service.ServiceTestConfiguration
-import io.learnet.starter.util.properties.S3Props
+import io.learnet.account.service.ServiceTestConfiguration
+import io.learnet.account.util.properties.S3Props
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

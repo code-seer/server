@@ -1,6 +1,6 @@
-package io.learnet.starter.service.api.aws
+package io.learnet.account.service.api.aws
 
-import io.learnet.starter.util.properties.S3Props
+import io.learnet.account.util.properties.S3Props
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import software.amazon.awssdk.services.s3.S3Client
