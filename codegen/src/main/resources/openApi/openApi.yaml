@@ -44,18 +44,18 @@ paths:
 #  ##################################################
   /permissions:
     $ref: ./paths/user/user.yaml#/paths/permissions
+  /profile:
+    $ref: ./paths/user/user.yaml#/paths/profile
   /avatar:
     $ref: ./paths/user/user.yaml#/paths/avatar
-#  /social:
-#    $ref: ./paths/user/user.yaml#/paths/social
-#  /profile:
-#    $ref: ./paths/user/user.yaml#/paths/profile
-#  /settings/language:
-#    $ref: ./paths/user/user.yaml#/paths/language
-#  /settings/privacy:
-#    $ref: ./paths/user/user.yaml#/paths/privacy
-#  /settings/notifications:
-#    $ref: ./paths/user/user.yaml#/paths/notifications
+  /social:
+    $ref: ./paths/user/user.yaml#/paths/social
+  /settings/language:
+    $ref: ./paths/user/user.yaml#/paths/language
+  /settings/privacy:
+    $ref: ./paths/user/user.yaml#/paths/privacy
+  /settings/notifications:
+    $ref: ./paths/user/user.yaml#/paths/notifications
 
 
 #

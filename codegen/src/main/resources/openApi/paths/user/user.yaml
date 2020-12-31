@@ -26,6 +26,94 @@ paths:
                 properties:
                   status:
                     type: string
+  profile:
+    post:
+      tags:
+        - user-management
+      summary: Save user profile
+      description: ''
+      operationId: saveUserProfile
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+      responses:
+        '200':
+          description: User Profile Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+    get:
+      tags:
+        - user-management
+      summary: Get user profile
+      description: ''
+      operationId: getUserProfile
+      produces:
+        - application/json
+      parameters:
+        - name: email
+          in: query
+          description: User email address
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User Profile Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+  social:
+    post:
+      tags:
+        - user-management
+      summary: Save user social links
+      description: ''
+      operationId: saveUserSocial
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSocial'
+      responses:
+        '200':
+          description: User Social Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSocial'
+    get:
+      tags:
+        - user-management
+      summary: Get user social links
+      description: ''
+      operationId: getUserSocial
+      produces:
+        - application/json
+      parameters:
+        - name: email
+          in: query
+          description: User email address
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User Social Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSocial'
   avatar:
     post:
       tags:
@@ -77,6 +165,138 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserAvatarResponse'
+  language:
+    post:
+      tags:
+        - user-management
+      summary: Save user language preference
+      description: ''
+      operationId: saveUserLanguage
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLanguage'
+      responses:
+        '200':
+          description: User Language Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLanguage'
+    get:
+      tags:
+        - user-management
+      summary: Get user language preference
+      description: ''
+      operationId: getUserLanguage
+      produces:
+        - application/json
+      parameters:
+        - name: email
+          in: query
+          description: User email address
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User Language Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLanguage'
+  privacy:
+    post:
+      tags:
+        - user-management
+      summary: Save user privacy settings
+      description: ''
+      operationId: saveUserPrivacySettings
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPrivacySettings'
+      responses:
+        '200':
+          description: User Privacy Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPrivacySettings'
+    get:
+      tags:
+        - user-management
+      summary: Get user privacy settings
+      description: ''
+      operationId: getUserPrivacySettings
+      produces:
+        - application/json
+      parameters:
+        - name: email
+          in: query
+          description: User email address
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User Privacy Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPrivacySettings'
+  notifications:
+    post:
+      tags:
+        - user-management
+      summary: Save user notification settings
+      description: ''
+      operationId: saveUserNotificationSettings
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserNotificationSettings'
+      responses:
+        '200':
+          description: User Notifications Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserNotificationSettings'
+    get:
+      tags:
+        - user-management
+      summary: Get user notification settings
+      description: ''
+      operationId: getUserNotificationSettings
+      produces:
+        - application/json
+      parameters:
+        - name: email
+          in: query
+          description: User email address
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User Notification Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserNotificationSettings'
 components:
   schemas:
     UserPermissionsRequest:
@@ -93,3 +313,62 @@ components:
       properties:
         url:
           type: string
+    UserProfile:
+      type: object
+      properties:
+        title:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone:
+          type: string
+        secondary_phone:
+          type: string
+        email_address:
+          type: string
+        address:
+          type: string
+        country:
+          type: string
+        state:
+          type: string
+        city:
+          type: string
+        postal_code:
+          type: string
+    UserSocial:
+      type: object
+      properties:
+        facebook:
+          type: string
+        instagram:
+          type: string
+        whatsapp:
+          type: string
+        twitter:
+          type: string
+        linkedin:
+          type: string
+    UserLanguage:
+      type: object
+      properties:
+        language:
+          type: string
+    UserPrivacySettings:
+      type: object
+      properties:
+        directory_opt_in:
+          type: boolean
+        others_can_contact:
+          type: boolean
+    UserNotificationSettings:
+      type: object
+      properties:
+        posts:
+          type: boolean
+        comment_replies:
+          type: boolean
+        new_message:
+          type: boolean
