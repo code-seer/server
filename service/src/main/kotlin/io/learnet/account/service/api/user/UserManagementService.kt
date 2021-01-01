@@ -2,11 +2,11 @@ package io.learnet.account.service.api.user
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserRecord
-import io.learnet.account.model.UserPermissionsRequest
-import io.learnet.account.model.UserRole
+import io.learnet.account.model.*
 import io.learnet.account.util.properties.UserPermissionsProps
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
 
 @Service
 class UserManagementService: UserManagement {
@@ -48,6 +48,54 @@ class UserManagementService: UserManagement {
             }
         }
         return status
+    }
+
+    override fun getUserProfile(email: String): UserProfileDto {
+        TODO("Not yet implemented")
+    }
+
+    override fun getAvatarUrl(email: String): UserAvatarResponse {
+        TODO("Not yet implemented")
+    }
+
+    override fun getUserLanguage(email: String): UserLanguageDto {
+        TODO("Not yet implemented")
+    }
+
+    override fun getUserNotificationSettings(email: String): UserNotificationSettingsDto {
+        TODO("Not yet implemented")
+    }
+
+    override fun saveUserPrivacySettings(email: String): UserPrivacySettingsDto {
+        TODO("Not yet implemented")
+    }
+
+    override fun saveUserPrivacySettings(userPrivacySettingsDto: UserPrivacySettingsDto): UserPrivacySettingsDto {
+        TODO("Not yet implemented")
+    }
+
+    override fun getUserSocial(email: String): UserSocialDto {
+        TODO("Not yet implemented")
+    }
+
+    override fun saveUserProfile(userProfileDto: UserProfileDto): UserProfileDto {
+        TODO("Not yet implemented")
+    }
+
+    override fun uploadUserAvatar(avatar: MultipartFile): UserAvatarResponse {
+        TODO("Not yet implemented")
+    }
+
+    override fun saveUserLanguage(userLanguageDto: UserLanguageDto): UserLanguageDto {
+        TODO("Not yet implemented")
+    }
+
+    override fun saveUserNotificationSettings(userNotificationSettingsDto: UserNotificationSettingsDto): UserNotificationSettingsDto {
+        TODO("Not yet implemented")
+    }
+
+    override fun saveUserSocial(userSocialDto: UserSocialDto): UserSocialDto {
+        TODO("Not yet implemented")
     }
 
     /**
