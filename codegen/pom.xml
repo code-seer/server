@@ -45,7 +45,7 @@
 						</goals>
 						<configuration>
 							<addCompileSourceRoot>false</addCompileSourceRoot>
-							<inputSpec>${project.basedir}/src/main/resources/openApi/openApi.yaml</inputSpec>
+							<inputSpec>${project.basedir}/src/main/resources/openApi/openApi.json</inputSpec>
 							<generatorName>spring</generatorName>
 							<configOptions>
 								<modelPackage>io.learnet.account.model</modelPackage>
@@ -70,7 +70,7 @@
 						<configuration>
 							<generatorName>typescript-axios</generatorName>
 							<addCompileSourceRoot>false</addCompileSourceRoot>
-							<inputSpec>${project.basedir}/src/main/resources/openApi/openApi.yaml</inputSpec>
+							<inputSpec>${project.basedir}/src/main/resources/openApi/openApi.json</inputSpec>
 							<output>${project.build.directory}/generated-resources/typescript</output>
 						</configuration>
 					</execution>
