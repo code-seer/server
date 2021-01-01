@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://api.learnet.io/starter"
+      "url": "https://api.learnet.io/account"
     }
   ],
   "tags": [
@@ -18,6 +18,10 @@
     {
       "name": "discovery",
       "description": "Service Discovery services"
+    },
+    {
+      "name": "user-management",
+      "description": "Server-side user management"
     }
   ],
   "security": [
@@ -31,6 +35,9 @@
     },
     "/demoUser/findAllUsers": {
       "$ref": "./paths/demo/demo.json#/paths/find_all"
+    },
+    "/permissions": {
+      "$ref": "./paths/user/user.json#/paths/permissions"
     }
   },
   "components": {
@@ -140,7 +147,9 @@
         "enum": [
           "ROLE_ADMIN",
           "ROLE_TEST",
-          "ROLE_DEMO_USER_READ"
+          "ROLE_DEMO_USER_READ",
+          "ROLE_VIEW_DASHBOARD",
+          "ROLE_CREATE_CONFERENCE"
         ]
       }
     }
