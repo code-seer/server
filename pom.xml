@@ -24,6 +24,8 @@
     </modules>
 
     <properties>
+        <gitlab.url>gitlab.learnet.io</gitlab.url>
+        <gitlab.projectId>4</gitlab.projectId>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -63,6 +65,23 @@
         <firebase.admin.version>7.0.0</firebase.admin.version>
         <aws.sdk.version>2.15.53</aws.sdk.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>gitlab-maven</id>
+            <url>https://${gitlab.url}/api/v4/projects/${gitlab.projectId}/packages/maven</url>
+        </repository>
+    </repositories>
+    <distributionManagement>
+        <repository>
+            <id>gitlab-maven</id>
+            <url>https://${gitlab.url}/api/v4/projects/${gitlab.projectId}/packages/maven</url>
+        </repository>
+        <snapshotRepository>
+            <id>gitlab-maven</id>
+            <url>https://${gitlab.url}/api/v4/projects/${gitlab.projectId}/packages/maven</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <dependencies>
         <dependency>
@@ -142,13 +161,6 @@
             <artifactId>spring-core</artifactId>
             <version>${springframework.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-devtools</artifactId>-->
-<!--            <scope>runtime</scope>-->
-<!--            <optional>true</optional>-->
-<!--            <version>${spring.boot.version}</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
