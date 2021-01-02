@@ -1,3 +1,3 @@
-export SPRING_APPLICATION_NAME=starter
+export SPRING_APPLICATION_NAME=account
 export SPRING_CLOUD_CONFIG_URI=https://configserver.learnet.io
 export SPRING_PROFILES_ACTIVE=dev

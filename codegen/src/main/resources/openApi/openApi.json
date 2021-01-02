@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "LearNet Stater App API",
-    "description": "REST API for LearNet Starter App",
+    "title": "LearNet Account Service API",
+    "description": "REST API for LearNet Account Service",
     "version": "0.0.1"
   },
   "servers": [
@@ -38,6 +38,24 @@
     },
     "/permissions": {
       "$ref": "./paths/user/user.json#/paths/permissions"
+    },
+    "/profile": {
+      "$ref": "./paths/user/user.json#/paths/profile"
+    },
+    "/avatar": {
+      "$ref": "./paths/user/user.json#/paths/avatar"
+    },
+    "/social": {
+      "$ref": "./paths/user/user.json#/paths/social"
+    },
+    "/settings/language": {
+      "$ref": "./paths/user/user.json#/paths/language"
+    },
+    "/settings/privacy": {
+      "$ref": "./paths/user/user.json#/paths/privacy"
+    },
+    "/settings/notifications": {
+      "$ref": "./paths/user/user.json#/paths/notifications"
     }
   },
   "components": {
