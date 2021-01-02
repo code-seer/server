@@ -7,4 +7,6 @@ import org.springframework.transaction.annotation.Transactional
 
 @Repository
 @Transactional
-interface UserProfileRepo : JpaRepository<UserProfileEntity, Long>
+interface UserProfileRepo : JpaRepository<UserProfileEntity, Long> {
+    fun findByEmail(email: String): UserProfileEntity
+}

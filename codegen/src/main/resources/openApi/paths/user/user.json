@@ -505,10 +505,10 @@
           "last_name": {
             "type": "string"
           },
-          "phone": {
+          "mobile_phone": {
             "type": "string"
           },
-          "secondary_phone": {
+          "home_phone": {
             "type": "string"
           },
           "email_address": {
@@ -528,6 +528,9 @@
           },
           "postal_code": {
             "type": "string"
+          },
+          "is_new_user": {
+            "type": "boolean"
           }
         }
       },

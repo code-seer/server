@@ -2,14 +2,23 @@ package io.learnet.account.service.api.user
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserRecord
+import io.learnet.account.data.entity.AddressEntity
+import io.learnet.account.data.entity.UserProfileEntity
+import io.learnet.account.data.repo.AddressRepo
+import io.learnet.account.data.repo.UserProfileRepo
 import io.learnet.account.model.*
 import io.learnet.account.util.properties.UserPermissionsProps
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
+import java.time.OffsetDateTime
+import java.util.*
+import kotlin.collections.HashMap
 
 @Service
-class UserManagementService: UserManagement {
+class UserManagementService(
+    private val userProfileRepo: UserProfileRepo,
+    private val addressRepo: AddressRepo): UserManagement {
 
     @Autowired
     lateinit var userPermissions: UserPermissionsProps
@@ -79,7 +88,35 @@ class UserManagementService: UserManagement {
     }
 
     override fun saveUserProfile(userProfileDto: UserProfileDto): UserProfileDto {
-        TODO("Not yet implemented")
+        val now = OffsetDateTime.now()
+        var entity = userProfileRepo.findByEmail(userProfileDto.emailAddress)
+        var addressEntity = entity.address
+        if (entity == null) {
+            entity = UserProfileEntity()
+            entity.uuid = UUID.randomUUID()
+            entity.createdDt = now
+        }
+        entity.firstName = userProfileDto.firstName
+        entity.lastName = userProfileDto.lastName
+        entity.title = userProfileDto.title
+        entity.mobilePhone = userProfileDto.mobilePhone
+        entity.homePhone = userProfileDto.homePhone
+        entity.email = userProfileDto.emailAddress
+        if (addressEntity == null) {
+            addressEntity = AddressEntity()
+            addressEntity.createdDt = now
+            addressEntity.uuid = UUID.randomUUID()
+        }
+        addressEntity.address1 = userProfileDto.address
+        addressEntity.city = userProfileDto.city
+        addressEntity.state = userProfileDto.state
+        addressEntity.postalCode = userProfileDto.postalCode
+        addressEntity.country = userProfileDto.country
+        addressRepo.save(addressEntity)
+        entity.address = addressEntity
+        entity.isNewUser = userProfileDto.isNewUser
+        userProfileRepo.save(entity)
+        return userProfileDto
     }
 
     override fun uploadUserAvatar(avatar: MultipartFile): UserAvatarResponse {

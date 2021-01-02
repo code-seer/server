@@ -36,13 +36,4 @@ interface UserManagement {
             UserPrivacySettingsDto
 
     fun saveUserSocial(userSocialDto: UserSocialDto): UserSocialDto
-
-
-
-
-
-
-
-
-
 }
