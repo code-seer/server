@@ -514,7 +514,7 @@
           "home_phone": {
             "type": "string"
           },
-          "email_address": {
+          "email": {
             "type": "string"
           },
           "address": {
@@ -554,6 +554,9 @@
           },
           "linkedin": {
             "type": "string"
+          },
+          "email": {
+            "type": "string"
           }
         }
       },
@@ -561,6 +564,9 @@
         "type": "object",
         "properties": {
           "language": {
+            "type": "string"
+          },
+          "email": {
             "type": "string"
           }
         }
@@ -573,6 +579,9 @@
           },
           "others_can_contact": {
             "type": "boolean"
+          },
+          "email": {
+            "type": "string"
           }
         }
       },
@@ -587,6 +596,9 @@
           },
           "new_message": {
             "type": "boolean"
+          },
+          "email": {
+            "type": "string"
           }
         }
       }

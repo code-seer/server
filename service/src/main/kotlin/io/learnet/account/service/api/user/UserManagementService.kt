@@ -103,7 +103,7 @@ class UserManagementService(
 
     override fun saveUserProfile(userProfileDto: UserProfileDto): UserProfileDto {
         val now = OffsetDateTime.now()
-        var entity = userProfileRepo.findByEmail(userProfileDto.emailAddress)
+        var entity = userProfileRepo.findByEmail(userProfileDto.email)
         var addressEntity = entity.address
         if (entity == null) {
             entity = UserProfileEntity()
@@ -115,7 +115,7 @@ class UserManagementService(
         entity.title = userProfileDto.title
         entity.mobilePhone = userProfileDto.mobilePhone
         entity.homePhone = userProfileDto.homePhone
-        entity.email = userProfileDto.emailAddress
+        entity.email = userProfileDto.email
         if (addressEntity == null) {
             addressEntity = AddressEntity()
             addressEntity.createdDt = now
