@@ -68,11 +68,21 @@ class UserManagementService(
     }
 
     override fun getAvatarUrl(email: String): UserAvatarResponse {
-        TODO("Not yet implemented")
+        var entity = userProfileRepo.findByEmail(email)
+        val response = UserAvatarResponse()
+        if (entity != null) {
+            response.url = entity.avatar
+        }
+        return response
     }
 
     override fun getUserLanguage(email: String): UserLanguageDto {
-        TODO("Not yet implemented")
+        var entity = userProfileRepo.findByEmail(email)
+        val response = UserLanguageDto()
+        if (entity != null) {
+            response.language = entity.language
+        }
+        return response
     }
 
     override fun getUserNotificationSettings(email: String): UserNotificationSettingsDto {

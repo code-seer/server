@@ -47,6 +47,10 @@ open class UserProfileEntity: Serializable {
         open var title: String? = null
 
         @Basic
+        @Column(name = "language", columnDefinition = "text")
+        open var language: String? = null
+
+        @Basic
         @Column(name = "gender", columnDefinition = "text")
         open var gender: String? = null
 
