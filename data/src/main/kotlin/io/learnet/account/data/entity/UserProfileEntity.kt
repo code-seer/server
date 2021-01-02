@@ -75,6 +75,10 @@ open class UserProfileEntity: Serializable {
         open var avatar: String? = null
 
         @Basic
+        @Column(name = "avatar_object_key")
+        open var avatarObjectKey: String? = null
+
+        @Basic
         @Column(name = "created_dt", columnDefinition = "timestamptz")
         open var createdDt: OffsetDateTime = OffsetDateTime.now()
 

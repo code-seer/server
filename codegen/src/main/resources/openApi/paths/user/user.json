@@ -202,6 +202,9 @@
                   "avatar": {
                     "type": "string",
                     "format": "binary"
+                  },
+                  "email": {
+                    "type": "string"
                   }
                 }
               },

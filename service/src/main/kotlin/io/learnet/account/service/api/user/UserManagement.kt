@@ -25,7 +25,7 @@ interface UserManagement {
 
     fun saveUserProfile(userProfileDto: UserProfileDto): UserProfileDto
 
-    fun uploadUserAvatar(avatar: MultipartFile): UserAvatarResponse
+    fun uploadUserAvatar(avatar: MultipartFile, email: String): UserAvatarResponse
 
     fun saveUserLanguage(userLanguageDto: UserLanguageDto): UserLanguageDto
 

@@ -29,7 +29,7 @@ class UserController(
         TODO("Not yet implemented")
     }
 
-    override fun uploadUserAvatar(avatar: MultipartFile?): ResponseEntity<UserAvatarResponse> {
+    override fun uploadUserAvatar(avatar: MultipartFile?, email: String?): ResponseEntity<UserAvatarResponse> {
         TODO("Not yet implemented")
     }
 

@@ -7,6 +7,8 @@ import io.learnet.account.data.entity.UserProfileEntity
 import io.learnet.account.data.repo.AddressRepo
 import io.learnet.account.data.repo.UserProfileRepo
 import io.learnet.account.model.*
+import io.learnet.account.service.api.aws.S3
+import io.learnet.account.util.properties.S3Props
 import io.learnet.account.util.properties.UserPermissionsProps
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -17,6 +19,8 @@ import kotlin.collections.HashMap
 
 @Service
 class UserManagementService(
+    private val s3: S3,
+    private val s3Props: S3Props,
     private val userProfileRepo: UserProfileRepo,
     private val addressRepo: AddressRepo): UserManagement {
 
@@ -112,15 +116,36 @@ class UserManagementService(
         addressEntity.state = userProfileDto.state
         addressEntity.postalCode = userProfileDto.postalCode
         addressEntity.country = userProfileDto.country
+        addressEntity.updatedDt = now
         addressRepo.save(addressEntity)
         entity.address = addressEntity
+        entity.updatedDt = now
         entity.isNewUser = userProfileDto.isNewUser
         userProfileRepo.save(entity)
         return userProfileDto
     }
 
-    override fun uploadUserAvatar(avatar: MultipartFile): UserAvatarResponse {
-        TODO("Not yet implemented")
+    override fun uploadUserAvatar(avatar: MultipartFile, email: String): UserAvatarResponse {
+        val newObjectKey = UUID.randomUUID().toString()
+        var entity = userProfileRepo.findByEmail(email)
+        val now = OffsetDateTime.now()
+        if (entity == null) {
+            entity = UserProfileEntity()
+            entity.uuid = UUID.randomUUID()
+            entity.createdDt = now
+        } else {
+            // TODO: this should be an asynchronous call; we don't really care when it finishes
+            entity.avatarObjectKey?.let { s3.deleteObject(s3Props.bucket, it) }
+        }
+        val url = s3.uploadObject(s3Props.bucket, newObjectKey, avatar)
+        entity.email = email
+        entity.avatar = url
+        entity.avatarObjectKey = newObjectKey
+        entity.updatedDt = now
+        userProfileRepo.save(entity)
+        val response = UserAvatarResponse()
+        response.url = url
+        return response
     }
 
     override fun saveUserLanguage(userLanguageDto: UserLanguageDto): UserLanguageDto {
