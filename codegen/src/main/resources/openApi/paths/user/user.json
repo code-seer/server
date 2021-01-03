@@ -557,6 +557,12 @@
           },
           "email": {
             "type": "string"
+          },
+          "github": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
           }
         }
       },

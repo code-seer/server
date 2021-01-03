@@ -3,9 +3,9 @@ package io.learnet.account.service.api.user
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserRecord
 import io.learnet.account.data.entity.AddressEntity
+import io.learnet.account.data.entity.SocialEntity
 import io.learnet.account.data.entity.UserProfileEntity
-import io.learnet.account.data.repo.AddressRepo
-import io.learnet.account.data.repo.UserProfileRepo
+import io.learnet.account.data.repo.*
 import io.learnet.account.model.*
 import io.learnet.account.service.api.aws.S3
 import io.learnet.account.util.properties.S3Props
@@ -22,11 +22,13 @@ class UserManagementService(
     private val s3: S3,
     private val s3Props: S3Props,
     private val userProfileRepo: UserProfileRepo,
+    private val socialRepo: SocialRepo,
+    private val securityRepo: SecurityRepo,
+    private val userSettingsRepo: UserSettingsRepo,
     private val addressRepo: AddressRepo): UserManagement {
 
     @Autowired
     lateinit var userPermissions: UserPermissionsProps
-
 
     override fun createPermissions(request: UserPermissionsRequest): String {
         val claims =  hashMapOf<String, Boolean>()
@@ -68,7 +70,7 @@ class UserManagementService(
     }
 
     override fun getAvatarUrl(email: String): UserAvatarResponse {
-        var entity = userProfileRepo.findByEmail(email)
+        val entity = userProfileRepo.findByEmail(email)
         val response = UserAvatarResponse()
         if (entity != null) {
             response.url = entity.avatar
@@ -77,9 +79,9 @@ class UserManagementService(
     }
 
     override fun getUserLanguage(email: String): UserLanguageDto {
-        var entity = userProfileRepo.findByEmail(email)
+        var entity = getUserProfileEntity(email)
         val response = UserLanguageDto()
-        if (entity != null) {
+        if (entity.language != null) {
             response.language = entity.language
         }
         return response
@@ -103,13 +105,8 @@ class UserManagementService(
 
     override fun saveUserProfile(userProfileDto: UserProfileDto): UserProfileDto {
         val now = OffsetDateTime.now()
-        var entity = userProfileRepo.findByEmail(userProfileDto.email)
+        val entity = getUserProfileEntity(userProfileDto.email)
         var addressEntity = entity.address
-        if (entity == null) {
-            entity = UserProfileEntity()
-            entity.uuid = UUID.randomUUID()
-            entity.createdDt = now
-        }
         entity.firstName = userProfileDto.firstName
         entity.lastName = userProfileDto.lastName
         entity.title = userProfileDto.title
@@ -137,21 +134,13 @@ class UserManagementService(
 
     override fun uploadUserAvatar(avatar: MultipartFile, email: String): UserAvatarResponse {
         val newObjectKey = UUID.randomUUID().toString()
-        var entity = userProfileRepo.findByEmail(email)
-        val now = OffsetDateTime.now()
-        if (entity == null) {
-            entity = UserProfileEntity()
-            entity.uuid = UUID.randomUUID()
-            entity.createdDt = now
-        } else {
-            // TODO: this should be an asynchronous call; we don't really care when it finishes
-            entity.avatarObjectKey?.let { s3.deleteObject(s3Props.bucket, it) }
-        }
+        val entity = getUserProfileEntity(email)
+        entity.avatarObjectKey?.let { s3.deleteObject(s3Props.bucket, it) }
         val url = s3.uploadObject(s3Props.bucket, newObjectKey, avatar)
         entity.email = email
         entity.avatar = url
         entity.avatarObjectKey = newObjectKey
-        entity.updatedDt = now
+        entity.updatedDt = OffsetDateTime.now()
         userProfileRepo.save(entity)
         val response = UserAvatarResponse()
         response.url = url
@@ -159,7 +148,10 @@ class UserManagementService(
     }
 
     override fun saveUserLanguage(userLanguageDto: UserLanguageDto): UserLanguageDto {
-        TODO("Not yet implemented")
+        val entity = getUserProfileEntity(userLanguageDto.email)
+        entity.language = userLanguageDto.language
+        userProfileRepo.save(entity)
+        return userLanguageDto
     }
 
     override fun saveUserNotificationSettings(userNotificationSettingsDto: UserNotificationSettingsDto): UserNotificationSettingsDto {
@@ -167,7 +159,26 @@ class UserManagementService(
     }
 
     override fun saveUserSocial(userSocialDto: UserSocialDto): UserSocialDto {
-        TODO("Not yet implemented")
+        val entity = getUserProfileEntity(userSocialDto.email)
+        var social = entity.social
+        val now = OffsetDateTime.now()
+        if (social == null) {
+            social = SocialEntity()
+            social.uuid = UUID.randomUUID();
+            social.createdDt = now
+        }
+        social.facebook = userSocialDto.facebook
+        social.twitter = userSocialDto.twitter
+        social.github = userSocialDto.github
+        social.instagram = userSocialDto.instagram
+        social.website = userSocialDto.website
+        social.whatsapp = userSocialDto.whatsapp
+        social.linkedin = userSocialDto.linkedin
+        social.updatedDt = now
+        socialRepo.save(social)
+        entity.social = social
+        userProfileRepo.save(entity)
+        return userSocialDto
     }
 
     /**
@@ -185,5 +196,16 @@ class UserManagementService(
             }
         }
         return matches != fireBaseClaims.size
+    }
+
+    private fun getUserProfileEntity(email: String): UserProfileEntity {
+        var entity = userProfileRepo.findByEmail(email)
+        if (entity == null) {
+            entity = UserProfileEntity()
+            entity.email = email
+            entity.createdDt = OffsetDateTime.now()
+            entity.uuid = UUID.randomUUID()
+        }
+        return entity
     }
 }
