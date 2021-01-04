@@ -21,20 +21,20 @@ class UserController(
         TODO("Not yet implemented")
     }
 
-    override fun saveUserProfile(userProfileDto: UserProfileDto?): ResponseEntity<UserProfileDto> {
-        TODO("Not yet implemented")
+    override fun saveUserProfile(userProfileDto: UserProfileDto): ResponseEntity<UserProfileDto> {
+        return ResponseEntity.ok(userManagement.saveUserProfile(userProfileDto))
     }
 
-    override fun getAvatarUrl(email: String?): ResponseEntity<UserAvatarResponse> {
-        TODO("Not yet implemented")
+    override fun getAvatarUrl(email: String): ResponseEntity<UserAvatarResponse> {
+        return ResponseEntity.ok(userManagement.getAvatarUrl(email))
     }
 
-    override fun uploadUserAvatar(avatar: MultipartFile?, email: String?): ResponseEntity<UserAvatarResponse> {
-        TODO("Not yet implemented")
+    override fun uploadUserAvatar(avatar: MultipartFile, email: String): ResponseEntity<UserAvatarResponse> {
+        return ResponseEntity.ok(userManagement.uploadUserAvatar(avatar, email))
     }
 
-    override fun getUserLanguage(email: String?): ResponseEntity<UserLanguageDto> {
-        TODO("Not yet implemented")
+    override fun getUserLanguage(email: String): ResponseEntity<UserLanguageDto> {
+        return ResponseEntity.ok(userManagement.getUserLanguage(email))
     }
 
     override fun getUserNotificationSettings(email: String?): ResponseEntity<UserNotificationSettingsDto> {
@@ -45,8 +45,8 @@ class UserController(
         TODO("Not yet implemented")
     }
 
-    override fun saveUserLanguage(userLanguageDto: UserLanguageDto?): ResponseEntity<UserLanguageDto> {
-        TODO("Not yet implemented")
+    override fun saveUserLanguage(userLanguageDto: UserLanguageDto): ResponseEntity<UserLanguageDto> {
+        return ResponseEntity.ok(userManagement.saveUserLanguage(userLanguageDto))
     }
 
     override fun saveUserNotificationSettings(userNotificationSettingsDto: UserNotificationSettingsDto?): ResponseEntity<UserNotificationSettingsDto> {
@@ -57,11 +57,11 @@ class UserController(
         TODO("Not yet implemented")
     }
 
-    override fun getUserSocial(email: String?): ResponseEntity<UserSocialDto> {
-        TODO("Not yet implemented")
+    override fun getUserSocial(email: String): ResponseEntity<UserSocialDto> {
+        return ResponseEntity.ok(userManagement.getUserSocial(email))
     }
 
-    override fun saveUserSocial(userSocialDto: UserSocialDto?): ResponseEntity<UserSocialDto> {
-        TODO("Not yet implemented")
+    override fun saveUserSocial(userSocialDto: UserSocialDto): ResponseEntity<UserSocialDto> {
+        return ResponseEntity.ok(userManagement.saveUserSocial(userSocialDto))
     }
 }
