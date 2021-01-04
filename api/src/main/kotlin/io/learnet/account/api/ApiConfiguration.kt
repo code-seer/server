@@ -55,7 +55,7 @@ class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
     @EventListener
     fun onApplicationStart(event: ApplicationStartedEvent) {
         handleMigration()
-        createDemoUser()
+//        createDemoUser()
     }
 
     /**
