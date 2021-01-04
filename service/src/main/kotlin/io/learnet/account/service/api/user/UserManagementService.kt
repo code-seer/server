@@ -67,14 +67,14 @@ class UserManagementService(
 
     override fun getUserProfile(email: String): UserProfileDto {
         val entity = userProfileRepo.findByEmail(email)
-        val address = entity.address
+        val address = entity?.address
         val dto = UserProfileDto()
-        dto.title = entity.title
-        dto.firstName = entity.firstName
-        dto.lastName = entity.lastName
-        dto.mobilePhone = entity.mobilePhone
-        dto.homePhone = entity.homePhone
-        dto.email = entity.email
+        dto.title = entity?.title
+        dto.firstName = entity?.firstName
+        dto.lastName = entity?.lastName
+        dto.mobilePhone = entity?.mobilePhone
+        dto.homePhone = entity?.homePhone
+        dto.email = entity?.email
         dto.address = address?.address1
         dto.country = address?.country
         dto.state = address?.state
