@@ -4,16 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.javafaker.Faker
 import com.google.firebase.auth.UserRecord
 import io.learnet.account.api.ApiTestConfiguration
-import io.learnet.account.api.security.createClaims
 import io.learnet.account.api.security.createUser
 import io.learnet.account.api.security.deleteUser
 import io.learnet.account.api.security.login
-import io.learnet.account.data.entity.*
+import io.learnet.account.model.*
 import io.learnet.account.util.properties.DemoUserProps
 import io.learnet.account.util.properties.FirebaseProps
-import io.learnet.account.model.DemoUserResponse
-import io.learnet.account.model.PageableRequest
-import io.learnet.account.model.UserProfileDto
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -32,9 +28,6 @@ import org.testng.annotations.BeforeClass
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
 import java.lang.reflect.Method
-import java.time.OffsetDateTime
-import java.time.ZoneId
-import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
@@ -66,14 +59,17 @@ class UserControllerTest: AbstractTestNGSpringContextTests() {
     private val host = "localhost"
     private var idToken: String? = null
     private var userRecord: UserRecord? = null
-    private val testEmail = "testuser@learnet.io"
+    private var userProfileDto: UserProfileDto? = null
+    private var userSocialDto: UserSocialDto? = null
 
     @BeforeClass
     fun beforeClass() {
         deleteUser(demoUserProps.email)
         userRecord = createUser(demoUserProps)
-        createClaims(userRecord!!, false)
         idToken = login(firebaseProps, objectMapper, demoUserProps.email)
+        createUserProfileTestClaims()
+        userProfileDto = createTestUserProfile()
+        userSocialDto = createTestUserSocial()
     }
 
     @AfterClass
@@ -86,15 +82,34 @@ class UserControllerTest: AbstractTestNGSpringContextTests() {
         log.info("  Testcase: " + method.name)
     }
 
-    
-    @Test
-    fun save_user_profile_test() {
+    private fun createTestUserSocial(): UserSocialDto? {
+        val faker = Faker()
+        val socialDto = UserSocialDto()
+        socialDto.facebook = faker.internet().url()
+        socialDto.twitter = faker.name().username()
+        socialDto.linkedin = faker.internet().url()
+        socialDto.github = faker.internet().url()
+        socialDto.instagram = faker.name().username()
+        socialDto.whatsapp = faker.phoneNumber().phoneNumber()
+        socialDto.website = faker.internet().url()
+        return socialDto
+    }
+
+    private fun createUserProfileTestClaims() {
+        val request = UserPermissionsRequest()
+        request.email = demoUserProps.email
+        request.displayName = "UserController Test"
+        val response = request("permissions", "POST", request)
+        assertEquals(200, response?.statusCodeValue)
+    }
+
+    private fun createTestUserProfile(): UserProfileDto? {
         val faker = Faker()
         val userProfileDto = UserProfileDto()
         userProfileDto.firstName = faker.name().firstName()
         userProfileDto.lastName = faker.name().lastName()
         userProfileDto.title = faker.name().title()
-        userProfileDto.email = testEmail
+        userProfileDto.email = demoUserProps.email
         userProfileDto.isNewUser = true
         userProfileDto.homePhone = faker.phoneNumber().phoneNumber()
         userProfileDto.mobilePhone = faker.phoneNumber().cellPhone()
@@ -103,23 +118,50 @@ class UserControllerTest: AbstractTestNGSpringContextTests() {
         userProfileDto.city = faker.address().city()
         userProfileDto.postalCode = faker.address().zipCode()
         userProfileDto.address = faker.address().fullAddress()
+        return userProfileDto
+    }
+
+
+
+    @Test
+    fun save_user_profile_test() {
         val response = request("profile", "POST", userProfileDto)
         assertNotNull(response)
         assertEquals(200, response.statusCodeValue)
         val responseDto = objectMapper.readValue(response.body, UserProfileDto::class.java)
-        assertNotNull(responseDto)
-        assertEquals(userProfileDto.firstName, responseDto.firstName)
-        assertEquals(userProfileDto.lastName, responseDto.lastName)
-        assertEquals(userProfileDto.title, responseDto.title)
-        assertEquals(userProfileDto.email, responseDto.email)
-        assertEquals(userProfileDto.homePhone, responseDto.homePhone)
-        assertEquals(userProfileDto.mobilePhone, responseDto.mobilePhone)
-        assertEquals(userProfileDto.country, responseDto.country)
-        assertEquals(userProfileDto.state, responseDto.state)
-        assertEquals(userProfileDto.city, responseDto.city)
-        assertEquals(userProfileDto.postalCode, responseDto.postalCode)
-        assertEquals(userProfileDto.address, responseDto.address)
+       assertUserProfileResponse(responseDto)
     }
+
+    @Test
+    fun save_user_social_test() {
+
+    }
+
+    @Test(dependsOnMethods = ["save_user_profile_test"])
+    fun get_user_profile_test() {
+        val response = request("profile?email=${demoUserProps.email}", "GET", null)
+        assertNotNull(response)
+        assertEquals(200, response.statusCodeValue)
+        val responseDto = objectMapper.readValue(response.body, UserProfileDto::class.java)
+        assertUserProfileResponse(responseDto)
+    }
+
+    private fun assertUserProfileResponse(responseDto: UserProfileDto?) {
+        assertNotNull(responseDto)
+        assertEquals(userProfileDto?.firstName, responseDto.firstName)
+        assertEquals(userProfileDto?.lastName, responseDto.lastName)
+        assertEquals(userProfileDto?.title, responseDto.title)
+        assertEquals(userProfileDto?.email, responseDto.email)
+        assertEquals(userProfileDto?.homePhone, responseDto.homePhone)
+        assertEquals(userProfileDto?.mobilePhone, responseDto.mobilePhone)
+        assertEquals(userProfileDto?.country, responseDto.country)
+        assertEquals(userProfileDto?.state, responseDto.state)
+        assertEquals(userProfileDto?.city, responseDto.city)
+        assertEquals(userProfileDto?.postalCode, responseDto.postalCode)
+        assertEquals(userProfileDto?.address, responseDto.address)
+    }
+
+
 
 
 //    private fun getSocial(): SocialEntity? {

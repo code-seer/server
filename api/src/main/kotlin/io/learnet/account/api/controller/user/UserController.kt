@@ -4,6 +4,7 @@ import io.learnet.account.api.*
 import io.learnet.account.model.*
 import io.learnet.account.service.api.user.UserManagement
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import org.springframework.web.multipart.MultipartFile
 
@@ -17,10 +18,12 @@ class UserController(
         return ResponseEntity.ok(InlineResponse200().status(response))
     }
 
-    override fun getUserProfile(email: String?): ResponseEntity<UserProfileDto> {
-        TODO("Not yet implemented")
+    @PreAuthorize("hasRole(T(io.learnet.account.model.UserRole).READ_USER_PROFILE.value)")
+    override fun getUserProfile(email: String): ResponseEntity<UserProfileDto> {
+        return ResponseEntity.ok(userManagement.getUserProfile(email))
     }
 
+    @PreAuthorize("hasRole(T(io.learnet.account.model.UserRole).WRITE_USER_PROFILE.value)")
     override fun saveUserProfile(userProfileDto: UserProfileDto): ResponseEntity<UserProfileDto> {
         return ResponseEntity.ok(userManagement.saveUserProfile(userProfileDto))
     }

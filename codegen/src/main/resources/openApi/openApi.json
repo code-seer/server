@@ -167,7 +167,9 @@
           "ROLE_TEST",
           "ROLE_DEMO_USER_READ",
           "ROLE_VIEW_DASHBOARD",
-          "ROLE_CREATE_CONFERENCE"
+          "ROLE_CREATE_CONFERENCE",
+          "ROLE_WRITE_USER_PROFILE",
+          "ROLE_READ_USER_PROFILE"
         ]
       }
     }
