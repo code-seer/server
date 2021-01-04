@@ -66,7 +66,21 @@ class UserManagementService(
     }
 
     override fun getUserProfile(email: String): UserProfileDto {
-        TODO("Not yet implemented")
+        val entity = userProfileRepo.findByEmail(email)
+        val address = entity.address
+        val dto = UserProfileDto()
+        dto.title = entity.title
+        dto.firstName = entity.firstName
+        dto.lastName = entity.lastName
+        dto.mobilePhone = entity.mobilePhone
+        dto.homePhone = entity.homePhone
+        dto.email = entity.email
+        dto.address = address?.address1
+        dto.country = address?.country
+        dto.state = address?.state
+        dto.city = address?.city
+        dto.postalCode = address?.postalCode
+        return dto
     }
 
     override fun getAvatarUrl(email: String): UserAvatarResponse {
@@ -79,7 +93,7 @@ class UserManagementService(
     }
 
     override fun getUserLanguage(email: String): UserLanguageDto {
-        var entity = getUserProfileEntity(email)
+        val entity = getUserProfileEntity(email)
         val response = UserLanguageDto()
         if (entity.language != null) {
             response.language = entity.language
@@ -100,12 +114,23 @@ class UserManagementService(
     }
 
     override fun getUserSocial(email: String): UserSocialDto {
-        TODO("Not yet implemented")
+        val entity = getUserProfileEntity(email)
+        val dto = UserSocialDto()
+        if (entity?.social != null) {
+            dto.facebook = entity.social!!.facebook
+            dto.github = entity.social!!.github
+            dto.instagram = entity.social!!.instagram
+            dto.whatsapp = entity.social!!.whatsapp
+            dto.twitter = entity.social!!.twitter
+            dto.linkedin = entity.social!!.linkedin
+            dto.website = entity.social!!.website
+        }
+        return dto
     }
 
     override fun saveUserProfile(userProfileDto: UserProfileDto): UserProfileDto {
         val now = OffsetDateTime.now()
-        val entity = getUserProfileEntity(userProfileDto.email)
+        var entity = getUserProfileEntity(userProfileDto.email)
         var addressEntity = entity.address
         entity.firstName = userProfileDto.firstName
         entity.lastName = userProfileDto.lastName
@@ -131,6 +156,7 @@ class UserManagementService(
         userProfileRepo.save(entity)
         return userProfileDto
     }
+
 
     override fun uploadUserAvatar(avatar: MultipartFile, email: String): UserAvatarResponse {
         val newObjectKey = UUID.randomUUID().toString()
