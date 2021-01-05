@@ -66,8 +66,6 @@ class UserControllerTest: AbstractTestNGSpringContextTests() {
     fun beforeClass() {
         deleteUser(demoUserProps.email)
         userRecord = createUser(demoUserProps)
-        idToken = login(firebaseProps, objectMapper, demoUserProps.email)
-        createUserProfileTestClaims()
         userProfileDto = createTestUserProfile()
         userSocialDto = createTestUserSocial()
     }
@@ -79,6 +77,7 @@ class UserControllerTest: AbstractTestNGSpringContextTests() {
 
     @BeforeMethod
     fun nameBefore(method: Method) {
+        idToken = login(firebaseProps, objectMapper, demoUserProps.email)
         log.info("  Testcase: " + method.name)
     }
 
@@ -95,13 +94,6 @@ class UserControllerTest: AbstractTestNGSpringContextTests() {
         return socialDto
     }
 
-    private fun createUserProfileTestClaims() {
-        val request = UserPermissionsRequest()
-        request.email = demoUserProps.email
-        request.displayName = "UserController Test"
-        val response = request("permissions", "POST", request)
-        assertEquals(200, response?.statusCodeValue)
-    }
 
     private fun createTestUserProfile(): UserProfileDto? {
         val faker = Faker()
@@ -121,10 +113,19 @@ class UserControllerTest: AbstractTestNGSpringContextTests() {
         return userProfileDto
     }
 
-
-
     @Test
-    fun save_user_profile_test() {
+    fun create_user_permissions() {
+        val request = UserPermissionsRequest()
+        request.email = demoUserProps.email
+        request.displayName = "UserController Test"
+        val response = request("permissions", "POST", request)
+        assertNotNull(response)
+        assertEquals(200, response.statusCodeValue)
+    }
+
+
+    @Test(dependsOnMethods = ["create_user_permissions"])
+    fun save_user_profile() {
         val response = request("profile", "POST", userProfileDto)
         assertNotNull(response)
         assertEquals(200, response.statusCodeValue)
@@ -132,13 +133,13 @@ class UserControllerTest: AbstractTestNGSpringContextTests() {
        assertUserProfileResponse(responseDto)
     }
 
-    @Test
-    fun save_user_social_test() {
+//    @Test
+    fun save_user_social() {
 
     }
 
-    @Test(dependsOnMethods = ["save_user_profile_test"])
-    fun get_user_profile_test() {
+//    @Test(dependsOnMethods = ["save_user_profile"])
+    fun get_user_profile() {
         val response = request("profile?email=${demoUserProps.email}", "GET", null)
         assertNotNull(response)
         assertEquals(200, response.statusCodeValue)
