@@ -1,15 +1,14 @@
-package io.learnet.account.api
+package io.learnet.starter.api
 
-import io.learnet.account.util.properties.DemoUserProps
-import io.learnet.account.api.security.createClaims
-import io.learnet.account.api.security.createUser
-import io.learnet.account.api.security.deleteUser
-import io.learnet.account.data.migration.FlywayMigration
-import io.learnet.account.data.repo.DemoUserRepo
-import io.learnet.account.search.SearchConfiguration
-import io.learnet.account.search.api.SearchApi
-import io.learnet.account.service.ServiceConfiguration
-import io.learnet.account.util.FirebaseConfig
+import io.learnet.starter.util.properties.DemoUserProps
+import io.learnet.starter.api.security.createClaims
+import io.learnet.starter.api.security.createUser
+import io.learnet.starter.api.security.deleteUser
+import io.learnet.starter.data.migration.FlywayMigration
+import io.learnet.starter.data.repo.DemoUserRepo
+import io.learnet.starter.search.SearchConfiguration
+import io.learnet.starter.search.api.SearchApi
+import io.learnet.starter.service.ServiceConfiguration
 import org.elasticsearch.client.core.CountRequest
 import org.elasticsearch.index.query.QueryBuilders
 import org.slf4j.Logger
@@ -34,7 +33,7 @@ import org.springframework.dao.InvalidDataAccessResourceUsageException
 //        classes = arrayOf(OpenApiControllerWebMvc::class))])
 @Configuration
 @ComponentScan
-@Import(value = [ SearchConfiguration::class, ServiceConfiguration::class, FirebaseConfig::class ] )
+@Import(value = [ SearchConfiguration::class, ServiceConfiguration::class ] )
 class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
@@ -55,18 +54,8 @@ class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
     @EventListener
     fun onApplicationStart(event: ApplicationStartedEvent) {
         handleMigration()
-//        createDemoUser()
     }
 
-    /**
-     * Create a demo LMS user account to access protected services. This microservice
-     * is not publicly accessible. It can only be accessed through the API Gateway
-     * and the user must be authenticated. Otherwise a 401 response is returned.
-     */
-    private fun createDemoUser() {
-        deleteUser(demoUserProps.email)
-        createClaims(createUser(demoUserProps), false)
-    }
 
     private fun handleMigration() {
         val countRequest = CountRequest(arrayOf(demoUserProps.esIndex), QueryBuilders.matchAllQuery())
