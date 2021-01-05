@@ -1,4 +1,4 @@
-package io.learnet.account.api.controller
+package io.learnet.account.api.controller.demo
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.firebase.auth.UserRecord
@@ -7,10 +7,8 @@ import io.learnet.account.api.security.createClaims
 import io.learnet.account.api.security.createUser
 import io.learnet.account.api.security.deleteUser
 import io.learnet.account.api.security.login
-import io.learnet.account.api.*
 import io.learnet.account.util.properties.DemoUserProps
 import io.learnet.account.util.properties.FirebaseProps
-import io.learnet.account.api.security.*
 import io.learnet.account.model.DemoUserResponse
 import io.learnet.account.model.PageableRequest
 import org.slf4j.Logger
