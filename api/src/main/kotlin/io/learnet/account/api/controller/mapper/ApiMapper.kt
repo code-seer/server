@@ -1,9 +1,9 @@
-package io.learnet.starter.api.controller.mapper
+package io.learnet.account.api.controller.mapper
 
-import io.learnet.starter.model.DemoUserDto
-import io.learnet.starter.model.DemoUserResponse
-import io.learnet.starter.model.ServiceInstanceDto
-import io.learnet.starter.search.api.LmsPage
+import io.learnet.account.model.DemoUserDto
+import io.learnet.account.model.DemoUserResponse
+import io.learnet.account.model.ServiceInstanceDto
+import io.learnet.account.search.api.LmsPage
 import org.springframework.cloud.client.ServiceInstance
 import org.springframework.stereotype.Component
 import java.util.ArrayList

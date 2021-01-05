@@ -1,14 +1,11 @@
-package io.learnet.starter.api
+package io.learnet.account.api
 
-import io.learnet.starter.util.properties.DemoUserProps
-import io.learnet.starter.api.security.createClaims
-import io.learnet.starter.api.security.createUser
-import io.learnet.starter.api.security.deleteUser
-import io.learnet.starter.data.migration.FlywayMigration
-import io.learnet.starter.data.repo.DemoUserRepo
-import io.learnet.starter.search.SearchConfiguration
-import io.learnet.starter.search.api.SearchApi
-import io.learnet.starter.service.ServiceConfiguration
+import io.learnet.account.util.properties.DemoUserProps
+import io.learnet.account.data.migration.FlywayMigration
+import io.learnet.account.data.repo.DemoUserRepo
+import io.learnet.account.search.SearchConfiguration
+import io.learnet.account.search.api.SearchApi
+import io.learnet.account.service.ServiceConfiguration
 import org.elasticsearch.client.core.CountRequest
 import org.elasticsearch.index.query.QueryBuilders
 import org.slf4j.Logger
