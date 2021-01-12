@@ -72,9 +72,11 @@ class UserManagementTest: AbstractTestNGSpringContextTests() {
         assertEquals("OK", response)
 
         val expected = listOf(
-                "ROLE_DEMO_USER_READ",
-                "ROLE_VIEW_DASHBOARD",
-                "ROLE_CREATE_CONFERENCE").toSet()
+            "ROLE_DEMO_USER_READ",
+            "ROLE_VIEW_DASHBOARD",
+            "ROLE_CREATE_CONFERENCE",
+            "ROLE_WRITE_USER_PROFILE",
+            "ROLE_READ_USER_PROFILE").toSet()
         val userRecord = FirebaseAuth.getInstance().getUserByEmail(testEmail)
         assertNotNull(userRecord)
         assertEquals(expected.size, userRecord.customClaims.size)
