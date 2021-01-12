@@ -17,19 +17,18 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.web.server.LocalServerPort
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
+import org.springframework.http.*
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests
 import org.testng.annotations.AfterClass
 import org.testng.annotations.BeforeClass
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
+import java.io.File
 import java.lang.reflect.Method
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import org.springframework.util.LinkedMultiValueMap
 
 
 @DirtiesContext
@@ -91,6 +90,7 @@ class UserControllerTest: AbstractTestNGSpringContextTests() {
         socialDto.instagram = faker.name().username()
         socialDto.whatsapp = faker.phoneNumber().phoneNumber()
         socialDto.website = faker.internet().url()
+        socialDto.email = demoUserProps.email
         return socialDto
     }
 
@@ -118,7 +118,7 @@ class UserControllerTest: AbstractTestNGSpringContextTests() {
         val request = UserPermissionsRequest()
         request.email = demoUserProps.email
         request.displayName = "UserController Test"
-        val response = request("permissions", "POST", request)
+        val response = request("permissions", "POST", false, request)
         assertNotNull(response)
         assertEquals(200, response.statusCodeValue)
     }
@@ -126,25 +126,55 @@ class UserControllerTest: AbstractTestNGSpringContextTests() {
 
     @Test(dependsOnMethods = ["create_user_permissions"])
     fun save_user_profile() {
-        val response = request("profile", "POST", userProfileDto)
+        val response = request("profile", "POST", false, userProfileDto)
         assertNotNull(response)
         assertEquals(200, response.statusCodeValue)
         val responseDto = objectMapper.readValue(response.body, UserProfileDto::class.java)
        assertUserProfileResponse(responseDto)
     }
 
-//    @Test
+    @Test(dependsOnMethods = ["create_user_permissions"])
     fun save_user_social() {
-
+        val response = request("social", "POST", false, userSocialDto)
+        assertNotNull(response)
+        assertEquals(200, response.statusCodeValue)
+        val responseDto = objectMapper.readValue(response.body, UserSocialDto::class.java)
+        assertNotNull(responseDto)
+        assertEquals(userSocialDto?.facebook, responseDto.facebook)
+        assertEquals(userSocialDto?.instagram, responseDto.instagram)
     }
 
-//    @Test(dependsOnMethods = ["save_user_profile"])
+    @Test(dependsOnMethods = ["save_user_profile"])
     fun get_user_profile() {
-        val response = request("profile?email=${demoUserProps.email}", "GET", null)
+        val response = request("profile?email=${demoUserProps.email}", "GET", false, null)
         assertNotNull(response)
         assertEquals(200, response.statusCodeValue)
         val responseDto = objectMapper.readValue(response.body, UserProfileDto::class.java)
         assertUserProfileResponse(responseDto)
+    }
+
+    // TODO: unable to load a multipart file using the dispatch servlet
+    @Test(dependsOnMethods = ["create_user_permissions"], enabled = false)
+    fun upload_avatar() {
+        val requestBody: LinkedMultiValueMap<Any, Any> = LinkedMultiValueMap<Any, Any>()
+        requestBody.add("avatar", loadAvatar())
+        requestBody.add("email", demoUserProps.email)
+        val response = request("avatar", "POST", true, requestBody)
+        assertNotNull(response)
+        assertEquals(200, response.statusCodeValue)
+        val responseDto = objectMapper.readValue(response.body, UserAvatarResponse::class.java)
+        assertNotNull(responseDto)
+        assertEquals(true, responseDto.url.contains("amazon"))
+    }
+
+    @Test(dependsOnMethods = ["upload_avatar"], enabled = false)
+    fun get_avatar() {
+        val response = request("avatar?email=${demoUserProps.email}", "GET", false,null)
+        assertNotNull(response)
+        assertEquals(200, response.statusCodeValue)
+        val responseDto = objectMapper.readValue(response.body, UserAvatarResponse::class.java)
+        assertNotNull(responseDto)
+        assertEquals(true, responseDto.url.contains("amazon"))
     }
 
     private fun assertUserProfileResponse(responseDto: UserProfileDto?) {
@@ -162,68 +192,22 @@ class UserControllerTest: AbstractTestNGSpringContextTests() {
         assertEquals(userProfileDto?.address, responseDto.address)
     }
 
-
-
-
-//    private fun getSocial(): SocialEntity? {
-//        val faker = Faker()
-//        val entity = SocialEntity()
-//        val now = OffsetDateTime.now()
-//        entity.facebook = faker.internet().url()
-//        entity.twitter = faker.name().username()
-//        entity.linkedin = faker.internet().url()
-//        entity.github = faker.internet().url()
-//        entity.youtube = faker.internet().url()
-//        entity.instagram = faker.name().username()
-//        entity.snapchat = faker.name().username()
-//        entity.whatsapp = faker.phoneNumber().phoneNumber()
-//        entity.website = faker.internet().url()
-//        entity.createdDt = now
-//        entity.updatedDt = now
-//        entity.uuid = UUID.randomUUID()
-//        return socialRepo.save(entity)
-//    }
-
-//    private fun getAddress(): AddressEntity {
-//        val faker = Faker()
-//        val entity = AddressEntity()
-//        val now = OffsetDateTime.now()
-//        entity.country = faker.address().country()
-//        entity.state = faker.address().stateAbbr()
-//        entity.city = faker.address().city()
-//        entity.postalCode = faker.address().zipCode()
-//        entity.address1 = faker.address().fullAddress()
-//        entity.createdDt = now
-//        entity.updatedDt = now
-//        entity.uuid = UUID.randomUUID()
-//        return addressRepo.save(entity)
-//    }
-
-
-//    @Test
-//    fun demo_user_endpoint_test() {
-//        createClaims(userRecord!!, false)
-//        idToken = login(firebaseProps, objectMapper, demoUserProps.email)
-//        val response = request()
-//        assertNotNull(response)
-//        assertEquals(200, response.statusCodeValue)
-//        val demoUserResponse = objectMapper.readValue(response.body, DemoUserResponse::class.java)
-//        assertNotNull(demoUserResponse)
-//        assertEquals(4, demoUserResponse.numPages)
-//        assertEquals(100, demoUserResponse.totalRecords)
-//        assertEquals("Angelo", demoUserResponse.content[7].firstName)
-//        assertEquals("Carter", demoUserResponse.content[7].lastName)
-//    }
-
-    private fun request(url: String, method: String, dto: Any?): ResponseEntity<String>? {
+    private fun request(url: String, method: String, multiPart: Boolean, dto: Any?): ResponseEntity<String>? {
         val uri = "http://${host}:${port}${contextPath}/${url}"
         val headers = HttpHeaders()
         headers.contentType = MediaType.APPLICATION_JSON
+        if (multiPart) {
+            headers.contentType = MediaType.MULTIPART_FORM_DATA
+        }
         idToken?.let { headers.setBearerAuth(it) }
         val entity = HttpEntity<Any>(dto, headers)
         if (method == "POST") {
             return restTemplate?.postForEntity(uri, entity, String::class.java)
         }
-        return restTemplate?.getForEntity(uri, String::class.java)
+        return restTemplate?.exchange(uri, HttpMethod.GET, entity, String::class.java)
+    }
+
+    private fun loadAvatar(): File {
+        return File(this::class.java.getResource("/avatar/dugg.jpg").file)
     }
 }

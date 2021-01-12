@@ -60,10 +60,12 @@ class UserController(
         TODO("Not yet implemented")
     }
 
+    @PreAuthorize("hasRole(T(io.learnet.account.model.UserRole).READ_USER_PROFILE.value)")
     override fun getUserSocial(email: String): ResponseEntity<UserSocialDto> {
         return ResponseEntity.ok(userManagement.getUserSocial(email))
     }
 
+    @PreAuthorize("hasRole(T(io.learnet.account.model.UserRole).WRITE_USER_PROFILE.value)")
     override fun saveUserSocial(userSocialDto: UserSocialDto): ResponseEntity<UserSocialDto> {
         return ResponseEntity.ok(userManagement.saveUserSocial(userSocialDto))
     }
