@@ -15,7 +15,8 @@
 	<description>API Code Generator</description>
 
 	<properties>
-			<git_push.script.path>${project.basedir}/script</git_push.script.path>
+		<npm_publish.script.path>${project.basedir}/script</npm_publish.script.path>
+		<apiVersion>1.0.2</apiVersion>
 	</properties>
 
     <dependencies>
@@ -70,6 +71,11 @@
 						<configuration>
 							<generatorName>typescript-axios</generatorName>
 							<addCompileSourceRoot>false</addCompileSourceRoot>
+							<configOptions>
+								<npmName>@learnet/starter-api</npmName>
+								<npmVersion>${apiVersion}</npmVersion>
+<!--								<npmRepository>https://gitlab.learnet.io/api/v4/projects/${gitlab.projectId}/packages/npm/</npmRepository>-->
+							</configOptions>
 							<inputSpec>${project.basedir}/src/main/resources/openApi/openApi.json</inputSpec>
 							<output>${project.build.directory}/generated-resources/typescript</output>
 						</configuration>
@@ -124,16 +130,16 @@
 				<version>${maven.plugin.version}</version>
 				<executions>
 					<execution>
-						<id>git-push</id>
+						<id>npm-publish</id>
 						<phase>install</phase>
 						<goals>
 							<goal>exec</goal>
 						</goals>
 						<configuration>
 							<executable>bash</executable>
-							<workingDirectory>${git_push.script.path}</workingDirectory>
+							<workingDirectory>${npm_publish.script.path}</workingDirectory>
 							<arguments>
-								<argument>git_push.sh</argument>
+								<argument>npm_publish.sh</argument>
 							</arguments>
 						</configuration>
 					</execution>
