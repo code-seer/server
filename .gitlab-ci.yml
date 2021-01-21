@@ -29,7 +29,6 @@ maven-build:
   artifacts:
     paths:
       - api/target/app.jar
-      - codegen
     when: always
     reports:
       junit:
@@ -44,7 +43,9 @@ npm-package:
   stage: npm-package
   script:
     - ls -a
-    - cd codegen/script
+    - cd codegen
+    - ls -a
+    - cd script
     - ls -a
     - ./npm_publish
 
