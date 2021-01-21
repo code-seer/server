@@ -123,27 +123,27 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>${maven.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>npm-publish</id>
-						<phase>install</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>bash</executable>
-							<workingDirectory>${npm_publish.script.path}</workingDirectory>
-							<arguments>
-								<argument>npm_publish.sh</argument>
-							</arguments>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.codehaus.mojo</groupId>-->
+<!--				<artifactId>exec-maven-plugin</artifactId>-->
+<!--				<version>${maven.plugin.version}</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>npm-publish</id>-->
+<!--						<phase>install</phase>-->
+<!--						<goals>-->
+<!--							<goal>exec</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<executable>bash</executable>-->
+<!--							<workingDirectory>${npm_publish.script.path}</workingDirectory>-->
+<!--							<arguments>-->
+<!--								<argument>npm_publish.sh</argument>-->
+<!--							</arguments>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
