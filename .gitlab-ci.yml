@@ -40,7 +40,7 @@ maven-build:
         - service/target/surefire-reports/TEST-*.xml
 
 npm-publish:
-  image: node:latest
+  image: node:15.4.
   stage: npm-publish
   script:
     - cd codegen/target/generated-resources/typescript
@@ -48,6 +48,7 @@ npm-publish:
     - npm config set "//gitlab.learnet.io/api/v4/projects/$CI_PROJECT_ID/packages/npm/:_authToken" "$CI_JOB_TOKEN"
     - npm config set @learnet:registry https://gitlab.learnet.io/api/v4/projects/$CI_PROJECT_ID/packages/npm/
     - npm install
+    - npm audit fix --force
     - npm publish
 
 docker-build:
