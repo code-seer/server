@@ -43,7 +43,9 @@ npm-package:
   image: node:latest
   stage: npm-package
   script:
+    - ls -a
     - cd codegen/script
+    - ls -a
     - ./npm_publish
 
 docker-build:
