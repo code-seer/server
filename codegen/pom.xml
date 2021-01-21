@@ -16,7 +16,6 @@
 
 	<properties>
 		<npm_publish.script.path>${project.basedir}/script</npm_publish.script.path>
-		<apiVersion>1.0.2</apiVersion>
 	</properties>
 
     <dependencies>
@@ -73,7 +72,7 @@
 							<addCompileSourceRoot>false</addCompileSourceRoot>
 							<configOptions>
 								<npmName>@learnet/starter-api</npmName>
-								<npmVersion>${apiVersion}</npmVersion>
+								<npmVersion>1.0.${current.time}</npmVersion>
 <!--								<npmRepository>https://gitlab.learnet.io/api/v4/projects/${gitlab.projectId}/packages/npm/</npmRepository>-->
 							</configOptions>
 							<inputSpec>${project.basedir}/src/main/resources/openApi/openApi.json</inputSpec>
@@ -141,6 +140,24 @@
 							<arguments>
 								<argument>npm_publish.sh</argument>
 							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>${maven.buildHelper.version}</version>
+				<executions>
+					<execution>
+						<id>timestamp-property</id>
+						<goals>
+							<goal>timestamp-property</goal>
+						</goals>
+						<configuration>
+							<name>current.time</name>
+							<pattern>yyyyMMddHHmmss</pattern>
+							<timeZone>GMT-5</timeZone>
 						</configuration>
 					</execution>
 				</executions>

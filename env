@@ -1,3 +1,4 @@
 export SPRING_APPLICATION_NAME=account
 export SPRING_CLOUD_CONFIG_URI=https://configserver.learnet.io
 export SPRING_PROFILES_ACTIVE=dev
+export CI_JOB_TOKEN=fC79RWjvsxLRqgzM3ygn
