@@ -40,7 +40,7 @@ maven-build:
         - service/target/surefire-reports/TEST-*.xml
 
 npm-publish:
-  image: node:15.4.
+  image: node:15.4
   stage: npm-publish
   script:
     - cd codegen/target/generated-resources/typescript
