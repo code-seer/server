@@ -71,7 +71,7 @@
 							<generatorName>typescript-axios</generatorName>
 							<addCompileSourceRoot>false</addCompileSourceRoot>
 							<configOptions>
-								<npmName>@learnet/starter-api</npmName>
+								<npmName>@learnet/account-api</npmName>
 								<npmVersion>1.0.${current.time}</npmVersion>
 <!--								<npmRepository>https://gitlab.learnet.io/api/v4/projects/${gitlab.projectId}/packages/npm/</npmRepository>-->
 							</configOptions>
