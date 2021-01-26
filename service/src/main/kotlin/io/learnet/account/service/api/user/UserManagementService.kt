@@ -12,6 +12,7 @@ import io.learnet.account.util.properties.S3Props
 import io.learnet.account.util.properties.UserPermissionsProps
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.util.StringUtils
 import org.springframework.web.multipart.MultipartFile
 import java.time.OffsetDateTime
 import java.util.*
@@ -66,21 +67,7 @@ class UserManagementService(
     }
 
     override fun getUserProfile(email: String): UserProfileDto {
-        val entity = userProfileRepo.findByEmail(email)
-        val address = entity?.address
-        val dto = UserProfileDto()
-        dto.title = entity?.title
-        dto.firstName = entity?.firstName
-        dto.lastName = entity?.lastName
-        dto.mobilePhone = entity?.mobilePhone
-        dto.homePhone = entity?.homePhone
-        dto.email = entity?.email
-        dto.address = address?.address1
-        dto.country = address?.country
-        dto.state = address?.state
-        dto.city = address?.city
-        dto.postalCode = address?.postalCode
-        return dto
+        return mapEntityToDto(userProfileRepo.findByEmail(email))
     }
 
     override fun getAvatarUrl(email: String): UserAvatarResponse {
@@ -132,31 +119,57 @@ class UserManagementService(
         val now = OffsetDateTime.now()
         var entity = getUserProfileEntity(userProfileDto.email)
         var addressEntity = entity.address
-        entity.firstName = userProfileDto.firstName
-        entity.lastName = userProfileDto.lastName
-        entity.title = userProfileDto.title
-        entity.mobilePhone = userProfileDto.mobilePhone
-        entity.homePhone = userProfileDto.homePhone
-        entity.email = userProfileDto.email
+        if (!StringUtils.isEmpty(userProfileDto.firstName)) {
+            entity.firstName = userProfileDto.firstName
+        }
+        if (!StringUtils.isEmpty(userProfileDto.lastName)) {
+            entity.lastName = userProfileDto.lastName
+        }
+        if (!StringUtils.isEmpty(userProfileDto.title)) {
+            entity.title = userProfileDto.title
+        }
+        if (!StringUtils.isEmpty(userProfileDto.mobilePhone)) {
+            entity.mobilePhone = userProfileDto.mobilePhone
+        }
+        if (!StringUtils.isEmpty(userProfileDto.homePhone)) {
+            entity.homePhone = userProfileDto.homePhone
+        }
+        if (!StringUtils.isEmpty(userProfileDto.email)) {
+            entity.email = userProfileDto.email
+        }
+        if (!StringUtils.isEmpty(userProfileDto.secondaryEmail)) {
+            entity.secondaryEmail = userProfileDto.secondaryEmail
+        }
         if (addressEntity == null) {
             addressEntity = AddressEntity()
             addressEntity.createdDt = now
             addressEntity.uuid = UUID.randomUUID()
         }
-        addressEntity.address1 = userProfileDto.address
-        addressEntity.city = userProfileDto.city
-        addressEntity.state = userProfileDto.state
-        addressEntity.postalCode = userProfileDto.postalCode
-        addressEntity.country = userProfileDto.country
+        if (!StringUtils.isEmpty(userProfileDto.address)) {
+            addressEntity.address1 = userProfileDto.address
+        }
+        if (!StringUtils.isEmpty(userProfileDto.city)) {
+            addressEntity.city = userProfileDto.city
+        }
+        if (!StringUtils.isEmpty(userProfileDto.state)) {
+            addressEntity.state = userProfileDto.state
+        }
+        if (!StringUtils.isEmpty(userProfileDto.postalCode)) {
+            addressEntity.postalCode = userProfileDto.postalCode
+        }
+        if (!StringUtils.isEmpty(userProfileDto.country)) {
+            addressEntity.country = userProfileDto.country
+        }
+        if (userProfileDto.isNewUser != null) {
+            entity.isNewUser = userProfileDto.isNewUser
+        }
         addressEntity.updatedDt = now
         addressRepo.save(addressEntity)
         entity.address = addressEntity
         entity.updatedDt = now
-        entity.isNewUser = userProfileDto.isNewUser
         userProfileRepo.save(entity)
-        return userProfileDto
+        return mapEntityToDto(entity)
     }
-
 
     override fun uploadUserAvatar(avatar: MultipartFile, email: String): UserAvatarResponse {
         val newObjectKey = UUID.randomUUID().toString()
@@ -233,5 +246,23 @@ class UserManagementService(
             entity.uuid = UUID.randomUUID()
         }
         return entity
+    }
+
+    private fun mapEntityToDto(entity: UserProfileEntity?): UserProfileDto {
+        val dto = UserProfileDto()
+        dto.avatar = entity?.avatar
+        dto.title = entity?.title
+        dto.firstName = entity?.firstName
+        dto.lastName = entity?.lastName
+        dto.email = entity?.email
+        dto.secondaryEmail = entity?.secondaryEmail
+        dto.mobilePhone = entity?.mobilePhone
+        dto.homePhone = entity?.homePhone
+        dto.address = entity?.address?.address1
+        dto.country = entity?.address?.country
+        dto.state = entity?.address?.state
+        dto.city = entity?.address?.city
+        dto.postalCode = entity?.address?.postalCode
+        return dto
     }
 }
