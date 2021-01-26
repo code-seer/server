@@ -9,23 +9,23 @@ interface UserManagement {
      * Creates user permissions upon user login by updating the Firebase
      * user record object.
      */
-    fun createPermissions(request: UserPermissionsRequest): String
+    fun createPermissions(): String
 
-    fun getUserProfile(email: String): UserProfileDto
+    fun getUserProfile(): UserProfileDto
 
-    fun getAvatarUrl(email: String): UserAvatarResponse
+    fun getAvatarUrl(): UserAvatarResponse
 
-    fun getUserLanguage(email: String): UserLanguageDto
+    fun getUserLanguage(): UserLanguageDto
 
-    fun getUserNotificationSettings(email: String): UserNotificationSettingsDto
+    fun getUserNotificationSettings(): UserNotificationSettingsDto
 
-    fun saveUserPrivacySettings(email: String): UserPrivacySettingsDto
+    fun saveUserPrivacySettings(): UserPrivacySettingsDto
 
-    fun getUserSocial(email: String): UserSocialDto
+    fun getUserSocial(): UserSocialDto
 
     fun saveUserProfile(userProfileDto: UserProfileDto): UserProfileDto
 
-    fun uploadUserAvatar(avatar: MultipartFile, email: String): UserAvatarResponse
+    fun uploadUserAvatar(avatar: MultipartFile): UserAvatarResponse
 
     fun saveUserLanguage(userLanguageDto: UserLanguageDto): UserLanguageDto
 

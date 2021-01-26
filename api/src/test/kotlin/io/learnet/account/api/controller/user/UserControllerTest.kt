@@ -90,7 +90,6 @@ class UserControllerTest: AbstractTestNGSpringContextTests() {
         socialDto.instagram = faker.name().username()
         socialDto.whatsapp = faker.phoneNumber().phoneNumber()
         socialDto.website = faker.internet().url()
-        socialDto.email = demoUserProps.email
         return socialDto
     }
 
@@ -102,7 +101,6 @@ class UserControllerTest: AbstractTestNGSpringContextTests() {
         userProfileDto.lastName = faker.name().lastName()
         userProfileDto.title = faker.name().title()
         userProfileDto.email = demoUserProps.email
-        userProfileDto.isNewUser = true
         userProfileDto.homePhone = faker.phoneNumber().phoneNumber()
         userProfileDto.mobilePhone = faker.phoneNumber().cellPhone()
         userProfileDto.country = faker.address().country()
@@ -115,10 +113,7 @@ class UserControllerTest: AbstractTestNGSpringContextTests() {
 
     @Test
     fun create_user_permissions() {
-        val request = UserPermissionsRequest()
-        request.email = demoUserProps.email
-        request.displayName = "UserController Test"
-        val response = request("permissions", "POST", false, request)
+        val response = request("permissions", "POST", false, null)
         assertNotNull(response)
         assertEquals(200, response.statusCodeValue)
     }

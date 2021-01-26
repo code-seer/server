@@ -4,7 +4,6 @@ package io.learnet.account.service.api.user
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.UserRecord
-import io.learnet.account.model.UserPermissionsRequest
 import io.learnet.account.service.ServiceTestConfiguration
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -64,10 +63,7 @@ class UserManagementTest: AbstractTestNGSpringContextTests() {
 
     @Test(priority = 1)
     fun createPermissions() {
-        val request = UserPermissionsRequest()
-        request.email(testEmail)
-        request.displayName("LearNet User")
-        val response = userManagement.createPermissions(request)
+        val response = userManagement.createPermissions()
         assertNotNull(response)
         assertEquals("OK", response)
 
@@ -88,10 +84,7 @@ class UserManagementTest: AbstractTestNGSpringContextTests() {
 
     @Test(priority = 2)
     fun createPermissionsWithNoChange() {
-        val request = UserPermissionsRequest()
-        request.email(testEmail)
-        request.displayName("LearNet User")
-        val response = userManagement.createPermissions(request)
+        val response = userManagement.createPermissions()
         assertNotNull(response)
         assertEquals("No Change", response)
     }

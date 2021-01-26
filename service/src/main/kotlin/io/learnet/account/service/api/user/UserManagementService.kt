@@ -11,12 +11,18 @@ import io.learnet.account.service.api.aws.S3
 import io.learnet.account.util.properties.S3Props
 import io.learnet.account.util.properties.UserPermissionsProps
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
 import org.springframework.util.StringUtils
 import org.springframework.web.multipart.MultipartFile
 import java.time.OffsetDateTime
 import java.util.*
 import kotlin.collections.HashMap
+import org.springframework.security.core.context.SecurityContextHolder
+
+
+
 
 @Service
 class UserManagementService(
@@ -26,19 +32,20 @@ class UserManagementService(
     private val socialRepo: SocialRepo,
     private val securityRepo: SecurityRepo,
     private val userSettingsRepo: UserSettingsRepo,
-    private val addressRepo: AddressRepo): UserManagement {
+    private val addressRepo: AddressRepo,
+    private val userPrincipal: UserDto): UserManagement {
 
     @Autowired
     lateinit var userPermissions: UserPermissionsProps
 
-    override fun createPermissions(request: UserPermissionsRequest): String {
+    override fun createPermissions(): String {
         val claims =  hashMapOf<String, Boolean>()
-        val userRecord = FirebaseAuth.getInstance().getUserByEmail(request.email)
+        val userRecord = FirebaseAuth.getInstance().getUserByEmail(userPrincipal.email)
 
         // A user is authorized to use the UI if explicitly permitted (only applicable during dev)
         var isUiAuthorized = false
         userPermissions.uiAuthorizedEmails.iterator().forEach {
-            if (it == request.email) {
+            if (it == userPrincipal.email) {
                 isUiAuthorized = true
         }}
         if (isUiAuthorized) {
@@ -66,12 +73,12 @@ class UserManagementService(
         return status
     }
 
-    override fun getUserProfile(email: String): UserProfileDto {
-        return mapEntityToDto(userProfileRepo.findByEmail(email))
+    override fun getUserProfile(): UserProfileDto {
+        return mapEntityToDto(userProfileRepo.findByEmail(userPrincipal.email))
     }
 
-    override fun getAvatarUrl(email: String): UserAvatarResponse {
-        val entity = userProfileRepo.findByEmail(email)
+    override fun getAvatarUrl(): UserAvatarResponse {
+        val entity = userProfileRepo.findByEmail(userPrincipal.email)
         val response = UserAvatarResponse()
         if (entity != null) {
             response.url = entity.avatar
@@ -79,8 +86,8 @@ class UserManagementService(
         return response
     }
 
-    override fun getUserLanguage(email: String): UserLanguageDto {
-        val entity = getUserProfileEntity(email)
+    override fun getUserLanguage(): UserLanguageDto {
+        val entity = getUserProfileEntity(userPrincipal.email)
         val response = UserLanguageDto()
         if (entity.language != null) {
             response.language = entity.language
@@ -88,11 +95,11 @@ class UserManagementService(
         return response
     }
 
-    override fun getUserNotificationSettings(email: String): UserNotificationSettingsDto {
+    override fun getUserNotificationSettings(): UserNotificationSettingsDto {
         TODO("Not yet implemented")
     }
 
-    override fun saveUserPrivacySettings(email: String): UserPrivacySettingsDto {
+    override fun saveUserPrivacySettings(): UserPrivacySettingsDto {
         TODO("Not yet implemented")
     }
 
@@ -100,8 +107,8 @@ class UserManagementService(
         TODO("Not yet implemented")
     }
 
-    override fun getUserSocial(email: String): UserSocialDto {
-        val entity = getUserProfileEntity(email)
+    override fun getUserSocial(): UserSocialDto {
+        val entity = getUserProfileEntity(userPrincipal.email)
         val dto = UserSocialDto()
         if (entity?.social != null) {
             dto.facebook = entity.social!!.facebook
@@ -117,7 +124,8 @@ class UserManagementService(
 
     override fun saveUserProfile(userProfileDto: UserProfileDto): UserProfileDto {
         val now = OffsetDateTime.now()
-        var entity = getUserProfileEntity(userProfileDto.email)
+        var entity = getUserProfileEntity(userPrincipal.email)
+        entity.email = userPrincipal.email
         var addressEntity = entity.address
         if (!StringUtils.isEmpty(userProfileDto.firstName)) {
             entity.firstName = userProfileDto.firstName
@@ -135,10 +143,7 @@ class UserManagementService(
             entity.homePhone = userProfileDto.homePhone
         }
         if (!StringUtils.isEmpty(userProfileDto.email)) {
-            entity.email = userProfileDto.email
-        }
-        if (!StringUtils.isEmpty(userProfileDto.secondaryEmail)) {
-            entity.secondaryEmail = userProfileDto.secondaryEmail
+            entity.secondaryEmail = userProfileDto.email
         }
         if (addressEntity == null) {
             addressEntity = AddressEntity()
@@ -160,9 +165,6 @@ class UserManagementService(
         if (!StringUtils.isEmpty(userProfileDto.country)) {
             addressEntity.country = userProfileDto.country
         }
-        if (userProfileDto.isNewUser != null) {
-            entity.isNewUser = userProfileDto.isNewUser
-        }
         addressEntity.updatedDt = now
         addressRepo.save(addressEntity)
         entity.address = addressEntity
@@ -171,12 +173,12 @@ class UserManagementService(
         return mapEntityToDto(entity)
     }
 
-    override fun uploadUserAvatar(avatar: MultipartFile, email: String): UserAvatarResponse {
+    override fun uploadUserAvatar(avatar: MultipartFile): UserAvatarResponse {
         val newObjectKey = UUID.randomUUID().toString()
-        val entity = getUserProfileEntity(email)
+        val entity = getUserProfileEntity(userPrincipal.email)
         entity.avatarObjectKey?.let { s3.deleteObject(s3Props.bucket, it) }
         val url = s3.uploadObject(s3Props.bucket, newObjectKey, avatar)
-        entity.email = email
+        entity.email = userPrincipal.email
         entity.avatar = url
         entity.avatarObjectKey = newObjectKey
         entity.updatedDt = OffsetDateTime.now()
@@ -187,7 +189,7 @@ class UserManagementService(
     }
 
     override fun saveUserLanguage(userLanguageDto: UserLanguageDto): UserLanguageDto {
-        val entity = getUserProfileEntity(userLanguageDto.email)
+        val entity = getUserProfileEntity(userPrincipal.email)
         entity.language = userLanguageDto.language
         userProfileRepo.save(entity)
         return userLanguageDto
@@ -198,7 +200,7 @@ class UserManagementService(
     }
 
     override fun saveUserSocial(userSocialDto: UserSocialDto): UserSocialDto {
-        val entity = getUserProfileEntity(userSocialDto.email)
+        val entity = getUserProfileEntity(userPrincipal.email)
         var social = entity.social
         val now = OffsetDateTime.now()
         if (social == null) {
@@ -238,7 +240,7 @@ class UserManagementService(
     }
 
     private fun getUserProfileEntity(email: String): UserProfileEntity {
-        var entity = userProfileRepo.findByEmail(email)
+        var entity = userProfileRepo.findByEmail(userPrincipal.email)
         if (entity == null) {
             entity = UserProfileEntity()
             entity.email = email
@@ -254,8 +256,7 @@ class UserManagementService(
         dto.title = entity?.title
         dto.firstName = entity?.firstName
         dto.lastName = entity?.lastName
-        dto.email = entity?.email
-        dto.secondaryEmail = entity?.secondaryEmail
+        dto.email = entity?.secondaryEmail
         dto.mobilePhone = entity?.mobilePhone
         dto.homePhone = entity?.homePhone
         dto.address = entity?.address?.address1

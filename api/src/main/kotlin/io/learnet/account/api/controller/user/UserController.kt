@@ -13,14 +13,14 @@ class UserController(
         private val userManagement: UserManagement
 ): PermissionsApi, ProfileApi, AvatarApi, SettingsApi, SocialApi {
 
-    override fun createUserPermissions(userPermissionsRequest: UserPermissionsRequest): ResponseEntity<InlineResponse200> {
-        val response = userManagement.createPermissions(userPermissionsRequest)
+    override fun createUserPermissions(): ResponseEntity<InlineResponse200> {
+        val response = userManagement.createPermissions()
         return ResponseEntity.ok(InlineResponse200().status(response))
     }
 
     @PreAuthorize("hasRole(T(io.learnet.account.model.UserRole).READ_USER_PROFILE.value)")
-    override fun getUserProfile(email: String): ResponseEntity<UserProfileDto> {
-        return ResponseEntity.ok(userManagement.getUserProfile(email))
+    override fun getUserProfile(): ResponseEntity<UserProfileDto> {
+        return ResponseEntity.ok(userManagement.getUserProfile())
     }
 
     @PreAuthorize("hasRole(T(io.learnet.account.model.UserRole).WRITE_USER_PROFILE.value)")
@@ -28,23 +28,25 @@ class UserController(
         return ResponseEntity.ok(userManagement.saveUserProfile(userProfileDto))
     }
 
-    override fun getAvatarUrl(email: String): ResponseEntity<UserAvatarResponse> {
-        return ResponseEntity.ok(userManagement.getAvatarUrl(email))
+    @PreAuthorize("hasRole(T(io.learnet.account.model.UserRole).READ_USER_PROFILE.value)")
+    override fun getAvatarUrl(): ResponseEntity<UserAvatarResponse> {
+        return ResponseEntity.ok(userManagement.getAvatarUrl())
     }
 
-    override fun uploadUserAvatar(avatar: MultipartFile, email: String): ResponseEntity<UserAvatarResponse> {
-        return ResponseEntity.ok(userManagement.uploadUserAvatar(avatar, email))
+    @PreAuthorize("hasRole(T(io.learnet.account.model.UserRole).WRITE_USER_PROFILE.value)")
+    override fun uploadUserAvatar(avatar: MultipartFile): ResponseEntity<UserAvatarResponse> {
+        return ResponseEntity.ok(userManagement.uploadUserAvatar(avatar))
     }
 
-    override fun getUserLanguage(email: String): ResponseEntity<UserLanguageDto> {
-        return ResponseEntity.ok(userManagement.getUserLanguage(email))
+    override fun getUserLanguage(): ResponseEntity<UserLanguageDto> {
+        return ResponseEntity.ok(userManagement.getUserLanguage())
     }
 
-    override fun getUserNotificationSettings(email: String?): ResponseEntity<UserNotificationSettingsDto> {
+    override fun getUserNotificationSettings(): ResponseEntity<UserNotificationSettingsDto> {
         TODO("Not yet implemented")
     }
 
-    override fun getUserPrivacySettings(email: String?): ResponseEntity<UserPrivacySettingsDto> {
+    override fun getUserPrivacySettings(): ResponseEntity<UserPrivacySettingsDto> {
         TODO("Not yet implemented")
     }
 
@@ -61,8 +63,8 @@ class UserController(
     }
 
     @PreAuthorize("hasRole(T(io.learnet.account.model.UserRole).READ_USER_PROFILE.value)")
-    override fun getUserSocial(email: String): ResponseEntity<UserSocialDto> {
-        return ResponseEntity.ok(userManagement.getUserSocial(email))
+    override fun getUserSocial(): ResponseEntity<UserSocialDto> {
+        return ResponseEntity.ok(userManagement.getUserSocial())
     }
 
     @PreAuthorize("hasRole(T(io.learnet.account.model.UserRole).WRITE_USER_PROFILE.value)")

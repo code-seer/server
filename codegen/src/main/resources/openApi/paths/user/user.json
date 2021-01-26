@@ -8,22 +8,9 @@
         "summary": "Populates user permissions",
         "description": "",
         "operationId": "createUserPermissions",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserPermissionsRequest"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "User Management Response",
@@ -88,15 +75,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "email",
-            "in": "query",
-            "description": "User email address",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -157,15 +135,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "email",
-            "in": "query",
-            "description": "User email address",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -202,9 +171,6 @@
                   "avatar": {
                     "type": "string",
                     "format": "binary"
-                  },
-                  "email": {
-                    "type": "string"
                   }
                 }
               },
@@ -240,15 +206,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "email",
-            "in": "query",
-            "description": "User email address",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -309,15 +266,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "email",
-            "in": "query",
-            "description": "User email address",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -378,15 +326,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "email",
-            "in": "query",
-            "description": "User email address",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -447,15 +386,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "email",
-            "in": "query",
-            "description": "User email address",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -474,20 +404,6 @@
   },
   "components": {
     "schemas": {
-      "UserPermissionsRequest": {
-        "type": "object",
-        "required": [
-          "email"
-        ],
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "display_name": {
-            "type": "string"
-          }
-        }
-      },
       "UserAvatarResponse": {
         "type": "object",
         "properties": {
@@ -520,9 +436,6 @@
           "email": {
             "type": "string"
           },
-          "secondaryEmail": {
-            "type": "string"
-          },
           "address": {
             "type": "string"
           },
@@ -537,9 +450,6 @@
           },
           "postal_code": {
             "type": "string"
-          },
-          "is_new_user": {
-            "type": "boolean"
           }
         }
       },
@@ -561,9 +471,6 @@
           "linkedin": {
             "type": "string"
           },
-          "email": {
-            "type": "string"
-          },
           "github": {
             "type": "string"
           },
@@ -577,9 +484,6 @@
         "properties": {
           "language": {
             "type": "string"
-          },
-          "email": {
-            "type": "string"
           }
         }
       },
@@ -591,9 +495,6 @@
           },
           "others_can_contact": {
             "type": "boolean"
-          },
-          "email": {
-            "type": "string"
           }
         }
       },
@@ -608,9 +509,6 @@
           },
           "new_message": {
             "type": "boolean"
-          },
-          "email": {
-            "type": "string"
           }
         }
       }
