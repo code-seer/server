@@ -499,6 +499,9 @@
       "UserProfileDto": {
         "type": "object",
         "properties": {
+          "avatar": {
+            "type": "string"
+          },
           "title": {
             "type": "string"
           },
@@ -515,6 +518,9 @@
             "type": "string"
           },
           "email": {
+            "type": "string"
+          },
+          "secondaryEmail": {
             "type": "string"
           },
           "address": {

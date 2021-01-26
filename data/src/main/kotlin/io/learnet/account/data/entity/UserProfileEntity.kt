@@ -75,6 +75,12 @@ open class UserProfileEntity: Serializable {
         open var email: String? = null
 
         @Basic
+        @FullTextField(analyzer = "english", projectable = Projectable.YES)
+        @KeywordField(name = "secondaryEmail_raw", sortable = Sortable.YES)
+        @Column(name = "secondary_email", columnDefinition = "text")
+        open var secondaryEmail: String? = null
+
+        @Basic
         @GenericField(projectable = Projectable.YES, sortable = Sortable.YES)
         @Column(name = "is_new_user", columnDefinition = "text")
         open var isNewUser: Boolean = true
