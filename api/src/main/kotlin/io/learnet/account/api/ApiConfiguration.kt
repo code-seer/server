@@ -3,6 +3,7 @@ package io.learnet.account.api
 import io.learnet.account.util.properties.DemoUserProps
 import io.learnet.account.data.migration.FlywayMigration
 import io.learnet.account.data.repo.DemoUserRepo
+import io.learnet.account.model.UserDto
 import io.learnet.account.search.SearchConfiguration
 import io.learnet.account.search.api.SearchApi
 import io.learnet.account.service.ServiceConfiguration
@@ -15,6 +16,8 @@ import org.springframework.boot.context.event.ApplicationStartedEvent
 import org.springframework.context.annotation.*
 import org.springframework.context.event.EventListener
 import org.springframework.dao.InvalidDataAccessResourceUsageException
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.web.context.annotation.RequestScope
 
 
 /**
@@ -44,6 +47,11 @@ class ApiConfiguration(private val demoUserRepo: DemoUserRepo) {
     @Autowired
     lateinit var searchApi: SearchApi
 
+    @Bean
+    @RequestScope
+    fun userDto(): UserDto {
+        return SecurityContextHolder.getContext().authentication?.principal as UserDto
+    }
 
     /**
      * TODO: Run the comparison on all tables and indices that should be seeded.

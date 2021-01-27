@@ -4,6 +4,7 @@ package io.learnet.account.service.api.user
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.UserRecord
+import io.learnet.account.model.UserDto
 import io.learnet.account.service.ServiceTestConfiguration
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -19,21 +20,23 @@ import kotlin.test.assertNotNull
 class UserManagementTest: AbstractTestNGSpringContextTests() {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
-    private val testEmail = "learnetuser@learnet.io"
 
     @Autowired
     lateinit var userManagement: UserManagement
+    
+    @Autowired
+    lateinit var userDto: UserDto
 
     @BeforeClass
     fun beforeClass() {
         log.info("Test class ${this.javaClass.simpleName} started")
         deleteUser()
         val request: UserRecord.CreateRequest = UserRecord.CreateRequest()
-                .setEmail(testEmail)
+                .setEmail(userDto.email)
                 .setEmailVerified(false)
                 .setDisabled(false)
         FirebaseAuth.getInstance().createUser(request)
-        log.info("Test user with email address $testEmail has been created")
+        log.info("Test user with email address $userDto.email has been created")
     }
 
     @AfterClass
@@ -54,10 +57,10 @@ class UserManagementTest: AbstractTestNGSpringContextTests() {
 
     private fun deleteUser() {
         try {
-            FirebaseAuth.getInstance().deleteUser(FirebaseAuth.getInstance().getUserByEmail(testEmail).uid)
-            log.info("Test user with email address $testEmail has been deleted")
+            FirebaseAuth.getInstance().deleteUser(FirebaseAuth.getInstance().getUserByEmail(userDto.email).uid)
+            log.info("Test user with email address $userDto.email has been deleted")
         } catch (e: FirebaseAuthException) {
-            log.info("Test user with email address $testEmail does not exist")
+            log.info("Test user with email address $userDto.email does not exist")
         }
     }
 
@@ -73,7 +76,7 @@ class UserManagementTest: AbstractTestNGSpringContextTests() {
             "ROLE_CREATE_CONFERENCE",
             "ROLE_WRITE_USER_PROFILE",
             "ROLE_READ_USER_PROFILE").toSet()
-        val userRecord = FirebaseAuth.getInstance().getUserByEmail(testEmail)
+        val userRecord = FirebaseAuth.getInstance().getUserByEmail(userDto.email)
         assertNotNull(userRecord)
         assertEquals(expected.size, userRecord.customClaims.size)
         val actual = userRecord.customClaims.toList()

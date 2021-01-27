@@ -22,8 +22,6 @@ import kotlin.collections.HashMap
 import org.springframework.security.core.context.SecurityContextHolder
 
 
-
-
 @Service
 class UserManagementService(
     private val s3: S3,
