@@ -11,15 +11,12 @@ import io.learnet.account.service.api.aws.S3
 import io.learnet.account.util.properties.S3Props
 import io.learnet.account.util.properties.UserPermissionsProps
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
-import org.springframework.util.StringUtils
 import org.springframework.web.multipart.MultipartFile
 import java.time.OffsetDateTime
 import java.util.*
 import kotlin.collections.HashMap
-import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.util.ObjectUtils
 
 
 @Service
@@ -125,22 +122,22 @@ class UserManagementService(
         var entity = getUserProfileEntity(userPrincipal.email)
         entity.email = userPrincipal.email
         var addressEntity = entity.address
-        if (!StringUtils.isEmpty(userProfileDto.firstName)) {
+        if (!ObjectUtils.isEmpty(userProfileDto.firstName)) {
             entity.firstName = userProfileDto.firstName
         }
-        if (!StringUtils.isEmpty(userProfileDto.lastName)) {
+        if (!ObjectUtils.isEmpty(userProfileDto.lastName)) {
             entity.lastName = userProfileDto.lastName
         }
-        if (!StringUtils.isEmpty(userProfileDto.title)) {
+        if (!ObjectUtils.isEmpty(userProfileDto.title)) {
             entity.title = userProfileDto.title
         }
-        if (!StringUtils.isEmpty(userProfileDto.mobilePhone)) {
+        if (!ObjectUtils.isEmpty(userProfileDto.mobilePhone)) {
             entity.mobilePhone = userProfileDto.mobilePhone
         }
-        if (!StringUtils.isEmpty(userProfileDto.homePhone)) {
+        if (!ObjectUtils.isEmpty(userProfileDto.homePhone)) {
             entity.homePhone = userProfileDto.homePhone
         }
-        if (!StringUtils.isEmpty(userProfileDto.email)) {
+        if (!ObjectUtils.isEmpty(userProfileDto.email)) {
             entity.secondaryEmail = userProfileDto.email
         }
         if (addressEntity == null) {
@@ -148,19 +145,19 @@ class UserManagementService(
             addressEntity.createdDt = now
             addressEntity.uuid = UUID.randomUUID()
         }
-        if (!StringUtils.isEmpty(userProfileDto.address)) {
+        if (!ObjectUtils.isEmpty(userProfileDto.address)) {
             addressEntity.address1 = userProfileDto.address
         }
-        if (!StringUtils.isEmpty(userProfileDto.city)) {
+        if (!ObjectUtils.isEmpty(userProfileDto.city)) {
             addressEntity.city = userProfileDto.city
         }
-        if (!StringUtils.isEmpty(userProfileDto.state)) {
+        if (!ObjectUtils.isEmpty(userProfileDto.state)) {
             addressEntity.state = userProfileDto.state
         }
-        if (!StringUtils.isEmpty(userProfileDto.postalCode)) {
+        if (!ObjectUtils.isEmpty(userProfileDto.postalCode)) {
             addressEntity.postalCode = userProfileDto.postalCode
         }
-        if (!StringUtils.isEmpty(userProfileDto.country)) {
+        if (!ObjectUtils.isEmpty(userProfileDto.country)) {
             addressEntity.country = userProfileDto.country
         }
         addressEntity.updatedDt = now

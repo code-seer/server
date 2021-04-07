@@ -20,7 +20,7 @@
 <!--        <module>api</module>-->
         <module>data</module>
 <!--        <module>search</module>-->
-<!--        <module>service</module>-->
+        <module>service</module>
     </modules>
 
     <properties>

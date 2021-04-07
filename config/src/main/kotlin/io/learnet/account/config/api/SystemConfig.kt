@@ -17,7 +17,7 @@ import javax.annotation.PostConstruct
  * only valid at the time of the startup. Any updates made to the configuration
  * file on upstream will change the configurations at runtime.
  */
-@Component
+//@Component
 class SystemConfig {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
@@ -69,7 +69,7 @@ class SystemConfig {
     private fun loadProperties(): SortedMap<String, Any> {
         val objectMapper = ObjectMapper(YAMLFactory())
         val typeRef: TypeReference<HashMap<String, Any>> = object : TypeReference<HashMap<String, Any>>() {}
-        val map = objectMapper.readValue(ResourceUtils.getFile("classpath:application.yml"), typeRef)
+        val map = objectMapper.readValue(ResourceUtils.getFile("file:src/main/resources/application.yml"), typeRef)
         var props: MutableMap<String, Any> = HashMap()
         parseProps(props, map, String())
         return props.toSortedMap()

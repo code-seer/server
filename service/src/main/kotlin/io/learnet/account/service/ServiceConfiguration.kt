@@ -1,6 +1,6 @@
 package io.learnet.account.service
 
-import io.learnet.account.search.SearchConfiguration
+import io.learnet.account.data.DataConfiguration
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Import
 @Configuration
 @ComponentScan
 @Import(value = [
-    SearchConfiguration::class
+    DataConfiguration::class
 ])
 class ServiceConfiguration
