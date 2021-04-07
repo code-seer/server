@@ -3,13 +3,11 @@ package io.learnet.account.config.api
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.apache.http.client.ClientProtocolException
-import org.apache.http.client.methods.HttpGet
-import org.apache.http.impl.client.HttpClients
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
+import org.springframework.util.ResourceUtils
 import java.util.*
 import javax.annotation.PostConstruct
 
@@ -20,20 +18,14 @@ import javax.annotation.PostConstruct
  * file on upstream will change the configurations at runtime.
  */
 @Component
-class SystemConfig(@Qualifier("jacksonObjectMapper") private val objectMapper: ObjectMapper) {
+class SystemConfig {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
-
-    private var activeProfile: String? = null
-    private var appName: String? = null
-    private var configServerUrl: String? = null
     private val excludedProps = arrayOf(
         "firebase.private_key",
         "s3.key",
-        "s3.secret")
-    private val springProfilesActiveEnvName = "SPRING_PROFILES_ACTIVE"
-    private val springApplicationEnvName = "SPRING_APPLICATION_NAME"
-    private val springCloudConfigUrlEnvName = "SPRING_CLOUD_CONFIG_URI"
+        "s3.secret"
+    )
 
     /**
      * Log all configurations to the console
@@ -43,26 +35,9 @@ class SystemConfig(@Qualifier("jacksonObjectMapper") private val objectMapper: O
         var maxNameLength = -1
         var maxValueLength = -1
         val defaultLength = 30
-        var properties: SortedMap<String, Any>
+        var properties: SortedMap<String, Any> = loadProperties()
         val propertyNames = ArrayList<String>()
         val configValues = ArrayList<Any>()
-        try {
-            activeProfile = System.getenv(springProfilesActiveEnvName)
-            appName = System.getenv(springApplicationEnvName)
-            configServerUrl = System.getenv(springCloudConfigUrlEnvName)
-            properties = loadJsonHttp()
-        } catch (e: ClientProtocolException) {
-            if (activeProfile == null) {
-                log.warn("$springProfilesActiveEnvName not set")
-            }
-            if (appName == null) {
-                log.warn("$springApplicationEnvName not set")
-            }
-            if (configServerUrl == null) {
-                log.warn("$springCloudConfigUrlEnvName not set")
-            }
-            return
-        }
         for (field in properties) {
             if (field.key != "description") {
                 propertyNames.add(field.key)
@@ -79,19 +54,22 @@ class SystemConfig(@Qualifier("jacksonObjectMapper") private val objectMapper: O
         log.info("  +$line")
         for (i in 0 until propertyNames.size) {
             if (!excludedProps.contains(propertyNames[i])) {
-                log.info(String.format("  | %-" + maxNameLength.toString() + "s : %s", propertyNames[i], configValues[i]))
+                log.info(
+                    String.format(
+                        "  | %-" + maxNameLength.toString() + "s : %s",
+                        propertyNames[i],
+                        configValues[i]
+                    )
+                )
             }
         }
         log.info("  +$line")
     }
 
-    @Throws(ClientProtocolException::class)
-    private fun loadJsonHttp(): SortedMap<String, Any> {
-        val httpClient = HttpClients.createDefault()
-        val request = HttpGet("${configServerUrl}/${appName}-${activeProfile}.json")
+    private fun loadProperties(): SortedMap<String, Any> {
+        val objectMapper = ObjectMapper(YAMLFactory())
         val typeRef: TypeReference<HashMap<String, Any>> = object : TypeReference<HashMap<String, Any>>() {}
-        val map = objectMapper.readValue(httpClient.execute(request).entity.content, typeRef)
-        httpClient.close()
+        val map = objectMapper.readValue(ResourceUtils.getFile("classpath:application.yml"), typeRef)
         var props: MutableMap<String, Any> = HashMap()
         parseProps(props, map, String())
         return props.toSortedMap()

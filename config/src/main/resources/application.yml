@@ -1,0 +1,107 @@
+spring:
+  application:
+    name: server
+  profiles:
+    active: dev
+  http:
+    multipart:
+      enabled: true
+  servlet:
+    multipart:
+      max-request-size: 5MB
+      max-file-size: 5MB
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+  flyway:
+    locations: classpath:/db/migration/dev
+    baselineOnMigrate: true
+    enabled: false
+    schemas: public
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://ionos.learnet.io:5433/account_dev
+    username: admin
+    password: admin
+    main:
+      banner-mode: off
+http:
+  schema: http
+firebase:
+  type: service_account
+  project_id: learnet
+  private_key_id: 6713b56eefffc0f81be54500938876efc96394c6
+  private_key: |
+    -----BEGIN PRIVATE KEY-----
+    MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCFnHd5oieDHJhI
+    wXnrRsOwytOa5MRXQGZjf6zQPTZz8+KT7iy4F/KzKGwzqlMmolsAFyJjqv2gfkOj
+    QvSAhlNqqYVdw2SANHyoAHJFsZX6AR+IpHxrFW+aD9LZbVQC0S2DRoUGEJ0RNV3F
+    +Xe6z6h8Zzi6YaHltTFvgwkBR+4iubnvYw/0nspjvlPsl3ZfVyl5CSLH+Ed5uM8U
+    mQy3n5ufXOGzCyZLuIpY9oahqQ0reDNhZVr/rHCT3VZBmEdLd5sL/pvxOOjswRhJ
+    dLD34BYkKDG2X/x6nsXqHSaLB9XLhHvDklAkyXfyrDyEEyJFq6/iOuznAAzjagZK
+    OnVp5PbbAgMBAAECggEAOO4Y+EJQDK0f9AxAWzAdTNS3gi3MvRKrLeUmaNpUO+bk
+    mbyn4E8P8iecpw0Bfho6pRi2ZfpjNEHopwVt8d+KZo3Rzkhlp7z1io4aIrkO2uYk
+    ng/cFbKeCWqJoGxVmhewCVoAbzuf+Uega60mx3oY490FjmDwX1SrukR+j0WrYa7c
+    v46pe6cztEbeOspOz3XXm2gkW4G3Ebq27XM/DepykI/NrggLxv55dLjr9vKUqb63
+    wPkmvcMzKjNuRkUzi46EJdnxqqoXNghB4BcaKzjR169sqAm2dGFEwFm6vTJTgWWn
+    ys5smgHsmtZH1+I4gYQUYOOEi6EkrhVUhkGfvgYtOQKBgQC5vqTgEPUpmJuSJcNE
+    Ct6YshIFwlhPE7NBzwnSCKYzYU36wbvsz2YW1fJbnPzTlMBoQUMp3t/3XbUnlRIb
+    8OIFYC0QVP7A9qi3Fv5ixHLcp7+KhZk2wy7UIrH3OE/aVYuxmQoCPcHC3L/x/9g+
+    qBE52hAhTaO/DP2ZvIai7/g6swKBgQC4JdIRC/PRaffMMIkJCWfK91OZGWO3ON5n
+    pFK5Io3wwbg2F6fGo3FBNkoUCU1Nh6I/6gN+B/gIrQXb8HTArXQ9hFeUait63f50
+    YbUbB3IAEcO3UQ+vzPTEhterJndYK6TsSJv5ZEuvFUOVRaNIBXd10Rbdl/qnHAAx
+    +fvhHGcHOQKBgDoTVKPGSZE+6O1yJzKAH4corh/k2w2mgDbEUDK+h5CrDOGpb2Ok
+    mSvsqwFf/WD+MoamWSSfTfGe+AQvROE9mL3Li2t+18RnmurcIp+pAqzhOi9KhFQu
+    BNdJHdHJZpZChxH5Yrq+qnWN5en5b5hvniszdjWje95BZo2J96K8WyWnAoGAcUUS
+    SdoIR6/e9IKGSEC4z2gCzBGJ/JHGfAnfuHFAze7a2KsEUHMInww91MVD/4SGkLnp
+    HATa1LtY90iZCEupTI2zMV99Dz6t3fib5dxWiyRiNsht1b1Ecf5feq9Wia2O7Khd
+    CLJgu3lg8Ni87vgt2xKZ9gQd8dyPYi5aeMV3ukECgYAqbIdLzOX9I/Hwx5jKGF53
+    BwaaaCcGKMDTRXO0bpSD70EC/3R0szl5iKkuRZMtMi9/oAZmErQHALJCgdqJKHnu
+    M0nIEkwJ8wa+GFxd0/ILDc00H7Xejbnioc2VbFd1YQD6cmU/4Oekc7uQADDFreaC
+    0WFbluRIBsnwoXxcy2sZBA==
+    -----END PRIVATE KEY-----
+  client_email: firebase-adminsdk-cgbyq@learnet.iam.gserviceaccount.com
+  client_id: 109075177870270086574
+  auth_uri: https://accounts.google.com/o/oauth2/auth
+  token_uri: https://oauth2.googleapis.com/token
+  auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+  client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-cgbyq%40learnet.iam.gserviceaccount.com
+  custom_token_verification_url: https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken
+  client_api_key: AIzaSyA1kPvCDU4oKuCxIoQSZC7UzXm_P1JMxBw
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+    root: INFO
+demouser:
+  es_index: 'learnet-demo_user-read'
+  display_name: 'LearNet Demo User'
+  email: 'bizmelesse@gmail.com'
+  password: 'demouser'
+  phone_number: '+11234567890'
+  photo_url: 'https://avatars0.githubusercontent.com/u/19600025?s=460&u=0743d9d8e8ebefe36990ad498ede9fc0df96e18f&v=4'
+s3:
+  key: 'AKIAX2IAEH45GOI6CGX2'
+  secret: '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'
+  user: 'learnet_backend'
+  bucket: 'learnet-dev-4a861d39-5142-4499-bab4-d953e460c22f'
+description: LearNet Server Dev Configurations
+source:
+  profile: dev
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+user:
+  permissions:
+    uiAuthorizedEmails:
+      - bizmelesse@gmail.com
+      - learnetuser@learnet.io
+      - ui@learnet.io
+    defaultPermissions:
+      - ROLE_DEMO_USER_READ
+      - ROLE_CREATE_CONFERENCE
+      - ROLE_WRITE_USER_PROFILE
+      - ROLE_READ_USER_PROFILE
