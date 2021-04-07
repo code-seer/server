@@ -17,15 +17,13 @@
         <module>config</module>
         <module>codegen</module>
         <module>model</module>
-        <module>api</module>
-        <module>data</module>
-        <module>search</module>
-        <module>service</module>
+<!--        <module>api</module>-->
+<!--        <module>data</module>-->
+<!--        <module>search</module>-->
+<!--        <module>service</module>-->
     </modules>
 
     <properties>
-        <gitlab.url>gitlab.learnet.io</gitlab.url>
-        <gitlab.projectId>11</gitlab.projectId>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -65,23 +63,6 @@
         <aws.sdk.version>2.15.53</aws.sdk.version>
         <maven.buildHelper.version>3.2.0</maven.buildHelper.version>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>gitlab-maven</id>
-            <url>https://${gitlab.url}/api/v4/projects/${gitlab.projectId}/packages/maven</url>
-        </repository>
-    </repositories>
-    <distributionManagement>
-        <repository>
-            <id>gitlab-maven</id>
-            <url>https://${gitlab.url}/api/v4/projects/${gitlab.projectId}/packages/maven</url>
-        </repository>
-        <snapshotRepository>
-            <id>gitlab-maven</id>
-            <url>https://${gitlab.url}/api/v4/projects/${gitlab.projectId}/packages/maven</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <dependencies>
         <dependency>
