@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  postgresql:
+    image: postgres
+    container_name: pg_learnet
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=learnet_dev
+      - POSTGRES_USER=learnet_admin
+      - POSTGRES_PASSWORD=learnet_admin
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/schema.sql
+    restart: always
+volumes:
+  db_data:

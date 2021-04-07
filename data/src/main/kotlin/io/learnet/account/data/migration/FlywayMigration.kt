@@ -16,6 +16,6 @@ interface FlywayMigration {
     /**
      * Index existing data to Elasticsearch.
      */
-    fun indexData()
+//    fun indexData()
 
 }

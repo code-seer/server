@@ -27,6 +27,15 @@
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
+        <!-- <resources>
+            <resource>
+                <directory>resource</directory>
+                <targetPath>${project.build.outputDirectory}</targetPath>
+                <includes>
+                    <include>application.yml</include>
+                </includes>
+            </resource>
+      </resources> -->
         <plugins>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>

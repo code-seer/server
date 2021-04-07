@@ -21,9 +21,9 @@ spring:
     schemas: public
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://ionos.learnet.io:5433/account_dev
-    username: admin
-    password: admin
+    url: jdbc:postgresql://localhost:5432/learnet
+    username: learnet
+    password: learnet
     main:
       banner-mode: off
 http:

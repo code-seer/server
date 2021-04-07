@@ -20,7 +20,7 @@ CREATE TABLE public.user_profile (
     _uuid uuid DEFAULT uuid_generate_v4 ()
 );
 
-ALTER TABLE public.user_profile OWNER TO admin;
+ALTER TABLE public.user_profile OWNER TO learnet;
 
 CREATE TABLE public.address (
       id BIGSERIAL PRIMARY KEY NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE public.address (
       _uuid uuid DEFAULT uuid_generate_v4 ()
 );
 
-ALTER TABLE public.address OWNER TO admin;
+ALTER TABLE public.address OWNER TO learnet;
 
 CREATE TABLE public.social (
     id BIGSERIAL PRIMARY KEY NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE public.social (
     _uuid uuid DEFAULT uuid_generate_v4 ()
 );
 
-ALTER TABLE public.social OWNER TO admin;
+ALTER TABLE public.social OWNER TO learnet;
 
 
 CREATE TABLE public.security (
@@ -66,7 +66,7 @@ CREATE TABLE public.security (
      _uuid uuid DEFAULT uuid_generate_v4 ()
 );
 
-ALTER TABLE public.security OWNER TO admin;
+ALTER TABLE public.security OWNER TO learnet;
 
 CREATE TABLE public.user_settings (
       id BIGSERIAL PRIMARY KEY NOT NULL,
@@ -77,4 +77,4 @@ CREATE TABLE public.user_settings (
       _uuid uuid DEFAULT uuid_generate_v4 ()
 );
 
-ALTER TABLE public.user_settings OWNER TO admin;
+ALTER TABLE public.user_settings OWNER TO learnet;

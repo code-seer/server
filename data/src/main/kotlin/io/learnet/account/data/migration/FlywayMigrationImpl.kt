@@ -6,7 +6,6 @@ import io.learnet.account.util.properties.FlywayProps
 import io.learnet.account.util.properties.SourceProps
 import io.learnet.account.util.properties.SpringApplicationProps
 import org.flywaydb.core.Flyway
-import org.hibernate.search.mapper.orm.Search
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -48,7 +47,6 @@ open class FlywayMigrationImpl(
         log.info("  +$line")
         clean()
         flyway.locations(flywayProps.locations).load().migrate()
-        indexData()
     }
 
     override fun clean() {
@@ -58,13 +56,6 @@ open class FlywayMigrationImpl(
         } else {
             log.info(String.format("  | %-" + maxNameLength.toString() + "s : %s", "Dropping database", "false"))
         }
-    }
-
-    override fun indexData() {
-        log.info("Bulk indexing in progress")
-        val searchSession = Search.session(entityManager)
-        searchSession.massIndexer().startAndWait()
-
     }
 
 }
