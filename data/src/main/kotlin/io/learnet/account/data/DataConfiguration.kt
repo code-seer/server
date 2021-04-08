@@ -1,7 +1,7 @@
 package io.learnet.account.data
 
 
-import io.learnet.account.config.SystemConfigConfiguration
+import io.learnet.account.util.UtilConfiguration
 import io.learnet.account.util.properties.DataSourceProps
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.domain.EntityScan
@@ -19,7 +19,7 @@ import javax.sql.DataSource
 @EntityScan
 @EnableJpaRepositories
 @EnableTransactionManagement
-@Import(value = [SystemConfigConfiguration::class])
+@Import(value = [UtilConfiguration::class])
 open class DataConfiguration {
 
     @Autowired
