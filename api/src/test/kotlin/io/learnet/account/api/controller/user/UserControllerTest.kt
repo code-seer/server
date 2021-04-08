@@ -54,7 +54,7 @@ class UserControllerTest: AbstractTestNGSpringContextTests() {
     @Qualifier("jacksonObjectMapper")
     lateinit var objectMapper: ObjectMapper
 
-    private val contextPath = "/account"
+    private val contextPath = "/api"
     private val host = "localhost"
     private var idToken: String? = null
     private var userRecord: UserRecord? = null

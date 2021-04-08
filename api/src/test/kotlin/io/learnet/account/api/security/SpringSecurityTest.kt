@@ -16,10 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.web.server.LocalServerPort
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
+import org.springframework.http.*
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests
 import org.testng.annotations.AfterClass
@@ -59,7 +56,7 @@ class SpringSecurityTest: AbstractTestNGSpringContextTests() {
     @Qualifier("jacksonObjectMapper")
     lateinit var objectMapper: ObjectMapper
 
-    private val testUrl = "/account/demoUser/findAllUsers"
+    private val contextPath = "/api"
     private val host = "localhost"
     private var idToken: String? = null
     private var userRecord: UserRecord? = null
@@ -88,33 +85,29 @@ class SpringSecurityTest: AbstractTestNGSpringContextTests() {
     }
 
     @Test
-    fun demo_user_endpoint_200_test() {
-        createClaims(userRecord!!, false)
+    fun httpStatus200Test() {
         idToken = login(firebaseProps, objectMapper, demoUserProps.email)
-        val response = request()
+        request("/permissions", "POST")
+        // Get updated idToken after new permissions have been assigned
+        idToken = login(firebaseProps, objectMapper, demoUserProps.email)
+        val response = request("/profile?email=${demoUserProps.email}", "GET")
         assertNotNull(response)
         assertEquals(200, response.statusCodeValue)
-        val demoUserResponse = objectMapper.readValue(response.body, DemoUserResponse::class.java)
-        assertNotNull(demoUserResponse)
-        assertEquals(4, demoUserResponse.numPages)
-        assertEquals(100, demoUserResponse.totalRecords)
-        assertEquals("Angelo", demoUserResponse.content[7].firstName)
-        assertEquals("Carter", demoUserResponse.content[7].lastName)
     }
 
     @Test
-    fun demo_user_endpoint_403_test() {
+    fun httpStatus403Test() {
         createClaims(userRecord!!, true)
         idToken = login(firebaseProps, objectMapper, demoUserProps.email)
-        val response = request()
+        val response = request("/profile?email=${demoUserProps.email}", "GET")
         assertNotNull(response)
         assertEquals(403, response.statusCodeValue)
     }
 
     @Test
-    fun demo_user_endpoint_401_test() {
+    fun httpStatus401Test() {
         idToken = ""
-        val response = request()
+        val response = request("/profile?email=${demoUserProps.email}", "GET")
         assertNotNull(response)
         assertEquals(401, response.statusCodeValue)
         val typeRef: TypeReference<HashMap<String, Any>> = object : TypeReference<HashMap<String, Any>>() {}
@@ -122,17 +115,24 @@ class SpringSecurityTest: AbstractTestNGSpringContextTests() {
         assertEquals("UNAUTHORIZED", map["error"])
     }
 
-    private fun request(): ResponseEntity<String>? {
-        val uri = "http://${host}:${port}${testUrl}"
+//    private fun request(url: String): ResponseEntity<String>? {
+//        val uri = "http://${host}:${port}${url}"
+//        val headers = HttpHeaders()
+//        headers.contentType = MediaType.APPLICATION_JSON
+//        idToken?.let { headers.setBearerAuth(it) }
+//        val entity = HttpEntity<Any>(null, headers)
+//        return restTemplate?.exchange(uri, HttpMethod.GET, entity, String::class.java)
+//    }
+
+    private fun request(url: String, method: String): ResponseEntity<String>? {
+        val uri = "http://${host}:${port}${contextPath}${url}"
         val headers = HttpHeaders()
         headers.contentType = MediaType.APPLICATION_JSON
         idToken?.let { headers.setBearerAuth(it) }
-        val pageableRequest = PageableRequest()
-        pageableRequest.limit = 25
-        pageableRequest.offset = 0
-        pageableRequest.sortBy = arrayOf("lastName").toMutableList()
-        pageableRequest.sortDir = arrayOf("ASC").toMutableList()
-        val entity = HttpEntity<PageableRequest>(pageableRequest, headers)
-        return restTemplate?.postForEntity(uri, entity, String::class.java)
+        val entity = HttpEntity<Any>(null, headers)
+        if (method == "POST") {
+            return restTemplate?.postForEntity(uri, entity, String::class.java)
+        }
+        return restTemplate?.exchange(uri, HttpMethod.GET, entity, String::class.java)
     }
 }

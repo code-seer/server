@@ -17,11 +17,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>io.learnet.account</groupId>
-			<artifactId>search</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.learnet.account</groupId>
 			<artifactId>service</artifactId>
 			<version>${project.version}</version>
 		</dependency>
