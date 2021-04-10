@@ -1,4 +1,4 @@
-package io.learnet.account.service
+package io.learnet.service
 
 import io.learnet.account.data.DataConfiguration
 import org.springframework.context.annotation.ComponentScan

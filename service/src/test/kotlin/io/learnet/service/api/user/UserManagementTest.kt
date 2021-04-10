@@ -1,11 +1,11 @@
-package io.learnet.account.service.api.user
+package io.learnet.service.api.user
 
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.UserRecord
 import io.learnet.account.model.UserDto
-import io.learnet.account.service.ServiceTestConfiguration
+import io.learnet.service.ServiceTestConfiguration
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

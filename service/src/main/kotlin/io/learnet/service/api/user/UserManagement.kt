@@ -1,4 +1,4 @@
-package io.learnet.account.service.api.user
+package io.learnet.service.api.user
 
 import io.learnet.account.model.*
 import org.springframework.web.multipart.MultipartFile

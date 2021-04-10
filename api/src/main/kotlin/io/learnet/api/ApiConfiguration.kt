@@ -2,7 +2,7 @@ package io.learnet.api
 
 import io.learnet.account.data.migration.FlywayMigration
 import io.learnet.account.model.UserDto
-import io.learnet.account.service.ServiceConfiguration
+import io.learnet.service.ServiceConfiguration
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

@@ -1,4 +1,4 @@
-package io.learnet.account.service.api.aws
+package io.learnet.service.api.aws
 
 import io.learnet.account.util.properties.S3Props
 import org.springframework.stereotype.Service

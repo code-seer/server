@@ -2,7 +2,7 @@ package io.learnet.api.controller.user
 
 import io.learnet.account.api.*
 import io.learnet.account.model.*
-import io.learnet.account.service.api.user.UserManagement
+import io.learnet.service.api.user.UserManagement
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller

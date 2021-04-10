@@ -1,7 +1,7 @@
-package io.learnet.account.service.api.aws
+package io.learnet.service.api.aws
 
 
-import io.learnet.account.service.ServiceTestConfiguration
+import io.learnet.service.ServiceTestConfiguration
 import io.learnet.account.util.properties.S3Props
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
