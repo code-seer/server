@@ -1,16 +1,22 @@
 package io.learnet.api
 
 import io.learnet.data.migration.FlywayMigration
-import io.learnet.web.model.UserDto
 import io.learnet.service.ServiceConfiguration
+import io.learnet.web.model.UserDto
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.event.ApplicationStartedEvent
-import org.springframework.context.annotation.*
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
 import org.springframework.context.event.EventListener
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.context.annotation.RequestScope
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 
 /**
@@ -23,7 +29,7 @@ import org.springframework.web.context.annotation.RequestScope
 
 @Configuration
 @ComponentScan
-@Import(value = [ServiceConfiguration::class ] )
+@Import(value = [ServiceConfiguration::class])
 class ApiConfiguration {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
@@ -43,5 +49,26 @@ class ApiConfiguration {
     @EventListener
     fun onApplicationStart(event: ApplicationStartedEvent) {
         flywayMigration.init()
+    }
+
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource? {
+        val allowedOrigins: List<String> = listOf(
+            "http://localhost:3000",
+            "https://learnet.io")
+        val allowedMethods: List<String> = listOf(
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE",
+            "OPTIONS"
+        )
+        val configuration = CorsConfiguration()
+        configuration.allowedOrigins = allowedOrigins
+        configuration.allowedMethods = allowedMethods
+        configuration.allowedHeaders = listOf("*")
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
     }
 }
