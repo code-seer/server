@@ -65,6 +65,7 @@ class AWSTest: AbstractTestNGSpringContextTests() {
     }
 
     private fun fileToMultipart(file: File): MultipartFile {
+        // TODO: this creates a copy of cat.jpg so clean up after creating mock file
         return MockMultipartFile("mr.cat", file.name, MediaType.IMAGE_JPEG.toString(), FileInputStream(file))
     }
 
