@@ -1,8 +1,8 @@
 package io.learnet.api.controller.user
 
-import io.learnet.account.api.*
-import io.learnet.account.model.*
 import io.learnet.service.api.user.UserManagement
+import io.learnet.web.api.*
+import io.learnet.web.model.*
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
@@ -18,22 +18,22 @@ class UserController(
         return ResponseEntity.ok(InlineResponse200().status(response))
     }
 
-    @PreAuthorize("hasRole(T(io.learnet.account.model.UserRole).READ_USER_PROFILE.value)")
+    @PreAuthorize("hasRole(T(io.learnet.web.model.UserRole).READ_USER_PROFILE.value)")
     override fun getUserProfile(): ResponseEntity<UserProfileDto> {
         return ResponseEntity.ok(userManagement.getUserProfile())
     }
 
-    @PreAuthorize("hasRole(T(io.learnet.account.model.UserRole).WRITE_USER_PROFILE.value)")
+    @PreAuthorize("hasRole(T(io.learnet.web.model.UserRole).WRITE_USER_PROFILE.value)")
     override fun saveUserProfile(userProfileDto: UserProfileDto): ResponseEntity<UserProfileDto> {
         return ResponseEntity.ok(userManagement.saveUserProfile(userProfileDto))
     }
 
-    @PreAuthorize("hasRole(T(io.learnet.account.model.UserRole).READ_USER_PROFILE.value)")
+    @PreAuthorize("hasRole(T(io.learnet.web.model.UserRole).READ_USER_PROFILE.value)")
     override fun getAvatarUrl(): ResponseEntity<UserAvatarResponse> {
         return ResponseEntity.ok(userManagement.getAvatarUrl())
     }
 
-    @PreAuthorize("hasRole(T(io.learnet.account.model.UserRole).WRITE_USER_PROFILE.value)")
+    @PreAuthorize("hasRole(T(io.learnet.web.model.UserRole).WRITE_USER_PROFILE.value)")
     override fun uploadUserAvatar(avatar: MultipartFile): ResponseEntity<UserAvatarResponse> {
         return ResponseEntity.ok(userManagement.uploadUserAvatar(avatar))
     }
@@ -62,12 +62,12 @@ class UserController(
         TODO("Not yet implemented")
     }
 
-    @PreAuthorize("hasRole(T(io.learnet.account.model.UserRole).READ_USER_PROFILE.value)")
+    @PreAuthorize("hasRole(T(io.learnet.web.model.UserRole).READ_USER_PROFILE.value)")
     override fun getUserSocial(): ResponseEntity<UserSocialDto> {
         return ResponseEntity.ok(userManagement.getUserSocial())
     }
 
-    @PreAuthorize("hasRole(T(io.learnet.account.model.UserRole).WRITE_USER_PROFILE.value)")
+    @PreAuthorize("hasRole(T(io.learnet.web.model.UserRole).WRITE_USER_PROFILE.value)")
     override fun saveUserSocial(userSocialDto: UserSocialDto): ResponseEntity<UserSocialDto> {
         return ResponseEntity.ok(userManagement.saveUserSocial(userSocialDto))
     }

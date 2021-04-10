@@ -1,6 +1,6 @@
 package io.learnet.service.api.user
 
-import io.learnet.account.model.*
+import io.learnet.web.model.*
 import org.springframework.web.multipart.MultipartFile
 
 interface UserManagement {

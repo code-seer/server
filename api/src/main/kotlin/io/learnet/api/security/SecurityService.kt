@@ -1,6 +1,6 @@
 package io.learnet.api.security
 
-import io.learnet.account.model.UserDto
+import io.learnet.web.model.UserDto
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder

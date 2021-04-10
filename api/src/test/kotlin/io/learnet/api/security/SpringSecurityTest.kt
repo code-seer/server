@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.firebase.auth.UserRecord
 import io.learnet.api.ApiTestConfiguration
-import io.learnet.account.util.properties.DemoUserProps
-import io.learnet.account.util.properties.FirebaseProps
+import io.learnet.util.properties.DemoUserProps
+import io.learnet.util.properties.FirebaseProps
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

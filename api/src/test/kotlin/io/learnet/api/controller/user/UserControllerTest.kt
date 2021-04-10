@@ -7,9 +7,9 @@ import io.learnet.api.ApiTestConfiguration
 import io.learnet.api.security.createUser
 import io.learnet.api.security.deleteUser
 import io.learnet.api.security.login
-import io.learnet.account.model.*
-import io.learnet.account.util.properties.DemoUserProps
-import io.learnet.account.util.properties.FirebaseProps
+import io.learnet.web.model.*
+import io.learnet.util.properties.DemoUserProps
+import io.learnet.util.properties.FirebaseProps
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

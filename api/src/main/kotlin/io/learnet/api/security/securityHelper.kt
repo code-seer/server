@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.UserRecord
-import io.learnet.account.util.properties.DemoUserProps
-import io.learnet.account.util.properties.FirebaseProps
-import io.learnet.account.model.UserRole
+import io.learnet.util.properties.DemoUserProps
+import io.learnet.util.properties.FirebaseProps
+import io.learnet.web.model.UserRole
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.HttpClients

@@ -1,7 +1,7 @@
 package io.learnet.api
 
-import io.learnet.account.data.migration.FlywayMigration
-import io.learnet.account.model.UserDto
+import io.learnet.data.migration.FlywayMigration
+import io.learnet.web.model.UserDto
 import io.learnet.service.ServiceConfiguration
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

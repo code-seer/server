@@ -2,14 +2,14 @@ package io.learnet.service.api.user
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserRecord
-import io.learnet.account.data.entity.AddressEntity
-import io.learnet.account.data.entity.SocialEntity
-import io.learnet.account.data.entity.UserProfileEntity
-import io.learnet.account.data.repo.*
-import io.learnet.account.model.*
+import io.learnet.data.entity.AddressEntity
+import io.learnet.data.entity.SocialEntity
+import io.learnet.data.entity.UserProfileEntity
+import io.learnet.data.repo.*
+import io.learnet.web.model.*
 import io.learnet.service.api.aws.S3
-import io.learnet.account.util.properties.S3Props
-import io.learnet.account.util.properties.UserPermissionsProps
+import io.learnet.util.properties.S3Props
+import io.learnet.util.properties.UserPermissionsProps
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile

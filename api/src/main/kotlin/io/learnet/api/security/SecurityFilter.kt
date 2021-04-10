@@ -2,7 +2,7 @@ package io.learnet.api.security
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseToken
-import io.learnet.account.model.UserDto
+import io.learnet.web.model.UserDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder

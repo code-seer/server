@@ -70,8 +70,8 @@
 							<inputSpec>${project.basedir}/src/main/resources/openApi/openApi.json</inputSpec>
 							<generatorName>spring</generatorName>
 							<configOptions>
-								<modelPackage>io.learnet.account.model</modelPackage>
-								<apiPackage>io.learnet.account.api</apiPackage>
+								<modelPackage>io.learnet.web.model</modelPackage>
+								<apiPackage>io.learnet.web.api</apiPackage>
 								<serializableModel>true</serializableModel>
 								<interfaceOnly>true</interfaceOnly>
 								<swaggerAnnotations>false</swaggerAnnotations>

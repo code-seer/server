@@ -1,8 +1,7 @@
 package io.learnet.service
 
-import io.learnet.account.model.UserDto
-import io.learnet.account.util.FirebaseConfig
-import io.learnet.service.ServiceConfiguration
+import io.learnet.web.model.UserDto
+import io.learnet.util.FirebaseConfig
 import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.context.annotation.Bean

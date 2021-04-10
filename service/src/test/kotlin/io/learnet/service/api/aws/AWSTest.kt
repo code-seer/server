@@ -2,7 +2,7 @@ package io.learnet.service.api.aws
 
 
 import io.learnet.service.ServiceTestConfiguration
-import io.learnet.account.util.properties.S3Props
+import io.learnet.util.properties.S3Props
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
