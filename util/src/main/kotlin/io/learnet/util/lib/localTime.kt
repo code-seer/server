@@ -1,4 +1,4 @@
-package io.learnet.account.util.lib
+package io.learnet.util.lib
 
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat

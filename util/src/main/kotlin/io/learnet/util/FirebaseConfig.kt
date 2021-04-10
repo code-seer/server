@@ -1,9 +1,9 @@
-package io.learnet.account.util
+package io.learnet.util
 
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
-import io.learnet.account.util.properties.FirebaseProps
+import io.learnet.util.properties.FirebaseProps
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.configurationprocessor.json.JSONObject
 import org.springframework.context.annotation.Bean

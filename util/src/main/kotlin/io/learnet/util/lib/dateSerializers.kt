@@ -1,4 +1,4 @@
-package io.learnet.account.util.lib
+package io.learnet.util.lib
 
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.JsonParser

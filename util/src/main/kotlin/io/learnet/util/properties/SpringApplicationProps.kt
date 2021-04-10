@@ -1,11 +1,10 @@
-package io.learnet.account.util.properties
+package io.learnet.util.properties
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-@ConfigurationProperties("source")
-class SourceProps {
-    lateinit var profile: String
+@ConfigurationProperties("spring.application")
+class SpringApplicationProps {
     lateinit var name: String
 }

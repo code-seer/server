@@ -1,12 +1,12 @@
-package io.learnet.account.util
+package io.learnet.util
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import io.learnet.account.util.lib.OffsetDateTimeDeserializer
-import io.learnet.account.util.lib.OffsetDateTimeSerializer
-import io.learnet.account.util.properties.*
+import io.learnet.util.lib.OffsetDateTimeDeserializer
+import io.learnet.util.lib.OffsetDateTimeSerializer
+import io.learnet.util.properties.*
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean

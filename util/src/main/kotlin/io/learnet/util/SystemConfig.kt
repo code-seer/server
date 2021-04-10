@@ -1,4 +1,4 @@
-package io.learnet.account.util
+package io.learnet.util
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
