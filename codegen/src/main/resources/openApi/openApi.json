@@ -1,13 +1,13 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "LearNet Account Service API",
-    "description": "REST API for LearNet Account Service",
+    "title": "LearNet Backend Service API",
+    "description": "REST API for LearNet Backend Service",
     "version": "0.0.1"
   },
   "servers": [
     {
-      "url": "https://api.learnet.io/account"
+      "url": "https://learnet.io/api"
     }
   ],
   "tags": [
