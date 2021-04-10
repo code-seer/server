@@ -13,4 +13,4 @@ CREATE TABLE public.demo_user (
     _uuid uuid DEFAULT uuid_generate_v4 ()
 );
 
-ALTER TABLE public.demo_user OWNER TO admin;
+ALTER TABLE public.demo_user OWNER TO learnet;

@@ -1,24 +1,16 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "LearNet Account Service API",
-    "description": "REST API for LearNet Account Service",
+    "title": "LearNet Backend Service API",
+    "description": "REST API for LearNet Backend Service",
     "version": "0.0.1"
   },
   "servers": [
     {
-      "url": "https://api.learnet.io/account"
+      "url": "http://localhost:8080/api"
     }
   ],
   "tags": [
-    {
-      "name": "demo-user",
-      "description": "Starter Demo User Service"
-    },
-    {
-      "name": "discovery",
-      "description": "Service Discovery services"
-    },
     {
       "name": "user-management",
       "description": "Server-side user management"
@@ -30,12 +22,6 @@
     }
   ],
   "paths": {
-    "/discovery/{applicationName}": {
-      "$ref": "./paths/discovery/discovery.json#/paths/get_service_instances"
-    },
-    "/demoUser/findAllUsers": {
-      "$ref": "./paths/demo/demo.json#/paths/find_all"
-    },
     "/permissions": {
       "$ref": "./paths/user/user.json#/paths/permissions"
     },

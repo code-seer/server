@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>io.learnet.account</groupId>
+		<groupId>io.learnet</groupId>
 		<artifactId>root</artifactId>
 		<version>1.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
@@ -22,17 +22,7 @@
 
     <dependencies>
 		<dependency>
-			<groupId>io.learnet.account</groupId>
-			<artifactId>model</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>io.learnet.account</groupId>
-			<artifactId>config</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>io.learnet.account</groupId>
+			<groupId>io.learnet</groupId>
 			<artifactId>util</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
@@ -40,16 +30,6 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate.search</groupId>
-			<artifactId>hibernate-search-mapper-orm</artifactId>
-			<version>${hibernate.orm.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate.search</groupId>
-			<artifactId>hibernate-search-backend-elasticsearch</artifactId>
-			<version>${hibernate.orm.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -82,6 +62,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<version>${spring.boot.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
@@ -92,6 +73,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-autoconfigure</artifactId>
+			<version>${spring.boot.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot</artifactId>
 			<version>${spring.boot.version}</version>
 		</dependency>
 	</dependencies>
@@ -131,7 +117,7 @@
 						<argument>-accessType</argument><argument>fields</argument>
 						<argument>-metadata</argument><argument>none</argument>
 						<argument>-useGenericCollections</argument><argument>true</argument>
-						<argument>-package</argument><argument>io.learnet.account.data.entity</argument>
+						<argument>-package</argument><argument>io.learnet.data.entity</argument>
 						<argument>-innerIdentityClasses</argument><argument>true</argument>
 						<argument>-useBuiltinIdentityClass</argument><argument>false</argument>
 						<argument>-primaryKeyOnJoin</argument><argument>false</argument>
