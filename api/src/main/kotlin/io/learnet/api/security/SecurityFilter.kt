@@ -1,4 +1,4 @@
-package io.learnet.account.api.security
+package io.learnet.api.security
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseToken

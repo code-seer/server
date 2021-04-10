@@ -1,4 +1,4 @@
-package io.learnet.account.api
+package io.learnet.api
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

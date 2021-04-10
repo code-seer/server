@@ -1,4 +1,4 @@
-package io.learnet.account.api
+package io.learnet.api
 
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer

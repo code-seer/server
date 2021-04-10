@@ -1,4 +1,4 @@
-package io.learnet.account.api.controller.user
+package io.learnet.api.controller.user
 
 import io.learnet.account.api.*
 import io.learnet.account.model.*

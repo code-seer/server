@@ -1,4 +1,4 @@
-package io.learnet.account.api
+package io.learnet.api
 
 import io.learnet.account.data.migration.FlywayMigration
 import io.learnet.account.model.UserDto

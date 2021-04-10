@@ -1,4 +1,4 @@
-package io.learnet.account.api.security
+package io.learnet.api.security
 
 import io.learnet.account.model.UserDto
 import org.springframework.security.core.GrantedAuthority

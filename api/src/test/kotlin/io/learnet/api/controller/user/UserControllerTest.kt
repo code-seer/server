@@ -1,12 +1,12 @@
-package io.learnet.account.api.controller.user
+package io.learnet.api.controller.user
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.javafaker.Faker
 import com.google.firebase.auth.UserRecord
-import io.learnet.account.api.ApiTestConfiguration
-import io.learnet.account.api.security.createUser
-import io.learnet.account.api.security.deleteUser
-import io.learnet.account.api.security.login
+import io.learnet.api.ApiTestConfiguration
+import io.learnet.api.security.createUser
+import io.learnet.api.security.deleteUser
+import io.learnet.api.security.login
 import io.learnet.account.model.*
 import io.learnet.account.util.properties.DemoUserProps
 import io.learnet.account.util.properties.FirebaseProps

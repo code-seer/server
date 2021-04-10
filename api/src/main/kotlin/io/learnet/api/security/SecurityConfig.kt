@@ -1,4 +1,4 @@
-package io.learnet.account.api.security
+package io.learnet.api.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
