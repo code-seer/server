@@ -1,8 +1,8 @@
-package io.learnet.account.data.migration
+package io.learnet.data.migration
 
 import com.github.javafaker.Faker
-import io.learnet.account.data.entity.*
-import io.learnet.account.data.repo.*
+import io.learnet.data.entity.*
+import io.learnet.data.repo.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -18,12 +18,13 @@ import javax.annotation.PostConstruct
  */
 @Component
 class SeedData(
-        private val userProfileRepo: UserProfileRepo,
-        private val addressRepo: AddressRepo,
-        private val socialRepo: SocialRepo,
-        private val securityRepo: SecurityRepo,
-        private val userSettingsRepo: UserSettingsRepo,
-        private val flyway: FlywayMigration) {
+    private val userProfileRepo: UserProfileRepo,
+    private val addressRepo: AddressRepo,
+    private val socialRepo: SocialRepo,
+    private val securityRepo: SecurityRepo,
+    private val userSettingsRepo: UserSettingsRepo,
+    private val flyway: FlywayMigration
+) {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
     private val rowcount = 100

@@ -1,6 +1,6 @@
-package io.learnet.account.data.repo
+package io.learnet.data.repo
 
-import io.learnet.account.data.entity.UserSettingsEntity
+import io.learnet.data.entity.UserSettingsEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional

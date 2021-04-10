@@ -1,4 +1,4 @@
-package io.learnet.account.data.entity
+package io.learnet.data.entity
 
 import org.hibernate.annotations.Type
 import java.io.Serializable
@@ -41,7 +41,7 @@ open class DemoUserEntity: Serializable {
         open var address: String? = null
 
         
-        @Type(type = "io.learnet.account.data.type.ArrayUserType")
+        @Type(type = "io.learnet.data.type.ArrayUserType")
         @Column(name = "favorites", columnDefinition = "text[]")
         open var favorites: Array<String> = emptyArray()
 

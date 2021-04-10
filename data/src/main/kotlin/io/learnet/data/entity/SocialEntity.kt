@@ -1,4 +1,4 @@
-package io.learnet.account.data.entity
+package io.learnet.data.entity
 
 import java.io.Serializable
 import java.time.OffsetDateTime

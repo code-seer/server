@@ -1,10 +1,10 @@
-package io.learnet.account.data.migration
+package io.learnet.data.migration
 
-import io.learnet.account.util.lib.line
-import io.learnet.account.util.properties.DataSourceProps
-import io.learnet.account.util.properties.FlywayProps
-import io.learnet.account.util.properties.SourceProps
-import io.learnet.account.util.properties.SpringApplicationProps
+import io.learnet.util.lib.line
+import io.learnet.util.properties.DataSourceProps
+import io.learnet.util.properties.FlywayProps
+import io.learnet.util.properties.SourceProps
+import io.learnet.util.properties.SpringApplicationProps
 import org.flywaydb.core.Flyway
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -20,10 +20,10 @@ import javax.persistence.PersistenceContext
 @Transactional
 @Component
 open class FlywayMigrationImpl(
-        private val dataSourceProps: DataSourceProps,
-        private val sourceProps: SourceProps,
-        private val springAppProps: SpringApplicationProps,
-        private val flywayProps: FlywayProps
+    private val dataSourceProps: DataSourceProps,
+    private val sourceProps: SourceProps,
+    private val springAppProps: SpringApplicationProps,
+    private val flywayProps: FlywayProps
 ): FlywayMigration {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)

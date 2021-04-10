@@ -1,4 +1,4 @@
-package io.learnet.account.data.migration
+package io.learnet.data.migration
 
 interface FlywayMigration {
     /**
@@ -16,6 +16,5 @@ interface FlywayMigration {
     /**
      * Index existing data to Elasticsearch.
      */
-//    fun indexData()
 
 }

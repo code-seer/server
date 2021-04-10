@@ -1,4 +1,4 @@
-package io.learnet.account.data
+package io.learnet.data
 
 import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration

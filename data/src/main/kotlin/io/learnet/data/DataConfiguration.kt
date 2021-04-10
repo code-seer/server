@@ -1,8 +1,8 @@
-package io.learnet.account.data
+package io.learnet.data
 
 
-import io.learnet.account.util.UtilConfiguration
-import io.learnet.account.util.properties.DataSourceProps
+import io.learnet.util.UtilConfiguration
+import io.learnet.util.properties.DataSourceProps
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.jdbc.DataSourceBuilder

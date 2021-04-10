@@ -1,13 +1,12 @@
-package io.learnet.account.data.repo
+package io.learnet.data.repo
 
-import io.learnet.account.data.entity.DemoUserEntity
+import io.learnet.data.entity.UserProfileEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
 
 @Repository
 @Transactional
-interface DemoUserRepo : JpaRepository<DemoUserEntity, Long> {
-    fun deleteByUuid(uuid: UUID)
+interface UserProfileRepo : JpaRepository<UserProfileEntity, Long> {
+    fun findByEmail(email: String): UserProfileEntity?
 }

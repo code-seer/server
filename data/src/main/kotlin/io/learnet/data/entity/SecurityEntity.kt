@@ -1,5 +1,6 @@
-package io.learnet.account.data.entity
+package io.learnet.data.entity
 
+import org.hibernate.annotations.Type
 import java.io.Serializable
 import java.time.OffsetDateTime
 import java.util.*
@@ -7,24 +8,20 @@ import javax.persistence.*
 
 
 @Entity
-@Table(schema = "public", name = "user_settings")
-open class UserSettingsEntity: Serializable {
+@Table(schema = "public", name = "security")
+open class SecurityEntity: Serializable {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id", columnDefinition = "bigserial")
         open var id: Long? = null
 
-        @OneToOne(mappedBy = "userSettings")
+        @OneToOne(mappedBy = "security")
         open var userProfile: UserProfileEntity? = null
 
-        @Basic
-        @Column(name = "timezone", columnDefinition = "text")
-        open var timezone: String? = null
-
-        @Basic
-        @Column(name = "language", columnDefinition = "text")
-        open var language: String? = null
+        @Type(type = "io.learnet.data.type.ArrayUserType")
+        @Column(name = "roles", columnDefinition = "text[]")
+        open var roles: Array<String> = emptyArray()
 
         @Basic
         @Column(name = "created_dt", columnDefinition = "timestamptz")

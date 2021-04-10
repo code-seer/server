@@ -1,7 +1,7 @@
-package io.learnet.account.data.repo
+package io.learnet.data.repo
 
-import io.learnet.account.data.DataTestConfiguration
-import io.learnet.account.data.migration.FlywayMigration
+import io.learnet.data.DataTestConfiguration
+import io.learnet.data.migration.FlywayMigration
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
