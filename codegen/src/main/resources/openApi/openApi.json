@@ -7,18 +7,10 @@
   },
   "servers": [
     {
-      "url": "https://learnet.io/api"
+      "url": "http://localhost:8080/api"
     }
   ],
   "tags": [
-    {
-      "name": "demo-user",
-      "description": "Starter Demo User Service"
-    },
-    {
-      "name": "discovery",
-      "description": "Service Discovery services"
-    },
     {
       "name": "user-management",
       "description": "Server-side user management"
@@ -30,12 +22,6 @@
     }
   ],
   "paths": {
-    "/discovery/{applicationName}": {
-      "$ref": "./paths/discovery/discovery.json#/paths/get_service_instances"
-    },
-    "/demoUser/findAllUsers": {
-      "$ref": "./paths/demo/demo.json#/paths/find_all"
-    },
     "/permissions": {
       "$ref": "./paths/user/user.json#/paths/permissions"
     },
