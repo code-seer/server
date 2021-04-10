@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.learnet.account</groupId>
+    <groupId>io.learnet</groupId>
     <artifactId>root</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Account</name>
-    <description>LearNet Account Service</description>
+    <name>LearNet Server</name>
+    <description>LearNet Backend Services</description>
 
     <modules>
         <module>util</module>
