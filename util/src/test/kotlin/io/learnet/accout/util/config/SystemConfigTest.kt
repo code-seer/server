@@ -1,8 +1,8 @@
-package io.learnet.account.api.config
+package io.learnet.accout.util.config
 
+import io.learnet.accout.util.UtilTestConfiguration
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.learnet.account.api.ApiConfiguration
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,7 +15,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 
-@SpringBootTest(classes = [ApiConfiguration::class])
+@SpringBootTest(classes = [UtilTestConfiguration::class])
 class SystemConfigTest: AbstractTestNGSpringContextTests() {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)

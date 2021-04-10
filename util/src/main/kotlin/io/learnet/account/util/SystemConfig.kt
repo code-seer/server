@@ -1,15 +1,12 @@
-package io.learnet.account.api
+package io.learnet.account.util
 
-
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
-import org.springframework.util.ResourceUtils
 import java.util.*
 import javax.annotation.PostConstruct
+import kotlin.collections.HashMap
 
 
 /**
@@ -18,13 +15,62 @@ import javax.annotation.PostConstruct
  * file on upstream will change the configurations at runtime.
  */
 @Component
-class SystemConfig {
+class SystemConfig(private val env: Environment) {
 
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
     private val excludedProps = arrayOf(
         "firebase.private_key",
         "s3.key",
         "s3.secret"
+    )
+    private val allPropKeys = arrayOf(
+        "demouser.es_index",
+        "demouser.display_name",
+        "demouser.email",
+        "demouser.password",
+        "demouser.phone_number",
+        "demouser.photo_url",
+        "description",
+        "firebase.type",
+        "firebase.project_id",
+        "firebase.private_key_id",
+        "firebase.private_key",
+        "firebase.client_email",
+        "firebase.client_id",
+        "firebase.auth_uri",
+        "firebase.token_uri",
+        "firebase.auth_provider_x509_cert_url",
+        "firebase.client_x509_cert_url",
+        "firebase.custom_token_verification_url",
+        "firebase.client_api_key",
+        "http.schema",
+        "logging.level.org.springframework.security",
+        "logging.level.root",
+        "s3.key",
+        "s3.secret",
+        "s3.user",
+        "s3.bucket",
+        "server.port",
+        "server.servlet.context-path",
+        "source.profile",
+        "spring.application.name",
+        "spring.profiles.active",
+        "spring.http.multipart.enabled",
+        "spring.servlet.multipart.max-request-size",
+        "spring.servlet.multipart.max-file-size",
+        "spring.servlet.multipart.enabled",
+        "spring.jpa.hibernate.ddl-auto",
+        "spring.flyway.locations",
+        "spring.flyway.baselineOnMigrate",
+        "spring.flyway.enabled",
+        "spring.flyway.schemas",
+        "spring.datasource.driver-class-name",
+        "spring.datasource.url",
+        "spring.datasource.username",
+        "spring.datasource.password",
+        "spring.datasource.main.banner-mode",
+        "user.permissions.uiAuthorizedEmails",
+        "user.permissions.defaultPermissions"
     )
 
     /**
@@ -67,10 +113,13 @@ class SystemConfig {
     }
 
     private fun loadProperties(): SortedMap<String, Any> {
-        val objectMapper = ObjectMapper(YAMLFactory())
-        val typeRef: TypeReference<HashMap<String, Any>> = object : TypeReference<HashMap<String, Any>>() {}
-        val map = objectMapper.readValue(ResourceUtils.getFile("file:src/main/resources/application.yml"), typeRef)
-        var props: MutableMap<String, Any> = HashMap()
+        val map: HashMap<String, Any> = HashMap()
+        val props: MutableMap<String, Any> = HashMap()
+        allPropKeys.forEach {
+            val value = env.getProperty(it)
+            if (value != null) {
+                map[it] = value
+            }}
         parseProps(props, map, String())
         return props.toSortedMap()
     }
