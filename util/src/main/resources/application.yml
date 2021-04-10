@@ -73,7 +73,7 @@ logging:
   level:
     org:
       springframework:
-        security: DEBUG
+        security: INFO
     root: INFO
 demouser:
   es_index: 'learnet-demo_user-read'
